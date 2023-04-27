@@ -51,7 +51,7 @@ class PartnerGatlingTest extends Simulation {
         ).exitHereIfFailed
         .pause(10)
         .exec(http("Authentication")
-        .post("/api/authenticate")
+        .post("/api/v1/authenticate")
         .headers(headers_http_authentication)
         .body(StringBody("""{"username":"admin", "password":"admin"}""")).asJson
         .check(header("Authorization").saveAs("access_token"))).exitHereIfFailed

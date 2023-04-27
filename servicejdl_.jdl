@@ -55,6 +55,19 @@ entity School {
     schoolAccountNumber Boolean,
     isDeleted DELFLAG
 }
+ 
+entity  SchoolpayTransaction {
+    dateCreated LocalDate required,
+    recordId Integer required unique,   
+    schoolcode String required,
+    schoolname string ,
+    schoolpayReceiptNumber  String required,
+    sourcePaymentChannelCode String required,
+    sourceTransactionId Integer required,   
+    studentCode string required,
+    studentName string required,
+
+  }
 
 entity NotifyTransaction {
     TransactionUId Integer required unique,

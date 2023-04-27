@@ -1,7 +1,8 @@
 package com.dsarena.corp.schoolpay.notificationapi.config;
 
-import com.dsarena.corp.schoolpay.notificationapi.security.*;
-import com.dsarena.corp.schoolpay.notificationapi.security.jwt.*;
+import com.dsarena.corp.schoolpay.notificationapi.security.AuthoritiesConstants;
+import com.dsarena.corp.schoolpay.notificationapi.security.jwt.JWTConfigurer;
+import com.dsarena.corp.schoolpay.notificationapi.security.jwt.TokenProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpMethod;
@@ -78,12 +79,14 @@ public class SecurityConfiguration {
             .antMatchers("/swagger-ui/**").permitAll()
             .antMatchers("/test/**").permitAll()
             .antMatchers("/api/authenticate").permitAll()
+            .antMatchers("/api/v1/authenticate").permitAll()
             .antMatchers("/api/register").permitAll()
             .antMatchers("/api/activate").permitAll()
             .antMatchers("/api/account/reset-password/init").permitAll()
             .antMatchers("/api/account/reset-password/finish").permitAll()
             .antMatchers("/api/admin/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/api/**").authenticated()
+            .antMatchers("payment/api/**").authenticated()
             .antMatchers("/management/health").permitAll()
             .antMatchers("/management/health/**").permitAll()
             .antMatchers("/management/info").permitAll()

@@ -1210,10 +1210,14 @@
       <layers>
           <layer>jaxrs-server</layer>
       </layers>
-      <plugin-options>
-          <jboss-fork-embedded>true</jboss-fork-embedded>
+      <plugin-options>      
+          <jboss-fork-embedded>true</jboss-fork-embedded> 
+                 
       </plugin-options>
       <cloud/>
+      <debug>true</debug>
+    
+
     </configuration>
     <executions>
       <execution>

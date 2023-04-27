@@ -121,7 +121,7 @@ spring:
       hibernate.connection.provider_disables_autocommit: true
       hibernate.cache.use_second_level_cache: true
       hibernate.cache.use_query_cache: false
-      hibernate.generate_statistics: false
+      hibernate.generate_statistics: true
       # modify batch size as necessary
       hibernate.jdbc.batch_size: 25
       hibernate.order_inserts: true
@@ -191,7 +191,6 @@ jhipster:
   mail:
     from: SchoolPaySettlementApp@localhost
   api-docs:
-    default-include-pattern: ${server.servlet.context-path:}payment/api/**,${server.servlet.context-path:}api/authenticate
     management-include-pattern: ${server.servlet.context-path:}/management/**
     title: School Pay Settlement App API
     description: School Pay Settlement App API documentation
@@ -202,8 +201,10 @@ jhipster:
     contact-email:
     license: unlicensed
     license-url:
+    default-include-pattern: ${server.servlet.context-path:}payment/api/**
+
   security:
-    content-security-policy: "default-src 'self'; frame-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:"
+    content-security-policy: '*'
     # By default, when using the UAA server /oauth/authorize endpoint, the redirect_uri parameter must exactly match
 # ===================================================================
 # Application specific properties

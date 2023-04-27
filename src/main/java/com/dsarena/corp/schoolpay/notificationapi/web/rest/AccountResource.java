@@ -10,6 +10,7 @@ import com.dsarena.corp.schoolpay.notificationapi.service.dto.PasswordChangeDTO;
 import com.dsarena.corp.schoolpay.notificationapi.web.rest.errors.*;
 import com.dsarena.corp.schoolpay.notificationapi.web.rest.vm.KeyAndPasswordVM;
 import com.dsarena.corp.schoolpay.notificationapi.web.rest.vm.ManagedUserVM;
+import io.swagger.v3.oas.annotations.Hidden;
 import java.util.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;

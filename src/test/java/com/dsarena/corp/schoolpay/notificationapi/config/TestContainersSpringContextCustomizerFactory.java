@@ -18,6 +18,7 @@ public class TestContainersSpringContextCustomizerFactory implements ContextCust
 
     private Logger log = LoggerFactory.getLogger(TestContainersSpringContextCustomizerFactory.class);
 
+    private static SqlTestContainer devTestContainer;
     private static SqlTestContainer prodTestContainer;
 
     @Override
@@ -32,12 +33,38 @@ public class TestContainersSpringContextCustomizerFactory implements ContextCust
                 if (
                     Arrays
                         .asList(context.getEnvironment().getActiveProfiles())
+                        .contains("test" + JHipsterConstants.SPRING_PROFILE_DEVELOPMENT)
+                ) {
+                    if (null == devTestContainer) {
+                        try {
+                            Class<? extends SqlTestContainer> containerClass = (Class<? extends SqlTestContainer>) Class.forName(
+                                this.getClass().getPackageName() + ".MysqlTestContainer"
+                            );
+                            devTestContainer = beanFactory.createBean(containerClass);
+                            beanFactory.registerSingleton(containerClass.getName(), devTestContainer);
+                            // ((DefaultListableBeanFactory)beanFactory).registerDisposableBean(containerClass.getName(), devTestContainer);
+                        } catch (ClassNotFoundException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                    testValues =
+                        testValues.and(
+                            "spring.datasource.url=" +
+                            devTestContainer.getTestContainer().getJdbcUrl() +
+                            "?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true"
+                        );
+                    testValues = testValues.and("spring.datasource.username=" + devTestContainer.getTestContainer().getUsername());
+                    testValues = testValues.and("spring.datasource.password=" + devTestContainer.getTestContainer().getPassword());
+                }
+                if (
+                    Arrays
+                        .asList(context.getEnvironment().getActiveProfiles())
                         .contains("test" + JHipsterConstants.SPRING_PROFILE_PRODUCTION)
                 ) {
                     if (null == prodTestContainer) {
                         try {
                             Class<? extends SqlTestContainer> containerClass = (Class<? extends SqlTestContainer>) Class.forName(
-                                this.getClass().getPackageName() + ".PostgreSqlTestContainer"
+                                this.getClass().getPackageName() + ".MysqlTestContainer"
                             );
                             prodTestContainer = beanFactory.createBean(containerClass);
                             beanFactory.registerSingleton(containerClass.getName(), prodTestContainer);
@@ -46,7 +73,12 @@ public class TestContainersSpringContextCustomizerFactory implements ContextCust
                             throw new RuntimeException(e);
                         }
                     }
-                    testValues = testValues.and("spring.datasource.url=" + prodTestContainer.getTestContainer().getJdbcUrl() + "");
+                    testValues =
+                        testValues.and(
+                            "spring.datasource.url=" +
+                            prodTestContainer.getTestContainer().getJdbcUrl() +
+                            "?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true"
+                        );
                     testValues = testValues.and("spring.datasource.username=" + prodTestContainer.getTestContainer().getUsername());
                     testValues = testValues.and("spring.datasource.password=" + prodTestContainer.getTestContainer().getPassword());
                 }

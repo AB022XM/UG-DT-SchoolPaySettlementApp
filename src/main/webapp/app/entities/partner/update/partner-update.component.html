@@ -1,0 +1,281 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-partner-heading"
+        data-cy="PartnerCreateUpdateHeading"
+        jhiTranslate="schoolPaySettlementApp.partner.home.createOrEditLabel"
+      >
+        Create or edit a Partner
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="schoolPaySettlementApp.partner.partnerId" for="field_partnerId">Partner Id</label>
+          <input type="text" class="form-control" name="partnerId" id="field_partnerId" data-cy="partnerId" formControlName="partnerId" />
+          <div *ngIf="editForm.get('partnerId')!.invalid && (editForm.get('partnerId')!.dirty || editForm.get('partnerId')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('partnerId')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="schoolPaySettlementApp.partner.partnerCode" for="field_partnerCode">Partner Code</label>
+          <input
+            type="number"
+            class="form-control"
+            name="partnerCode"
+            id="field_partnerCode"
+            data-cy="partnerCode"
+            formControlName="partnerCode"
+          />
+          <div *ngIf="editForm.get('partnerCode')!.invalid && (editForm.get('partnerCode')!.dirty || editForm.get('partnerCode')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('partnerCode')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('partnerCode')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="schoolPaySettlementApp.partner.partnerShortcode" for="field_partnerShortcode"
+            >Partner Shortcode</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="partnerShortcode"
+            id="field_partnerShortcode"
+            data-cy="partnerShortcode"
+            formControlName="partnerShortcode"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="schoolPaySettlementApp.partner.phonenumber" for="field_phonenumber">Phonenumber</label>
+          <input
+            type="text"
+            class="form-control"
+            name="phonenumber"
+            id="field_phonenumber"
+            data-cy="phonenumber"
+            formControlName="phonenumber"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="schoolPaySettlementApp.partner.address" for="field_address">Address</label>
+          <input type="text" class="form-control" name="address" id="field_address" data-cy="address" formControlName="address" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="schoolPaySettlementApp.partner.partnerName" for="field_partnerName">Partner Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="partnerName"
+            id="field_partnerName"
+            data-cy="partnerName"
+            formControlName="partnerName"
+          />
+          <div *ngIf="editForm.get('partnerName')!.invalid && (editForm.get('partnerName')!.dirty || editForm.get('partnerName')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('partnerName')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('partnerName')?.errors?.minlength"
+              jhiTranslate="entity.validation.minlength"
+              [translateValues]="{ min: 3 }"
+            >
+              This field is required to be at least 3 characters.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('partnerName')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 100 }"
+            >
+              This field cannot be longer than 100 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="schoolPaySettlementApp.partner.registrationdate" for="field_registrationdate"
+            >Registrationdate</label
+          >
+          <div class="input-group">
+            <input
+              id="field_registrationdate"
+              data-cy="registrationdate"
+              type="text"
+              class="form-control"
+              name="registrationdate"
+              ngbDatepicker
+              #registrationdateDp="ngbDatepicker"
+              formControlName="registrationdate"
+            />
+            <button type="button" class="btn btn-secondary" (click)="registrationdateDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="schoolPaySettlementApp.partner.isAbsaPartner" for="field_isAbsaPartner"
+            >Is Absa Partner</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="isAbsaPartner"
+            id="field_isAbsaPartner"
+            data-cy="isAbsaPartner"
+            formControlName="isAbsaPartner"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="schoolPaySettlementApp.partner.status" for="field_status">Status</label>
+          <select class="form-control" name="status" formControlName="status" id="field_status" data-cy="status">
+            <option [ngValue]="null">{{ 'schoolPaySettlementApp.RecordStatus.null' | translate }}</option>
+            <option *ngFor="let recordStatus of recordStatusValues" [value]="recordStatus">
+              {{ 'schoolPaySettlementApp.RecordStatus.' + recordStatus | translate }}
+            </option>
+          </select>
+          <div *ngIf="editForm.get('status')!.invalid && (editForm.get('status')!.dirty || editForm.get('status')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('status')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="schoolPaySettlementApp.partner.freeField1" for="field_freeField1">Free Field 1</label>
+          <input
+            type="text"
+            class="form-control"
+            name="freeField1"
+            id="field_freeField1"
+            data-cy="freeField1"
+            formControlName="freeField1"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="schoolPaySettlementApp.partner.freeField2" for="field_freeField2">Free Field 2</label>
+          <input
+            type="text"
+            class="form-control"
+            name="freeField2"
+            id="field_freeField2"
+            data-cy="freeField2"
+            formControlName="freeField2"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="schoolPaySettlementApp.partner.freeField3" for="field_freeField3">Free Field 3</label>
+          <input
+            type="text"
+            class="form-control"
+            name="freeField3"
+            id="field_freeField3"
+            data-cy="freeField3"
+            formControlName="freeField3"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="schoolPaySettlementApp.partner.provideDebitAccount" for="field_provideDebitAccount"
+            >Provide Debit Account</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="provideDebitAccount"
+            id="field_provideDebitAccount"
+            data-cy="provideDebitAccount"
+            formControlName="provideDebitAccount"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="schoolPaySettlementApp.partner.provideCreditAccount" for="field_provideCreditAccount"
+            >Provide Credit Account</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="provideCreditAccount"
+            id="field_provideCreditAccount"
+            data-cy="provideCreditAccount"
+            formControlName="provideCreditAccount"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="schoolPaySettlementApp.partner.isDeleted" for="field_isDeleted">Is Deleted</label>
+          <select class="form-control" name="isDeleted" formControlName="isDeleted" id="field_isDeleted" data-cy="isDeleted">
+            <option [ngValue]="null">{{ 'schoolPaySettlementApp.DELFLAG.null' | translate }}</option>
+            <option *ngFor="let dELFLAG of dELFLAGValues" [value]="dELFLAG">
+              {{ 'schoolPaySettlementApp.DELFLAG.' + dELFLAG | translate }}
+            </option>
+          </select>
+          <div *ngIf="editForm.get('isDeleted')!.invalid && (editForm.get('isDeleted')!.dirty || editForm.get('isDeleted')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('isDeleted')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

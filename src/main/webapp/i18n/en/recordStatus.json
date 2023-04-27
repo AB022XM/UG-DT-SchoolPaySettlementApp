@@ -1,0 +1,10 @@
+{
+  "schoolPaySettlementApp": {
+    "RecordStatus": {
+      "null": "",
+      "ACTIVE": "ACTIVE",
+      "INACTIVE": "INACTIVE",
+      "PENDING": "PENDING"
+    }
+  }
+}

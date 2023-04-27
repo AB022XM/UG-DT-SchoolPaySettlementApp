@@ -1,0 +1,50 @@
+{
+  "schoolPaySettlementApp": {
+    "notifyTransaction": {
+      "home": {
+        "title": "Notify Transactions",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Notify Transaction",
+        "createOrEditLabel": "Create or edit a Notify Transaction",
+        "notFound": "No Notify Transactions found"
+      },
+      "created": "A new Notify Transaction is created with identifier {{ param }}",
+      "updated": "A Notify Transaction is updated with identifier {{ param }}",
+      "deleted": "A Notify Transaction is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Notify Transaction {{ id }}?"
+      },
+      "detail": {
+        "title": "Notify Transaction"
+      },
+      "id": "ID",
+      "transactionUId": "Transaction U Id",
+      "recordId": "Record Id",
+      "customerPaymentCode": "Customer Payment Code",
+      "schoolName": "School Name",
+      "sourcePaymentChannelCode": "Source Payment Channel Code",
+      "schoolpayReceiptNumber": "Schoolpay Receipt Number",
+      "amount": "Amount",
+      "schoolCode": "School Code",
+      "partnerCode": "Partner Code",
+      "dateCreated": "Date Created",
+      "sourceTransactionId": "Source Transaction Id",
+      "studentCode": "Student Code",
+      "studentName": "Student Name",
+      "charges": "Charges",
+      "timestamp": "Timestamp",
+      "narration": "Narration",
+      "currency": "Currency",
+      "debitAccount": "Debit Account",
+      "creditAccount": "Credit Account",
+      "proccessingStatus": "Proccessing Status",
+      "fcrTransactionStatus": "Fcr Transaction Status",
+      "fcrTransactionId": "Fcr Transaction Id",
+      "fcrTransactionReference": "Fcr Transaction Reference",
+      "freeField1": "Free Field 1",
+      "freeField2": "Free Field 2",
+      "freeField3": "Free Field 3",
+      "retries": "Retries"
+    }
+  }
+}

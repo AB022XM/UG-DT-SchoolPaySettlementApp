@@ -20,9 +20,12 @@ spring:
   config:
     activate:
       on-profile: '!api-docs'
+
 springdoc:
   api-docs:
-    enabled: false
+    enabled: true
+    path-to-match: /payment/api/v1/,/api/authenticate
+
 ---
 management:
   endpoints:
@@ -179,7 +182,7 @@ jhipster:
     name: 'schoolPaySettlementApp'
   # By default CORS is disabled. Uncomment to enable.
   # cors:
-  #   allowed-origins: "http://localhost:8100,http://localhost:9000"
+  #   allowed-origins: "http://localhost:8100,http://localhost:9000,http://localhost:8066"
   #   allowed-methods: "*"
   #   allowed-headers: "*"
   #   exposed-headers: "Authorization,Link,X-Total-Count,X-${jhipster.clientApp.name}-alert,X-${jhipster.clientApp.name}-error,X-${jhipster.clientApp.name}-params"
@@ -188,7 +191,7 @@ jhipster:
   mail:
     from: SchoolPaySettlementApp@localhost
   api-docs:
-    default-include-pattern: ${server.servlet.context-path:}/api/**
+    default-include-pattern: ${server.servlet.context-path:}payment/api/**,${server.servlet.context-path:}api/authenticate
     management-include-pattern: ${server.servlet.context-path:}/management/**
     title: School Pay Settlement App API
     description: School Pay Settlement App API documentation
@@ -201,6 +204,7 @@ jhipster:
     license-url:
   security:
     content-security-policy: "default-src 'self'; frame-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:"
+    # By default, when using the UAA server /oauth/authorize endpoint, the redirect_uri parameter must exactly match
 # ===================================================================
 # Application specific properties
 # Add your own application properties here, see the ApplicationProperties class

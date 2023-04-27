@@ -1,0 +1,84 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="school">
+      <h2 data-cy="schoolDetailsHeading"><span jhiTranslate="schoolPaySettlementApp.school.detail.title">School</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ school.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="schoolPaySettlementApp.school.schoolId">School Id</span></dt>
+        <dd>
+          <span>{{ school.schoolId }}</span>
+        </dd>
+        <dt><span jhiTranslate="schoolPaySettlementApp.school.schoolCode">School Code</span></dt>
+        <dd>
+          <span>{{ school.schoolCode }}</span>
+        </dd>
+        <dt><span jhiTranslate="schoolPaySettlementApp.school.schoolShortcode">School Shortcode</span></dt>
+        <dd>
+          <span>{{ school.schoolShortcode }}</span>
+        </dd>
+        <dt><span jhiTranslate="schoolPaySettlementApp.school.phonenumber">Phonenumber</span></dt>
+        <dd>
+          <span>{{ school.phonenumber }}</span>
+        </dd>
+        <dt><span jhiTranslate="schoolPaySettlementApp.school.address">Address</span></dt>
+        <dd>
+          <span>{{ school.address }}</span>
+        </dd>
+        <dt><span jhiTranslate="schoolPaySettlementApp.school.schoolName">School Name</span></dt>
+        <dd>
+          <span>{{ school.schoolName }}</span>
+        </dd>
+        <dt><span jhiTranslate="schoolPaySettlementApp.school.registrationdate">Registrationdate</span></dt>
+        <dd>
+          <span>{{ school.registrationdate | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="schoolPaySettlementApp.school.status">Status</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'schoolPaySettlementApp.RecordStatus.' + school.status }}">{{ school.status }}</span>
+        </dd>
+        <dt><span jhiTranslate="schoolPaySettlementApp.school.freeField1">Free Field 1</span></dt>
+        <dd>
+          <span>{{ school.freeField1 }}</span>
+        </dd>
+        <dt><span jhiTranslate="schoolPaySettlementApp.school.freeField2">Free Field 2</span></dt>
+        <dd>
+          <span>{{ school.freeField2 }}</span>
+        </dd>
+        <dt><span jhiTranslate="schoolPaySettlementApp.school.freeField3">Free Field 3</span></dt>
+        <dd>
+          <span>{{ school.freeField3 }}</span>
+        </dd>
+        <dt><span jhiTranslate="schoolPaySettlementApp.school.isSchoolAccountNumberABSA">Is School Account Number ABSA</span></dt>
+        <dd>
+          <span>{{ school.isSchoolAccountNumberABSA }}</span>
+        </dd>
+        <dt><span jhiTranslate="schoolPaySettlementApp.school.schoolAccountNumber">School Account Number</span></dt>
+        <dd>
+          <span>{{ school.schoolAccountNumber }}</span>
+        </dd>
+        <dt><span jhiTranslate="schoolPaySettlementApp.school.isDeleted">Is Deleted</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'schoolPaySettlementApp.DELFLAG.' + school.isDeleted }}">{{ school.isDeleted }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/school', school.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,9 @@
+{
+  "schoolPaySettlementApp": {
+    "DELFLAG": {
+      "null": "",
+      "True": "True",
+      "False": "False"
+    }
+  }
+}

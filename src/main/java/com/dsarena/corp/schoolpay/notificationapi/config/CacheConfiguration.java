@@ -48,6 +48,9 @@ public class CacheConfiguration {
             createCache(cm, com.dsarena.corp.schoolpay.notificationapi.domain.User.class.getName());
             createCache(cm, com.dsarena.corp.schoolpay.notificationapi.domain.Authority.class.getName());
             createCache(cm, com.dsarena.corp.schoolpay.notificationapi.domain.User.class.getName() + ".authorities");
+            createCache(cm, com.dsarena.corp.schoolpay.notificationapi.domain.School.class.getName());
+            createCache(cm, com.dsarena.corp.schoolpay.notificationapi.domain.NotifyTransaction.class.getName());
+            createCache(cm, com.dsarena.corp.schoolpay.notificationapi.domain.Partner.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

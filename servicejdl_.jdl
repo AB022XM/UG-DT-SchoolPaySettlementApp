@@ -1,0 +1,110 @@
+
+application {
+  config {
+    baseName SchoolPaySettlementApp,
+    applicationType monolith,
+    packageName com.dsarena.corp.schoolpay.notificationapi,
+    authenticationType jwt,
+    prodDatabaseType mysql,
+    clientFramework angular,
+    devDatabaseType mysql,
+    buildTool maven,
+  	serverPort 9002,
+    enableSwaggerCodegen false,
+    testFrameworks [cucumber, gatling]
+    
+  }
+    entities *
+    paginate * with pagination
+    service *  with serviceClass
+    dto * with mapstruct
+  
+  
+}
+
+enum RecordStatus {
+    ACTIVE, INACTIVE, PENDING
+}
+
+enum IsAction {
+    True, False
+}
+
+enum ProccesingStatus 
+{
+PENDING, SUCCESS, FAILED, UNKNOWN
+}
+
+enum DELFLAG {
+    True, False
+}
+entity School {
+    schoolId UUID required unique, //this is a field to add an extra unique identifier.
+    schoolCode Integer required, //this is a unique identifier for students
+    schoolShortcode Integer required ,
+    schoolCode String required unique,
+    phonenumber String required ,
+    address String ,
+    schoolName String required minlength(3) maxlength(200),
+    registrationdate LocalDate required,
+    status RecordStatus required, //this field is used to check whether a record is active or inactive
+    freeField1 String,
+    freeField2 String,
+    freeField3 String,
+    isSchoolAccountNumberABSA Boolean,
+    schoolAccountNumber Boolean,
+    isDeleted DELFLAG
+}
+
+entity NotifyTransaction {
+    TransactionUId Integer required unique,
+    recordId Integer required unique,
+    customerPaymentCode String required,
+    schoolName String required,
+    sourcePaymentChannelCode String required,
+    schoolpayReceiptNumber String required,
+    amount Integer required,
+    schoolCode String,
+    partnerCode String required,
+    dateCreated LocalDate required,
+    sourceTransactionId Integer required,
+    studentCode Integer required,
+    studentName String required,
+    charges Integer,
+    timestamp LocalDate required,
+    narration String required,
+    currency Integer required,
+    debitAccount Integer required,
+    creditAccount Integer required,
+    proccessingStatus ProccesingStatus,
+    fcrTransactionStatus ProccesingStatus,
+    fcrTransactionId String,
+    fcrTransactionReference String,
+    freeField1 String,
+    freeField2 String,
+    freeField3 String,
+    retries Integer max(5)
+}
+
+entity Partner {
+    partnerId UUID required unique, //this is a field to add an extra unique identifier.
+    partnerCode Integer required, //this is a unique identifier for students
+    partnerShortcode Integer ,
+    phonenumber String ,
+    address String  ,
+    partnerName String required minlength(3) maxlength(100),
+    registrationdate LocalDate,
+    isAbsaPartner Boolean,
+    status RecordStatus required, //this field is used to check whether a record is active or inactive
+    freeField1 String,
+    freeField2 String,
+    freeField3 String,
+    provideDebitAccount Boolean,
+    provideCreditAccount Boolean,
+    isDeleted DELFLAG required
+
+}
+
+
+
+    

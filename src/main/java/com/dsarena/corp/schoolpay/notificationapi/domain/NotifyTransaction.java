@@ -1,10 +1,22 @@
 package com.dsarena.corp.schoolpay.notificationapi.domain;
 
 import com.dsarena.corp.schoolpay.notificationapi.domain.enumeration.ProccesingStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.LocalDate;
-import javax.persistence.*;
-import javax.validation.constraints.*;
+import java.util.Random;
+import javax.annotation.Nullable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -22,22 +34,24 @@ public class NotifyTransaction implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @JsonIgnore
     private Long id;
 
-    @NotNull
-    @Column(name = "transaction_u_id", nullable = false, unique = true)
-    private Integer transactionUId;
+    @Nullable
+    @Column(name = "transaction_u_id", nullable = true)
+    @JsonIgnore
+    private String transactionUId;
 
-    @NotNull
-    @Column(name = "record_id", nullable = false, unique = true)
+    @Column(name = "record_id", unique = true)
     private Integer recordId;
 
-    @NotNull
-    @Column(name = "customer_payment_code", nullable = false)
+    @Nullable
+    @Column(name = "customer_payment_code", nullable = true)
+    @JsonIgnore
     private String customerPaymentCode;
 
-    @NotNull
-    @Column(name = "school_name", nullable = false)
+    @Nullable
+    @Column(name = "school_name", nullable = true)
     private String schoolName;
 
     @NotNull
@@ -48,82 +62,98 @@ public class NotifyTransaction implements Serializable {
     @Column(name = "schoolpay_receipt_number", nullable = false)
     private String schoolpayReceiptNumber;
 
-    @NotNull
     @Column(name = "amount", nullable = false)
     private Integer amount;
 
     @Column(name = "school_code")
     private String schoolCode;
 
-    @NotNull
-    @Column(name = "partner_code", nullable = false)
+    @Nullable
+    @Column(name = "partner_code", nullable = true)
+    @JsonIgnore
+    @JsonIgnoreProperties(value = { "partnerCode" }, allowGetters = true)
     private String partnerCode;
 
-    @NotNull
+    @Nullable
     @Column(name = "date_created", nullable = false)
     private LocalDate dateCreated;
 
-    @NotNull
+    @Nullable
     @Column(name = "source_transaction_id", nullable = false)
-    private Integer sourceTransactionId;
+    private String sourceTransactionId;
 
-    @NotNull
+    @Nullable
     @Column(name = "student_code", nullable = false)
-    private Integer studentCode;
+    private String studentCode;
 
-    @NotNull
-    @Column(name = "student_name", nullable = false)
+    @Nullable
+    @Column(name = "student_name", nullable = true)
     private String studentName;
 
+    @Nullable
     @Column(name = "charges")
-    private Integer charges;
+    @JsonIgnore
+    private Integer charges = 0;
 
-    @NotNull
-    @Column(name = "timestamp", nullable = false)
+    @Nullable
+    @Column(name = "timestamp", nullable = true)
+    @JsonIgnore
     private LocalDate timestamp;
 
-    @NotNull
-    @Column(name = "narration", nullable = false)
+    @Nullable
+    @JsonIgnore
+    @Column(name = "narration", nullable = true)
     private String narration;
 
-    @NotNull
-    @Column(name = "currency", nullable = false)
-    private Integer currency;
+    @Nullable
+    @JsonIgnore
+    @Column(name = "currency", nullable = true)
+    private String currency = "UGX";
 
-    @NotNull
-    @Column(name = "debit_account", nullable = false)
-    private Integer debitAccount;
+    @Nullable
+    @JsonIgnore
+    @Column(name = "debit_account", nullable = true)
+    private String debitAccount;
 
-    @NotNull
-    @Column(name = "credit_account", nullable = false)
-    private Integer creditAccount;
+    @Nullable
+    @JsonIgnore
+    @Column(name = "credit_account", nullable = true)
+    private String creditAccount;
 
     @Enumerated(EnumType.STRING)
+    @JsonIgnore
     @Column(name = "proccessing_status")
     private ProccesingStatus proccessingStatus;
 
     @Enumerated(EnumType.STRING)
+    @JsonIgnore
     @Column(name = "fcr_transaction_status")
     private ProccesingStatus fcrTransactionStatus;
 
-    @Column(name = "fcr_transaction_id")
+    @Column(name = "fcr_transaction_id", nullable = true)
+    @JsonIgnore
     private String fcrTransactionId;
 
-    @Column(name = "fcr_transaction_reference")
+    @Column(name = "fcr_transaction_reference", nullable = true)
+    @JsonIgnore
     private String fcrTransactionReference;
 
     @Column(name = "free_field_1")
+    @JsonIgnore
     private String freeField1;
 
     @Column(name = "free_field_2")
+    @JsonIgnore
     private String freeField2;
 
     @Column(name = "free_field_3")
+    @JsonIgnore
     private String freeField3;
 
     @Max(value = 5)
     @Column(name = "retries")
-    private Integer retries;
+    @JsonIgnore
+    private Integer retries = 0;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -140,16 +170,16 @@ public class NotifyTransaction implements Serializable {
         this.id = id;
     }
 
-    public Integer getTransactionUId() {
+    public String getTransactionUId() {
         return this.transactionUId;
     }
 
-    public NotifyTransaction transactionUId(Integer transactionUId) {
+    public NotifyTransaction transactionUId(String transactionUId) {
         this.setTransactionUId(transactionUId);
         return this;
     }
 
-    public void setTransactionUId(Integer transactionUId) {
+    public void setTransactionUId(String transactionUId) {
         this.transactionUId = transactionUId;
     }
 
@@ -270,29 +300,29 @@ public class NotifyTransaction implements Serializable {
         this.dateCreated = dateCreated;
     }
 
-    public Integer getSourceTransactionId() {
+    public String getSourceTransactionId() {
         return this.sourceTransactionId;
     }
 
-    public NotifyTransaction sourceTransactionId(Integer sourceTransactionId) {
+    public NotifyTransaction sourceTransactionId(String sourceTransactionId) {
         this.setSourceTransactionId(sourceTransactionId);
         return this;
     }
 
-    public void setSourceTransactionId(Integer sourceTransactionId) {
+    public void setSourceTransactionId(String sourceTransactionId) {
         this.sourceTransactionId = sourceTransactionId;
     }
 
-    public Integer getStudentCode() {
+    public String getStudentCode() {
         return this.studentCode;
     }
 
-    public NotifyTransaction studentCode(Integer studentCode) {
+    public NotifyTransaction studentCode(String studentCode) {
         this.setStudentCode(studentCode);
         return this;
     }
 
-    public void setStudentCode(Integer studentCode) {
+    public void setStudentCode(String studentCode) {
         this.studentCode = studentCode;
     }
 
@@ -348,42 +378,42 @@ public class NotifyTransaction implements Serializable {
         this.narration = narration;
     }
 
-    public Integer getCurrency() {
+    public String getCurrency() {
         return this.currency;
     }
 
-    public NotifyTransaction currency(Integer currency) {
+    public NotifyTransaction currency(String currency) {
         this.setCurrency(currency);
         return this;
     }
 
-    public void setCurrency(Integer currency) {
+    public void setCurrency(String currency) {
         this.currency = currency;
     }
 
-    public Integer getDebitAccount() {
+    public String getDebitAccount() {
         return this.debitAccount;
     }
 
-    public NotifyTransaction debitAccount(Integer debitAccount) {
+    public NotifyTransaction debitAccount(String debitAccount) {
         this.setDebitAccount(debitAccount);
         return this;
     }
 
-    public void setDebitAccount(Integer debitAccount) {
+    public void setDebitAccount(String debitAccount) {
         this.debitAccount = debitAccount;
     }
 
-    public Integer getCreditAccount() {
+    public String getCreditAccount() {
         return this.creditAccount;
     }
 
-    public NotifyTransaction creditAccount(Integer creditAccount) {
+    public NotifyTransaction creditAccount(String creditAccount) {
         this.setCreditAccount(creditAccount);
         return this;
     }
 
-    public void setCreditAccount(Integer creditAccount) {
+    public void setCreditAccount(String creditAccount) {
         this.creditAccount = creditAccount;
     }
 
@@ -543,5 +573,16 @@ public class NotifyTransaction implements Serializable {
             ", freeField3='" + getFreeField3() + "'" +
             ", retries=" + getRetries() +
             "}";
+    }
+
+    public static String generateRecordId(String studentPaymentCode) {
+        int length = 11;
+        Random random = new Random();
+        char[] digits = new char[length];
+        digits[0] = (char) (random.nextInt(9) + '1');
+        for (int i = 1; i < length; i++) {
+            digits[i] = (char) (random.nextInt(10) + '0');
+        }
+        return "schp" + Long.parseLong(new String(digits)) + studentPaymentCode.substring(0, 3);
     }
 }

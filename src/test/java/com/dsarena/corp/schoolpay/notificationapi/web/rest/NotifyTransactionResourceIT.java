@@ -2,12 +2,17 @@ package com.dsarena.corp.schoolpay.notificationapi.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.dsarena.corp.schoolpay.notificationapi.IntegrationTest;
 import com.dsarena.corp.schoolpay.notificationapi.domain.NotifyTransaction;
-import com.dsarena.corp.schoolpay.notificationapi.domain.enumeration.ProccesingStatus;
 import com.dsarena.corp.schoolpay.notificationapi.domain.enumeration.ProccesingStatus;
 import com.dsarena.corp.schoolpay.notificationapi.repository.NotifyTransactionRepository;
 import com.dsarena.corp.schoolpay.notificationapi.service.dto.NotifyTransactionDTO;
@@ -35,8 +40,8 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class NotifyTransactionResourceIT {
 
-    private static final Integer DEFAULT_TRANSACTION_U_ID = 1;
-    private static final Integer UPDATED_TRANSACTION_U_ID = 2;
+    private static final String DEFAULT_TRANSACTION_U_ID = "AAAAAAAAAA";
+    private static final String UPDATED_TRANSACTION_U_ID = "BBBBBBBBBB";
 
     private static final Integer DEFAULT_RECORD_ID = 1;
     private static final Integer UPDATED_RECORD_ID = 2;
@@ -65,11 +70,11 @@ class NotifyTransactionResourceIT {
     private static final LocalDate DEFAULT_DATE_CREATED = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_DATE_CREATED = LocalDate.now(ZoneId.systemDefault());
 
-    private static final Integer DEFAULT_SOURCE_TRANSACTION_ID = 1;
-    private static final Integer UPDATED_SOURCE_TRANSACTION_ID = 2;
+    private static final String DEFAULT_SOURCE_TRANSACTION_ID = "AAAAAAAAAA";
+    private static final String UPDATED_SOURCE_TRANSACTION_ID = "BBBBBBBBBB";
 
-    private static final Integer DEFAULT_STUDENT_CODE = 1;
-    private static final Integer UPDATED_STUDENT_CODE = 2;
+    private static final String DEFAULT_STUDENT_CODE = "AAAAAAAAAA";
+    private static final String UPDATED_STUDENT_CODE = "BBBBBBBBBB";
 
     private static final String DEFAULT_STUDENT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_STUDENT_NAME = "BBBBBBBBBB";
@@ -83,14 +88,14 @@ class NotifyTransactionResourceIT {
     private static final String DEFAULT_NARRATION = "AAAAAAAAAA";
     private static final String UPDATED_NARRATION = "BBBBBBBBBB";
 
-    private static final Integer DEFAULT_CURRENCY = 1;
-    private static final Integer UPDATED_CURRENCY = 2;
+    private static final String DEFAULT_CURRENCY = "UGX";
+    private static final String UPDATED_CURRENCY = "UGX";
 
-    private static final Integer DEFAULT_DEBIT_ACCOUNT = 1;
-    private static final Integer UPDATED_DEBIT_ACCOUNT = 2;
+    private static final String DEFAULT_DEBIT_ACCOUNT = "AAAAAAAAAA";
+    private static final String UPDATED_DEBIT_ACCOUNT = "BBBBBBBBBB";
 
-    private static final Integer DEFAULT_CREDIT_ACCOUNT = 1;
-    private static final Integer UPDATED_CREDIT_ACCOUNT = 2;
+    private static final String DEFAULT_CREDIT_ACCOUNT = "AAAAAAAAAA";
+    private static final String UPDATED_CREDIT_ACCOUNT = "BBBBBBBBBB";
 
     private static final ProccesingStatus DEFAULT_PROCCESSING_STATUS = ProccesingStatus.PENDING;
     private static final ProccesingStatus UPDATED_PROCCESSING_STATUS = ProccesingStatus.SUCCESS;

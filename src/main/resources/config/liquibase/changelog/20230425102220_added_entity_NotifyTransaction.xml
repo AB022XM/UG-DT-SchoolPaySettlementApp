@@ -44,10 +44,10 @@
             <column name="date_created" type="date">
                 <constraints nullable="false" />
             </column>
-            <column name="source_transaction_id" type="integer">
+            <column name="source_transaction_id" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
-            <column name="student_code" type="integer">
+            <column name="student_code" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
             <column name="student_name" type="varchar(255)">
@@ -57,19 +57,19 @@
                 <constraints nullable="true" />
             </column>
             <column name="timestamp" type="date">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
             <column name="narration" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="currency" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="debit_account" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
-            <column name="currency" type="integer">
-                <constraints nullable="false" />
-            </column>
-            <column name="debit_account" type="integer">
-                <constraints nullable="false" />
-            </column>
-            <column name="credit_account" type="integer">
-                <constraints nullable="false" />
+            <column name="credit_account" type="varchar(255)">
+                <constraints nullable="true" />
             </column>
             <column name="proccessing_status" type="varchar(255)">
                 <constraints nullable="true" />

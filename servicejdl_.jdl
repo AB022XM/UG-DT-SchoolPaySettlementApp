@@ -65,7 +65,7 @@ entity  SchoolpayTransaction {
     sourcePaymentChannelCode String required,
     sourceTransactionId Integer required,   
     studentCode string required,
-    studentName string required,
+    studentName string required
 
   }
 

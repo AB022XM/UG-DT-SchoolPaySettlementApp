@@ -1,10 +1,13 @@
 package com.dsarena.corp.schoolpay.notificationapi.service.dto;
 
 import com.dsarena.corp.schoolpay.notificationapi.domain.enumeration.ProccesingStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
-import javax.validation.constraints.*;
+import javax.annotation.Nullable;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
 
 /**
  * A DTO for the {@link com.dsarena.corp.schoolpay.notificationapi.domain.NotifyTransaction} entity.
@@ -12,21 +15,22 @@ import javax.validation.constraints.*;
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class NotifyTransactionDTO implements Serializable {
 
+    @JsonIgnore
     private Long id;
 
-    @NotNull
-    private Integer transactionUId;
+    @JsonIgnore
+    private String transactionUId;
 
-    @NotNull
     private Integer recordId;
 
-    @NotNull
+    @Nullable
+    @JsonIgnore
     private String customerPaymentCode;
 
-    @NotNull
+    @Nullable
     private String schoolName;
 
-    @NotNull
+    @Nullable
     private String sourcePaymentChannelCode;
 
     @NotNull
@@ -35,39 +39,47 @@ public class NotifyTransactionDTO implements Serializable {
     @NotNull
     private Integer amount;
 
+    @Nullable
     private String schoolCode;
 
-    @NotNull
+    @Nullable
+    @JsonIgnore
     private String partnerCode;
 
     @NotNull
     private LocalDate dateCreated;
 
     @NotNull
-    private Integer sourceTransactionId;
+    private String sourceTransactionId;
 
     @NotNull
-    private Integer studentCode;
+    private String studentCode;
 
     @NotNull
     private String studentName;
 
-    private Integer charges;
+    @Nullable
+    @JsonIgnore
+    private Integer charges = 0;
 
-    @NotNull
+    @Nullable
+    @JsonIgnore
     private LocalDate timestamp;
 
-    @NotNull
+    @Nullable
+    @JsonIgnore
     private String narration;
 
-    @NotNull
-    private Integer currency;
+    @Nullable
+    private String currency;
 
-    @NotNull
-    private Integer debitAccount;
+    @Nullable
+    @JsonIgnore
+    private String debitAccount;
 
-    @NotNull
-    private Integer creditAccount;
+    @Nullable
+    @JsonIgnore
+    private String creditAccount;
 
     private ProccesingStatus proccessingStatus;
 
@@ -84,7 +96,7 @@ public class NotifyTransactionDTO implements Serializable {
     private String freeField3;
 
     @Max(value = 5)
-    private Integer retries;
+    private Integer retries = 0;
 
     public Long getId() {
         return id;
@@ -94,11 +106,11 @@ public class NotifyTransactionDTO implements Serializable {
         this.id = id;
     }
 
-    public Integer getTransactionUId() {
+    public String getTransactionUId() {
         return transactionUId;
     }
 
-    public void setTransactionUId(Integer transactionUId) {
+    public void setTransactionUId(String transactionUId) {
         this.transactionUId = transactionUId;
     }
 
@@ -174,19 +186,19 @@ public class NotifyTransactionDTO implements Serializable {
         this.dateCreated = dateCreated;
     }
 
-    public Integer getSourceTransactionId() {
+    public String getSourceTransactionId() {
         return sourceTransactionId;
     }
 
-    public void setSourceTransactionId(Integer sourceTransactionId) {
+    public void setSourceTransactionId(String sourceTransactionId) {
         this.sourceTransactionId = sourceTransactionId;
     }
 
-    public Integer getStudentCode() {
+    public String getStudentCode() {
         return studentCode;
     }
 
-    public void setStudentCode(Integer studentCode) {
+    public void setStudentCode(String studentCode) {
         this.studentCode = studentCode;
     }
 
@@ -222,27 +234,27 @@ public class NotifyTransactionDTO implements Serializable {
         this.narration = narration;
     }
 
-    public Integer getCurrency() {
+    public String getCurrency() {
         return currency;
     }
 
-    public void setCurrency(Integer currency) {
+    public void setCurrency(String currency) {
         this.currency = currency;
     }
 
-    public Integer getDebitAccount() {
+    public String getDebitAccount() {
         return debitAccount;
     }
 
-    public void setDebitAccount(Integer debitAccount) {
+    public void setDebitAccount(String debitAccount) {
         this.debitAccount = debitAccount;
     }
 
-    public Integer getCreditAccount() {
+    public String getCreditAccount() {
         return creditAccount;
     }
 
-    public void setCreditAccount(Integer creditAccount) {
+    public void setCreditAccount(String creditAccount) {
         this.creditAccount = creditAccount;
     }
 

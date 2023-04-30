@@ -49,7 +49,7 @@ public class NotifyTranRequest {
     private Long sourceTransactionId;
 
     @JsonProperty("studentCode")
-    private Integer studentCode;
+    private String studentCode;
 
     @JsonProperty("studentName")
     private String studentName;
@@ -128,12 +128,12 @@ public class NotifyTranRequest {
     }
 
     @JsonProperty("studentCode")
-    public Integer getStudentCode() {
+    public String getStudentCode() {
         return studentCode;
     }
 
     @JsonProperty("studentCode")
-    public void setStudentCode(Integer studentCode) {
+    public void setStudentCode(String studentCode) {
         this.studentCode = studentCode;
     }
 
@@ -160,7 +160,7 @@ public class NotifyTranRequest {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(Example.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
+        sb.append(NotifyTranRequest.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
         sb.append("dateCreated");
         sb.append('=');
         sb.append(((this.dateCreated == null) ? "<null>" : this.dateCreated));

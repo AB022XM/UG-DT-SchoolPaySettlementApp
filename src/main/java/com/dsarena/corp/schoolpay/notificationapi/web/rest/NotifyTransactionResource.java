@@ -1,28 +1,27 @@
 package com.dsarena.corp.schoolpay.notificationapi.web.rest;
 
+import com.dsarena.corp.schoolpay.notificationapi.domain.NotifyTransaction;
+import com.dsarena.corp.schoolpay.notificationapi.domain.Responses.NotificationResponse;
 import com.dsarena.corp.schoolpay.notificationapi.repository.NotifyTransactionRepository;
+import com.dsarena.corp.schoolpay.notificationapi.repository.SchoolRepository;
 import com.dsarena.corp.schoolpay.notificationapi.service.NotifyTransactionService;
+import com.dsarena.corp.schoolpay.notificationapi.service.SchoolService;
 import com.dsarena.corp.schoolpay.notificationapi.service.dto.NotifyTransactionDTO;
-import com.dsarena.corp.schoolpay.notificationapi.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import tech.jhipster.web.util.HeaderUtil;
-import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
@@ -40,15 +39,21 @@ public class NotifyTransactionResource {
     private String applicationName;
 
     private final NotifyTransactionService notifyTransactionService;
+    private final SchoolService dSchoolService;
 
     private final NotifyTransactionRepository notifyTransactionRepository;
+    private final SchoolRepository schoolRepository;
 
     public NotifyTransactionResource(
         NotifyTransactionService notifyTransactionService,
-        NotifyTransactionRepository notifyTransactionRepository
+        NotifyTransactionRepository notifyTransactionRepository,
+        SchoolRepository schoolRepository,
+        SchoolService dSchoolService
     ) {
         this.notifyTransactionService = notifyTransactionService;
         this.notifyTransactionRepository = notifyTransactionRepository;
+        this.schoolRepository = schoolRepository;
+        this.dSchoolService = dSchoolService;
     }
 
     /**
@@ -59,17 +64,42 @@ public class NotifyTransactionResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/notify")
-    public ResponseEntity<NotifyTransactionDTO> createNotifyTransaction(@Valid @RequestBody NotifyTransactionDTO notifyTransactionDTO)
-        throws URISyntaxException {
+    public ResponseEntity<NotificationResponse> createNotifyTransaction(@Valid @RequestBody NotifyTransactionDTO notifyTransactionDTO)
+        throws URISyntaxException, NumberFormatException {
         log.debug("REST request to save NotifyTransaction : {}", notifyTransactionDTO);
         if (notifyTransactionDTO.getId() != null) {
-            throw new BadRequestAlertException("A new notifyTransaction cannot already have an ID", ENTITY_NAME, "idexists");
+            // throw new BadRequestAlertException("A new notifyTransaction cannot already have an ID", ENTITY_NAME, "idexists");
+
+            return ResponseEntity
+                .created(new URI("/notify/" + notifyTransactionDTO.getTransactionUId()))
+                .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, notifyTransactionDTO.getId().toString()))
+                .body(
+                    new NotificationResponse(
+                        notifyTransactionDTO.getAmount().toString(),
+                        notifyTransactionDTO.getRecordId(),
+                        notifyTransactionDTO.getFcrTransactionId(),
+                        "Transansaction already proccessed",
+                        true
+                    )
+                );
         }
+
+        String transaction_u_id = NotifyTransaction.generateRecordId(notifyTransactionDTO.getStudentCode());
+        notifyTransactionDTO.setTransactionUId(transaction_u_id);
+
         NotifyTransactionDTO result = notifyTransactionService.save(notifyTransactionDTO);
+        int recordId = Integer.parseInt(result.getId().toString());
+        NotificationResponse response = new NotificationResponse(
+            result.getAmount().toString(),
+            recordId,
+            result.getTransactionUId(),
+            "Transansaction has been received",
+            true
+        );
         return ResponseEntity
-            .created(new URI("/notify/" + result.getId()))
+            .created(new URI("/notify/" + result.getTransactionUId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
-            .body(result);
+            .body(response);
     }
 
     /**

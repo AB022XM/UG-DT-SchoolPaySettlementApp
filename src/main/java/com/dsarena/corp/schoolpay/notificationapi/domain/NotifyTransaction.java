@@ -39,7 +39,6 @@ public class NotifyTransaction implements Serializable {
 
     @Nullable
     @Column(name = "transaction_u_id", nullable = true)
-    @JsonIgnore
     private String transactionUId;
 
     @Column(name = "record_id", unique = true)
@@ -111,12 +110,10 @@ public class NotifyTransaction implements Serializable {
     private String currency = "UGX";
 
     @Nullable
-    @JsonIgnore
     @Column(name = "debit_account", nullable = true)
     private String debitAccount;
 
     @Nullable
-    @JsonIgnore
     @Column(name = "credit_account", nullable = true)
     private String creditAccount;
 
@@ -575,14 +572,32 @@ public class NotifyTransaction implements Serializable {
             "}";
     }
 
-    public static String generateRecordId(String studentPaymentCode) {
-        int length = 11;
+    public static Integer generateUniqueRef() {
+        int length = 7;
         Random random = new Random();
         char[] digits = new char[length];
         digits[0] = (char) (random.nextInt(9) + '1');
         for (int i = 1; i < length; i++) {
             digits[i] = (char) (random.nextInt(10) + '0');
         }
-        return "schp" + Long.parseLong(new String(digits)) + studentPaymentCode.substring(0, 3);
+        return Integer.parseInt(new String(digits));
     }
+    // public static String generaneeratSTimeStampString() {
+
+    //     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+
+    //         //generate  date
+    //         return LocalDate.now().format(formatter);
+    // }
+
+    // public static LocalDate generateTimeStampLocal() {
+
+    //     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+
+    //         //generate  date
+    //         String date = LocalDate.now().format(formatter);
+    //         //date format
+    //         //format date
+    //         return LocalDate.parse(date, formatter);
+    // }
 }

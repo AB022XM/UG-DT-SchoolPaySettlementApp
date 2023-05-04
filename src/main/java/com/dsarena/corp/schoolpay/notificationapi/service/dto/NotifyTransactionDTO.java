@@ -18,8 +18,8 @@ public class NotifyTransactionDTO implements Serializable {
     @JsonIgnore
     private Long id;
 
-    @JsonIgnore
-    private String transactionUId;
+    @Nullable
+    private Integer transactionUId;
 
     private Integer recordId;
 
@@ -74,11 +74,9 @@ public class NotifyTransactionDTO implements Serializable {
     private String currency;
 
     @Nullable
-    @JsonIgnore
     private String debitAccount;
 
     @Nullable
-    @JsonIgnore
     private String creditAccount;
 
     private ProccesingStatus proccessingStatus;
@@ -106,11 +104,11 @@ public class NotifyTransactionDTO implements Serializable {
         this.id = id;
     }
 
-    public String getTransactionUId() {
+    public Integer getTransactionUId() {
         return transactionUId;
     }
 
-    public void setTransactionUId(String transactionUId) {
+    public void setTransactionUId(Integer transactionUId) {
         this.transactionUId = transactionUId;
     }
 

@@ -21,7 +21,7 @@
                 <constraints nullable="false" unique="true" uniqueConstraintName="ux_notify_transaction__record_id" />
             </column>
             <column name="customer_payment_code" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
             <column name="school_name" type="varchar(255)">
                 <constraints nullable="false" />
@@ -39,10 +39,10 @@
                 <constraints nullable="true" />
             </column>
             <column name="partner_code" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
             <column name="date_created" type="date">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
             <column name="source_transaction_id" type="varchar(255)">
                 <constraints nullable="false" />
@@ -66,7 +66,7 @@
                 <constraints nullable="true" />
             </column>
             <column name="debit_account" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
             <column name="credit_account" type="varchar(255)">
                 <constraints nullable="true" />

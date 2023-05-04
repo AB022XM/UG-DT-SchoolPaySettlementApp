@@ -2,8 +2,10 @@ package com.dsarena.corp.schoolpay.notificationapi.domain;
 
 import com.dsarena.corp.schoolpay.notificationapi.domain.enumeration.DELFLAG;
 import com.dsarena.corp.schoolpay.notificationapi.domain.enumeration.RecordStatus;
+import com.dsarena.corp.schoolpay.notificationapi.service.dto.SchoolDTO;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Optional;
 import java.util.UUID;
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -316,5 +318,9 @@ public class School implements Serializable {
             ", schoolAccountNumber='" + getSchoolAccountNumber() + "'" +
             ", isDeleted='" + getIsDeleted() + "'" +
             "}";
+    }
+
+    public Optional<SchoolDTO> map(Object object) {
+        return null;
     }
 }

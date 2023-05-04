@@ -3,14 +3,14 @@ package com.dsarena.corp.schoolpay.notificationapi.domain.Responses;
 public class NotificationResponse {
 
     public String amountSettled;
-    public int recordId;
+    public String recordId;
     public String settlementReference;
     public String settlementResultMessage;
     public boolean settlementSuccessful;
 
     public NotificationResponse(
         String amountSettled,
-        int recordId,
+        String recordId,
         String settlementReference,
         String settlementResultMessage,
         boolean settlementSuccessful
@@ -30,11 +30,11 @@ public class NotificationResponse {
         this.amountSettled = amountSettled;
     }
 
-    public int getRecordId() {
+    public String getRecordId() {
         return recordId;
     }
 
-    public void setRecordId(int recordId) {
+    public void setRecordId(String recordId) {
         this.recordId = recordId;
     }
 

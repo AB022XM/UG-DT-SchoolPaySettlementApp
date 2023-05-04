@@ -1,7 +1,8 @@
 package com.dsarena.corp.schoolpay.notificationapi.repository;
 
 import com.dsarena.corp.schoolpay.notificationapi.domain.School;
-import org.springframework.data.jpa.repository.*;
+import java.util.Optional;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -9,4 +10,6 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface SchoolRepository extends JpaRepository<School, Long> {}
+public interface SchoolRepository extends JpaRepository<School, Long> {
+    Optional<School> findBySchoolCode(String schoolCode);
+}

@@ -2,13 +2,17 @@ package com.dsarena.corp.schoolpay.notificationapi.web.rest;
 
 import com.dsarena.corp.schoolpay.notificationapi.domain.NotifyTransaction;
 import com.dsarena.corp.schoolpay.notificationapi.domain.Responses.NotificationResponse;
+import com.dsarena.corp.schoolpay.notificationapi.domain.School;
+import com.dsarena.corp.schoolpay.notificationapi.domain.enumeration.ProccesingStatus;
 import com.dsarena.corp.schoolpay.notificationapi.repository.NotifyTransactionRepository;
 import com.dsarena.corp.schoolpay.notificationapi.repository.SchoolRepository;
 import com.dsarena.corp.schoolpay.notificationapi.service.NotifyTransactionService;
 import com.dsarena.corp.schoolpay.notificationapi.service.SchoolService;
 import com.dsarena.corp.schoolpay.notificationapi.service.dto.NotifyTransactionDTO;
+import com.dsarena.corp.schoolpay.notificationapi.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDate;
 import java.util.Optional;
 import javax.validation.Valid;
 import org.slf4j.Logger;
@@ -21,7 +25,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
@@ -66,40 +69,52 @@ public class NotifyTransactionResource {
     @PostMapping("/notify")
     public ResponseEntity<NotificationResponse> createNotifyTransaction(@Valid @RequestBody NotifyTransactionDTO notifyTransactionDTO)
         throws URISyntaxException, NumberFormatException {
+        Integer transactionId = NotifyTransaction.generateUniqueRef();
         log.debug("REST request to save NotifyTransaction : {}", notifyTransactionDTO);
         if (notifyTransactionDTO.getId() != null) {
-            // throw new BadRequestAlertException("A new notifyTransaction cannot already have an ID", ENTITY_NAME, "idexists");
-
-            return ResponseEntity
-                .created(new URI("/notify/" + notifyTransactionDTO.getTransactionUId()))
-                .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, notifyTransactionDTO.getId().toString()))
-                .body(
-                    new NotificationResponse(
-                        notifyTransactionDTO.getAmount().toString(),
-                        notifyTransactionDTO.getRecordId(),
-                        notifyTransactionDTO.getFcrTransactionId(),
-                        "Transansaction already proccessed",
-                        true
-                    )
-                );
+            throw new BadRequestAlertException("A new notifyTransaction cannot already have an ID", ENTITY_NAME, "idexists");
         }
 
-        String transaction_u_id = NotifyTransaction.generateRecordId(notifyTransactionDTO.getStudentCode());
-        notifyTransactionDTO.setTransactionUId(transaction_u_id);
+        log.debug("REST request to save NotifyTransaction : {}", notifyTransactionDTO);
+        //Do a duplicate check here
+        Optional<NotifyTransaction> notifyTransaction = notifyTransactionRepository.findByRecordId(notifyTransactionDTO.getRecordId());
 
+        log.debug("isPresentValue: " + notifyTransaction.isPresent());
+        if (notifyTransaction.isPresent()) {
+            NotificationResponse duplicateResp = new NotificationResponse(
+                notifyTransaction.get().getAmount() + "",
+                notifyTransaction.get().getRecordId() + "",
+                notifyTransaction.get().getTransactionUId() + "",
+                "Transansaction already proccessed:  " + notifyTransaction.get().getTimestamp(),
+                true
+            );
+            return ResponseEntity.created(new URI("/notify/" + notifyTransactionDTO.getTransactionUId())).body(duplicateResp);
+        }
+
+        Optional<School> school = schoolRepository.findBySchoolCode(notifyTransactionDTO.getSchoolCode());
+        if (!school.isPresent()) {
+            log.debug("SCH isPresentValue: " + school.isPresent());
+            throw new BadRequestAlertException("School with schoolCode" + school + "does not exist", ENTITY_NAME, "notfound");
+        }
+
+        notifyTransactionDTO.setCreditAccount(school.get().getSchoolAccountNumber().toString());
+
+        notifyTransactionDTO.setFcrTransactionStatus(ProccesingStatus.PENDING);
+        notifyTransactionDTO.setTimestamp(LocalDate.now());
         NotifyTransactionDTO result = notifyTransactionService.save(notifyTransactionDTO);
-        int recordId = Integer.parseInt(result.getId().toString());
-        NotificationResponse response = new NotificationResponse(
+        log.debug(ENTITY_NAME + " ON Saved: " + result.toString());
+        //fetch saved object
+        Optional<NotifyTransaction> savedNotifyTransaction = notifyTransactionRepository.findById(result.getId());
+
+        log.info("Saved NotifyTransaction: " + savedNotifyTransaction.get().toString());
+        NotificationResponse responseCreatedResponse = new NotificationResponse(
             result.getAmount().toString(),
-            recordId,
-            result.getTransactionUId(),
+            result.getRecordId().toString(),
+            savedNotifyTransaction.get().getTransactionUId().toString(),
             "Transansaction has been received",
             true
         );
-        return ResponseEntity
-            .created(new URI("/notify/" + result.getTransactionUId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
-            .body(response);
+        return ResponseEntity.created(new URI("/notify/" + result.getTransactionUId())).body(responseCreatedResponse);
     }
 
     /**

@@ -101,6 +101,18 @@ public class SchoolService {
     }
 
     /**
+    //  * Get one school by id.
+    //  *
+    //  * @param id the id of the entity.
+    //  * @return the entity.
+    //  */
+    // @Transactional(readOnly = true)
+    // public Optional<SchoolDTO> findOneBySchoolCode(String schoolCode) {
+    //     log.debug("Request to get School : {}", schoolCode);
+    //     return schoolRepository.findBySchoolCode(schoolCode).map());
+    // }
+
+    /**
      * Delete the school by id.
      *
      * @param id the id of the entity.

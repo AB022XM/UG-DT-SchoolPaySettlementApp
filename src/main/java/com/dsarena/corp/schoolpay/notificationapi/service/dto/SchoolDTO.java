@@ -6,7 +6,8 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 import java.util.UUID;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * A DTO for the {@link com.dsarena.corp.schoolpay.notificationapi.domain.School} entity.
@@ -48,7 +49,7 @@ public class SchoolDTO implements Serializable {
 
     private Boolean isSchoolAccountNumberABSA;
 
-    private Boolean schoolAccountNumber;
+    private String schoolAccountNumber;
 
     private DELFLAG isDeleted;
 
@@ -156,11 +157,11 @@ public class SchoolDTO implements Serializable {
         this.isSchoolAccountNumberABSA = isSchoolAccountNumberABSA;
     }
 
-    public Boolean getSchoolAccountNumber() {
+    public String getSchoolAccountNumber() {
         return schoolAccountNumber;
     }
 
-    public void setSchoolAccountNumber(Boolean schoolAccountNumber) {
+    public void setSchoolAccountNumber(String schoolAccountNumber) {
         this.schoolAccountNumber = schoolAccountNumber;
     }
 

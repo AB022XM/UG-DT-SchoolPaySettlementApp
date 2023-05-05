@@ -50,7 +50,7 @@
             <column name="is_school_account_number_absa" type="boolean">
                 <constraints nullable="true" />
             </column>
-            <column name="school_account_number" type="boolean">
+            <column name="school_account_number" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             <column name="is_deleted" type="varchar(255)">

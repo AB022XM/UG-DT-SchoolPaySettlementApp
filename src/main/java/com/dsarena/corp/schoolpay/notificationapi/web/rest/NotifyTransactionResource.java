@@ -1,17 +1,23 @@
 package com.dsarena.corp.schoolpay.notificationapi.web.rest;
 
+import com.dsarena.corp.schoolpay.notificationapi.Util.PostToAmol;
+import com.dsarena.corp.schoolpay.notificationapi.domain.AmolResponse;
 import com.dsarena.corp.schoolpay.notificationapi.domain.NotifyTransaction;
 import com.dsarena.corp.schoolpay.notificationapi.domain.Responses.NotificationResponse;
 import com.dsarena.corp.schoolpay.notificationapi.domain.School;
 import com.dsarena.corp.schoolpay.notificationapi.domain.enumeration.ProccesingStatus;
 import com.dsarena.corp.schoolpay.notificationapi.repository.NotifyTransactionRepository;
+import com.dsarena.corp.schoolpay.notificationapi.repository.PartnerRepository;
 import com.dsarena.corp.schoolpay.notificationapi.repository.SchoolRepository;
 import com.dsarena.corp.schoolpay.notificationapi.service.NotifyTransactionService;
+import com.dsarena.corp.schoolpay.notificationapi.service.PartnerService;
 import com.dsarena.corp.schoolpay.notificationapi.service.SchoolService;
 import com.dsarena.corp.schoolpay.notificationapi.service.dto.NotifyTransactionDTO;
 import com.dsarena.corp.schoolpay.notificationapi.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.util.Optional;
 import javax.validation.Valid;
@@ -44,6 +50,9 @@ public class NotifyTransactionResource {
     private final NotifyTransactionService notifyTransactionService;
     private final SchoolService dSchoolService;
 
+    private final PartnerRepository partrRepository;
+    private final PartnerService partnerService;
+
     private final NotifyTransactionRepository notifyTransactionRepository;
     private final SchoolRepository schoolRepository;
 
@@ -51,12 +60,16 @@ public class NotifyTransactionResource {
         NotifyTransactionService notifyTransactionService,
         NotifyTransactionRepository notifyTransactionRepository,
         SchoolRepository schoolRepository,
-        SchoolService dSchoolService
+        SchoolService dSchoolService,
+        PartnerRepository partnerRepository,
+        PartnerService partnerService
     ) {
         this.notifyTransactionService = notifyTransactionService;
         this.notifyTransactionRepository = notifyTransactionRepository;
         this.schoolRepository = schoolRepository;
         this.dSchoolService = dSchoolService;
+        this.partnerService = partnerService;
+        this.partrRepository = partnerRepository;
     }
 
     /**
@@ -65,11 +78,13 @@ public class NotifyTransactionResource {
      * @param notifyTransactionDTO the notifyTransactionDTO to create.
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new notifyTransactionDTO, or with status {@code 400 (Bad Request)} if the notifyTransaction has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
+     * @throws NoSuchAlgorithmException
+     * @throws KeyManagementException
      */
     @PostMapping("/notify")
     public ResponseEntity<NotificationResponse> createNotifyTransaction(@Valid @RequestBody NotifyTransactionDTO notifyTransactionDTO)
-        throws URISyntaxException, NumberFormatException {
-        Integer transactionId = NotifyTransaction.generateUniqueRef();
+        throws URISyntaxException, NumberFormatException, KeyManagementException, NoSuchAlgorithmException {
+        // Integer transactionId = NotifyTransaction.generateUniqueRef();
         log.debug("REST request to save NotifyTransaction : {}", notifyTransactionDTO);
         if (notifyTransactionDTO.getId() != null) {
             throw new BadRequestAlertException("A new notifyTransaction cannot already have an ID", ENTITY_NAME, "idexists");
@@ -91,29 +106,47 @@ public class NotifyTransactionResource {
             return ResponseEntity.created(new URI("/notify/" + notifyTransactionDTO.getTransactionUId())).body(duplicateResp);
         }
 
-        Optional<School> school = schoolRepository.findBySchoolCode(notifyTransactionDTO.getSchoolCode());
-        if (!school.isPresent()) {
-            log.debug("SCH isPresentValue: " + school.isPresent());
-            throw new BadRequestAlertException("School with schoolCode" + school + "does not exist", ENTITY_NAME, "notfound");
+        School school = schoolRepository.findBySchoolCode(notifyTransactionDTO.getSchoolCode()).get();
+        if (school == null) {
+            throw new BadRequestAlertException(
+                "School with schoolCode" + notifyTransaction.get().getSchoolCode() + " does not exist",
+                ENTITY_NAME,
+                "notfound"
+            );
         }
 
-        notifyTransactionDTO.setCreditAccount(school.get().getSchoolAccountNumber().toString());
+        //Partner partner = partnerService.findByFreeText2(school.get().getFreeField2());
+
+        notifyTransactionDTO.setCreditAccount(school.getSchoolAccountNumber().toString());
 
         notifyTransactionDTO.setFcrTransactionStatus(ProccesingStatus.PENDING);
         notifyTransactionDTO.setTimestamp(LocalDate.now());
         NotifyTransactionDTO result = notifyTransactionService.save(notifyTransactionDTO);
         log.debug(ENTITY_NAME + " ON Saved: " + result.toString());
         //fetch saved object
-        Optional<NotifyTransaction> savedNotifyTransaction = notifyTransactionRepository.findById(result.getId());
+        NotifyTransaction savedNotifyTransaction = notifyTransactionRepository.findById(result.getId()).get();
+        Long tranId = savedNotifyTransaction.getId();
 
-        log.info("Saved NotifyTransaction: " + savedNotifyTransaction.get().toString());
+        log.info("Saved NotifyTransaction: " + savedNotifyTransaction.toString());
         NotificationResponse responseCreatedResponse = new NotificationResponse(
             result.getAmount().toString(),
             result.getRecordId().toString(),
-            savedNotifyTransaction.get().getTransactionUId().toString(),
+            savedNotifyTransaction.getTransactionUId().toString(),
             "Transansaction has been received",
             true
         );
+
+        AmolResponse amolResp = new PostToAmol().postOneTransaction(savedNotifyTransaction, school.getSchoolAccountNumber());
+        if (amolResp != null) {
+            if (amolResp.getStatus().equalsIgnoreCase(ProccesingStatus.SUCCESS.name().toString())) {
+                savedNotifyTransaction.fcrTransactionStatus(ProccesingStatus.SUCCESS);
+                savedNotifyTransaction.fcrTransactionReference(amolResp.getData().getTransferReferenceId().toString());
+                savedNotifyTransaction.fcrTransactionId(amolResp.getData().getTransferId());
+            } else {
+                savedNotifyTransaction.fcrTransactionStatus(ProccesingStatus.FAILED);
+            }
+        }
+
         return ResponseEntity.created(new URI("/notify/" + result.getTransactionUId())).body(responseCreatedResponse);
     }
 

@@ -2,8 +2,14 @@ package com.dsarena.corp.schoolpay.notificationapi.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.dsarena.corp.schoolpay.notificationapi.IntegrationTest;
 import com.dsarena.corp.schoolpay.notificationapi.domain.School;
@@ -72,8 +78,8 @@ class SchoolResourceIT {
     private static final Boolean DEFAULT_IS_SCHOOL_ACCOUNT_NUMBER_ABSA = false;
     private static final Boolean UPDATED_IS_SCHOOL_ACCOUNT_NUMBER_ABSA = true;
 
-    private static final Boolean DEFAULT_SCHOOL_ACCOUNT_NUMBER = false;
-    private static final Boolean UPDATED_SCHOOL_ACCOUNT_NUMBER = true;
+    private static final String DEFAULT_SCHOOL_ACCOUNT_NUMBER = "00000000";
+    private static final String UPDATED_SCHOOL_ACCOUNT_NUMBER = "00000000";
 
     private static final DELFLAG DEFAULT_IS_DELETED = DELFLAG.True;
     private static final DELFLAG UPDATED_IS_DELETED = DELFLAG.False;
@@ -352,7 +358,7 @@ class SchoolResourceIT {
             .andExpect(jsonPath("$.[*].freeField2").value(hasItem(DEFAULT_FREE_FIELD_2)))
             .andExpect(jsonPath("$.[*].freeField3").value(hasItem(DEFAULT_FREE_FIELD_3)))
             .andExpect(jsonPath("$.[*].isSchoolAccountNumberABSA").value(hasItem(DEFAULT_IS_SCHOOL_ACCOUNT_NUMBER_ABSA.booleanValue())))
-            .andExpect(jsonPath("$.[*].schoolAccountNumber").value(hasItem(DEFAULT_SCHOOL_ACCOUNT_NUMBER.booleanValue())))
+            .andExpect(jsonPath("$.[*].schoolAccountNumber").value(hasItem(DEFAULT_SCHOOL_ACCOUNT_NUMBER)))
             .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.toString())));
     }
 
@@ -380,7 +386,7 @@ class SchoolResourceIT {
             .andExpect(jsonPath("$.freeField2").value(DEFAULT_FREE_FIELD_2))
             .andExpect(jsonPath("$.freeField3").value(DEFAULT_FREE_FIELD_3))
             .andExpect(jsonPath("$.isSchoolAccountNumberABSA").value(DEFAULT_IS_SCHOOL_ACCOUNT_NUMBER_ABSA.booleanValue()))
-            .andExpect(jsonPath("$.schoolAccountNumber").value(DEFAULT_SCHOOL_ACCOUNT_NUMBER.booleanValue()))
+            .andExpect(jsonPath("$.schoolAccountNumber").value(DEFAULT_SCHOOL_ACCOUNT_NUMBER))
             .andExpect(jsonPath("$.isDeleted").value(DEFAULT_IS_DELETED.toString()));
     }
 

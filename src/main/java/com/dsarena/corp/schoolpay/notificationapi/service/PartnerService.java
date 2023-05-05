@@ -109,4 +109,8 @@ public class PartnerService {
         log.debug("Request to delete Partner : {}", id);
         partnerRepository.deleteById(id);
     }
+    // public Partner findByFreeText2(String freeField2) {
+    //     return partnerRepository.findByFreeText2(freeField2);
+
+    // }
 }

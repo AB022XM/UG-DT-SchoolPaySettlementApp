@@ -7,8 +7,16 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Optional;
 import java.util.UUID;
-import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Type;
@@ -76,7 +84,7 @@ public class School implements Serializable {
     private Boolean isSchoolAccountNumberABSA;
 
     @Column(name = "school_account_number")
-    private Boolean schoolAccountNumber;
+    private String schoolAccountNumber;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "is_deleted")
@@ -253,16 +261,16 @@ public class School implements Serializable {
         this.isSchoolAccountNumberABSA = isSchoolAccountNumberABSA;
     }
 
-    public Boolean getSchoolAccountNumber() {
+    public String getSchoolAccountNumber() {
         return this.schoolAccountNumber;
     }
 
-    public School schoolAccountNumber(Boolean schoolAccountNumber) {
+    public School schoolAccountNumber(String schoolAccountNumber) {
         this.setSchoolAccountNumber(schoolAccountNumber);
         return this;
     }
 
-    public void setSchoolAccountNumber(Boolean schoolAccountNumber) {
+    public void setSchoolAccountNumber(String schoolAccountNumber) {
         this.schoolAccountNumber = schoolAccountNumber;
     }
 

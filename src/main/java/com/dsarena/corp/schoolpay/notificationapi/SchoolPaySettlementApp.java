@@ -102,4 +102,12 @@ public class SchoolPaySettlementApp {
             env.getActiveProfiles().length == 0 ? env.getDefaultProfiles() : env.getActiveProfiles()
         );
     }
+    // @Scheduled(fixedDelay = 10000)
+    // public void postTransactions() throws KeyManagementException, NoSuchAlgorithmException {
+
+    // 	new PostToAmol().post();
+
+    //   //  System.out.println("Post Transaction Status : " + post.getStatus());
+
+    // }
 }

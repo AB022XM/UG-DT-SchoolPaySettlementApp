@@ -1,6 +1,6 @@
 {
-  "name": "SchoolPaySettlementApp",
-  "short_name": "SchoolPaySettlementApp",
+  "name": "SchoolPay",
+  "short_name": "SchoolPay",
   "icons": [
     {
       "src": "./content/images/jhipster_family_member_0_head-192.png",

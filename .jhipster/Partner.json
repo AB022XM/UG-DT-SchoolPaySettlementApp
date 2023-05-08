@@ -1,0 +1,85 @@
+{
+  "applications": ["SchoolPaySettlementApp"],
+  "changelogDate": "20230425102221",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "partner",
+  "fields": [
+    {
+      "fieldName": "partnerId",
+      "fieldType": "UUID",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "partnerCode",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "partnerShortcode",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "phonenumber",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "address",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "partnerName",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "100",
+      "fieldValidateRulesMinlength": "3"
+    },
+    {
+      "fieldName": "registrationdate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "isAbsaPartner",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "RecordStatus",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "ACTIVE,INACTIVE,PENDING"
+    },
+    {
+      "fieldName": "freeField1",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "freeField2",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "freeField3",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "provideDebitAccount",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "provideCreditAccount",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "isDeleted",
+      "fieldType": "DELFLAG",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "True,False"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Partner",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [],
+  "service": "serviceClass"
+}

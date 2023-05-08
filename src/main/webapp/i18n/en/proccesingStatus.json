@@ -1,0 +1,11 @@
+{
+  "schoolPaySettlementApp": {
+    "ProccesingStatus": {
+      "null": "",
+      "PENDING": "PENDING",
+      "SUCCESS": "SUCCESS",
+      "FAILED": "FAILED",
+      "UNKNOWN": "UNKNOWN"
+    }
+  }
+}

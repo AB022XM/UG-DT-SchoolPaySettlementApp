@@ -1,0 +1,142 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="notifyTransaction">
+      <h2 data-cy="notifyTransactionDetailsHeading">
+        <span jhiTranslate="schoolPaySettlementApp.notifyTransaction.detail.title">Notify Transaction</span>
+      </h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ notifyTransaction.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="schoolPaySettlementApp.notifyTransaction.transactionUId">Transaction U Id</span></dt>
+        <dd>
+          <span>{{ notifyTransaction.transactionUId }}</span>
+        </dd>
+        <dt><span jhiTranslate="schoolPaySettlementApp.notifyTransaction.recordId">Record Id</span></dt>
+        <dd>
+          <span>{{ notifyTransaction.recordId }}</span>
+        </dd>
+        <dt><span jhiTranslate="schoolPaySettlementApp.notifyTransaction.customerPaymentCode">Customer Payment Code</span></dt>
+        <dd>
+          <span>{{ notifyTransaction.customerPaymentCode }}</span>
+        </dd>
+        <dt><span jhiTranslate="schoolPaySettlementApp.notifyTransaction.schoolName">School Name</span></dt>
+        <dd>
+          <span>{{ notifyTransaction.schoolName }}</span>
+        </dd>
+        <dt><span jhiTranslate="schoolPaySettlementApp.notifyTransaction.sourcePaymentChannelCode">Source Payment Channel Code</span></dt>
+        <dd>
+          <span>{{ notifyTransaction.sourcePaymentChannelCode }}</span>
+        </dd>
+        <dt><span jhiTranslate="schoolPaySettlementApp.notifyTransaction.schoolpayReceiptNumber">Schoolpay Receipt Number</span></dt>
+        <dd>
+          <span>{{ notifyTransaction.schoolpayReceiptNumber }}</span>
+        </dd>
+        <dt><span jhiTranslate="schoolPaySettlementApp.notifyTransaction.amount">Amount</span></dt>
+        <dd>
+          <span>{{ notifyTransaction.amount }}</span>
+        </dd>
+        <dt><span jhiTranslate="schoolPaySettlementApp.notifyTransaction.schoolCode">School Code</span></dt>
+        <dd>
+          <span>{{ notifyTransaction.schoolCode }}</span>
+        </dd>
+        <dt><span jhiTranslate="schoolPaySettlementApp.notifyTransaction.partnerCode">Partner Code</span></dt>
+        <dd>
+          <span>{{ notifyTransaction.partnerCode }}</span>
+        </dd>
+        <dt><span jhiTranslate="schoolPaySettlementApp.notifyTransaction.dateCreated">Date Created</span></dt>
+        <dd>
+          <span>{{ notifyTransaction.dateCreated | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="schoolPaySettlementApp.notifyTransaction.sourceTransactionId">Source Transaction Id</span></dt>
+        <dd>
+          <span>{{ notifyTransaction.sourceTransactionId }}</span>
+        </dd>
+        <dt><span jhiTranslate="schoolPaySettlementApp.notifyTransaction.studentCode">Student Code</span></dt>
+        <dd>
+          <span>{{ notifyTransaction.studentCode }}</span>
+        </dd>
+        <dt><span jhiTranslate="schoolPaySettlementApp.notifyTransaction.studentName">Student Name</span></dt>
+        <dd>
+          <span>{{ notifyTransaction.studentName }}</span>
+        </dd>
+        <dt><span jhiTranslate="schoolPaySettlementApp.notifyTransaction.charges">Charges</span></dt>
+        <dd>
+          <span>{{ notifyTransaction.charges }}</span>
+        </dd>
+        <dt><span jhiTranslate="schoolPaySettlementApp.notifyTransaction.timestamp">Timestamp</span></dt>
+        <dd>
+          <span>{{ notifyTransaction.timestamp | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="schoolPaySettlementApp.notifyTransaction.narration">Narration</span></dt>
+        <dd>
+          <span>{{ notifyTransaction.narration }}</span>
+        </dd>
+        <dt><span jhiTranslate="schoolPaySettlementApp.notifyTransaction.currency">Currency</span></dt>
+        <dd>
+          <span>{{ notifyTransaction.currency }}</span>
+        </dd>
+        <dt><span jhiTranslate="schoolPaySettlementApp.notifyTransaction.debitAccount">Debit Account</span></dt>
+        <dd>
+          <span>{{ notifyTransaction.debitAccount }}</span>
+        </dd>
+        <dt><span jhiTranslate="schoolPaySettlementApp.notifyTransaction.creditAccount">Credit Account</span></dt>
+        <dd>
+          <span>{{ notifyTransaction.creditAccount }}</span>
+        </dd>
+        <dt><span jhiTranslate="schoolPaySettlementApp.notifyTransaction.proccessingStatus">Proccessing Status</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'schoolPaySettlementApp.ProccesingStatus.' + notifyTransaction.proccessingStatus }}">{{
+            notifyTransaction.proccessingStatus
+          }}</span>
+        </dd>
+        <dt><span jhiTranslate="schoolPaySettlementApp.notifyTransaction.fcrTransactionStatus">Fcr Transaction Status</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'schoolPaySettlementApp.ProccesingStatus.' + notifyTransaction.fcrTransactionStatus }}">{{
+            notifyTransaction.fcrTransactionStatus
+          }}</span>
+        </dd>
+        <dt><span jhiTranslate="schoolPaySettlementApp.notifyTransaction.fcrTransactionId">Fcr Transaction Id</span></dt>
+        <dd>
+          <span>{{ notifyTransaction.fcrTransactionId }}</span>
+        </dd>
+        <dt><span jhiTranslate="schoolPaySettlementApp.notifyTransaction.fcrTransactionReference">Fcr Transaction Reference</span></dt>
+        <dd>
+          <span>{{ notifyTransaction.fcrTransactionReference }}</span>
+        </dd>
+        <dt><span jhiTranslate="schoolPaySettlementApp.notifyTransaction.freeField1">Free Field 1</span></dt>
+        <dd>
+          <span>{{ notifyTransaction.freeField1 }}</span>
+        </dd>
+        <dt><span jhiTranslate="schoolPaySettlementApp.notifyTransaction.freeField2">Free Field 2</span></dt>
+        <dd>
+          <span>{{ notifyTransaction.freeField2 }}</span>
+        </dd>
+        <dt><span jhiTranslate="schoolPaySettlementApp.notifyTransaction.freeField3">Free Field 3</span></dt>
+        <dd>
+          <span>{{ notifyTransaction.freeField3 }}</span>
+        </dd>
+        <dt><span jhiTranslate="schoolPaySettlementApp.notifyTransaction.retries">Retries</span></dt>
+        <dd>
+          <span>{{ notifyTransaction.retries }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/notify-transaction', notifyTransaction.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

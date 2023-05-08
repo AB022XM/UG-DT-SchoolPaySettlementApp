@@ -10,6 +10,7 @@ import com.dsarena.corp.schoolpay.notificationapi.service.dto.AdminUserDTO;
 import com.dsarena.corp.schoolpay.notificationapi.web.rest.errors.BadRequestAlertException;
 import com.dsarena.corp.schoolpay.notificationapi.web.rest.errors.EmailAlreadyUsedException;
 import com.dsarena.corp.schoolpay.notificationapi.web.rest.errors.LoginAlreadyUsedException;
+import io.swagger.v3.oas.annotations.Hidden;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.*;

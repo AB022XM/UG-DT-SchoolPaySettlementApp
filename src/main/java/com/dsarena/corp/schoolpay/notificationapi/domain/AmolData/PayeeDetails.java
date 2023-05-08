@@ -17,7 +17,7 @@ import javax.annotation.Generated;
 public class PayeeDetails implements Serializable {
 
     @JsonProperty("branchId")
-    private String branchId;
+    private Integer branchId;
 
     @JsonProperty("cardNumber")
     private String cardNumber;
@@ -51,7 +51,7 @@ public class PayeeDetails implements Serializable {
      * @param productTypeCode
      */
     public PayeeDetails(
-        String branchId,
+        Integer branchId,
         String cardNumber,
         String counterPartyName,
         String payeeProductInstanceReference,
@@ -66,16 +66,16 @@ public class PayeeDetails implements Serializable {
     }
 
     @JsonProperty("branchId")
-    public String getBranchId() {
+    public Integer getBranchId() {
         return branchId;
     }
 
     @JsonProperty("branchId")
-    public void setBranchId(String branchId) {
+    public void setBranchId(Integer branchId) {
         this.branchId = branchId;
     }
 
-    public PayeeDetails withBranchId(String branchId) {
+    public PayeeDetails withBranchId(Integer branchId) {
         this.branchId = branchId;
         return this;
     }

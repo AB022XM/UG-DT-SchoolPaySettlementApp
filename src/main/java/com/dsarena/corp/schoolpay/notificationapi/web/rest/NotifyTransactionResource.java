@@ -94,7 +94,7 @@ public class NotifyTransactionResource {
         //Do a duplicate check here
         Optional<NotifyTransaction> notifyTransaction = notifyTransactionRepository.findByRecordId(notifyTransactionDTO.getRecordId());
 
-        log.debug("isPresentValue: " + notifyTransaction.isPresent());
+        log.debug("isPresentValue For notifyTransaction: " + notifyTransaction.isPresent());
         if (notifyTransaction.isPresent()) {
             NotificationResponse duplicateResp = new NotificationResponse(
                 notifyTransaction.get().getAmount() + "",
@@ -106,8 +106,8 @@ public class NotifyTransactionResource {
             return ResponseEntity.created(new URI("/notify/" + notifyTransactionDTO.getTransactionUId())).body(duplicateResp);
         }
 
-        School school = schoolRepository.findBySchoolCode(notifyTransactionDTO.getSchoolCode()).get();
-        if (school == null) {
+        Optional<School> school = schoolRepository.findBySchoolCode(notifyTransactionDTO.getSchoolCode());
+        if (!school.isPresent()) {
             throw new BadRequestAlertException(
                 "School with schoolCode" + notifyTransaction.get().getSchoolCode() + " does not exist",
                 ENTITY_NAME,
@@ -117,7 +117,7 @@ public class NotifyTransactionResource {
 
         //Partner partner = partnerService.findByFreeText2(school.get().getFreeField2());
 
-        notifyTransactionDTO.setCreditAccount(school.getSchoolAccountNumber().toString());
+        notifyTransactionDTO.setCreditAccount(school.get().getSchoolAccountNumber().toString());
 
         notifyTransactionDTO.setFcrTransactionStatus(ProccesingStatus.PENDING);
         notifyTransactionDTO.setTimestamp(LocalDate.now());
@@ -136,7 +136,7 @@ public class NotifyTransactionResource {
             true
         );
 
-        AmolResponse amolResp = new PostToAmol().postOneTransaction(savedNotifyTransaction, school.getSchoolAccountNumber());
+        AmolResponse amolResp = new PostToAmol().postOneTransaction(savedNotifyTransaction, school.get().getFreeField1());
         if (amolResp != null) {
             if (amolResp.getStatus().equalsIgnoreCase(ProccesingStatus.SUCCESS.name().toString())) {
                 savedNotifyTransaction.fcrTransactionStatus(ProccesingStatus.SUCCESS);

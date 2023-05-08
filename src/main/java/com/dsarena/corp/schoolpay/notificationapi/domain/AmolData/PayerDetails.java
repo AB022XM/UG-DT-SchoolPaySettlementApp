@@ -22,7 +22,7 @@ public class PayerDetails implements Serializable {
     private String bankCode;
 
     @JsonProperty("branchId")
-    private String branchId;
+    private Integer branchId;
 
     @JsonProperty("cardExpiryDate")
     private String cardExpiryDate;
@@ -62,7 +62,7 @@ public class PayerDetails implements Serializable {
      */
     public PayerDetails(
         String bankCode,
-        String branchId,
+        Integer branchId,
         String cardExpiryDate,
         String cardNumber,
         String originatorName,
@@ -95,16 +95,16 @@ public class PayerDetails implements Serializable {
     }
 
     @JsonProperty("branchId")
-    public String getBranchId() {
+    public Integer getBranchId() {
         return branchId;
     }
 
     @JsonProperty("branchId")
-    public void setBranchId(String branchId) {
+    public void setBranchId(Integer branchId) {
         this.branchId = branchId;
     }
 
-    public PayerDetails withBranchId(String branchId) {
+    public PayerDetails withBranchId(Integer branchId) {
         this.branchId = branchId;
         return this;
     }

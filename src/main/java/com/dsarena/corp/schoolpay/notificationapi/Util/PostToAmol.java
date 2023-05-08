@@ -36,8 +36,8 @@ public class PostToAmol {
             creditAccount = "6000029414";
         }
         DateType dateType = new DateType("2023-03-28T12:06:46.000Z", "P");
-        PayeeDetails pd = new PayeeDetails("null", "", nt.getStudentName(), nt.getCreditAccount(), "");
-        PayerDetails ppayerd = new PayerDetails("", null, "", "", nt.getStudentCode(), debitAccount, "");
+        PayeeDetails pd = new PayeeDetails(38, "", nt.getStudentName(), nt.getCreditAccount(), "");
+        PayerDetails ppayerd = new PayerDetails("", 38, "", "", nt.getStudentCode(), debitAccount, "");
         PaymentMechanism pm = new PaymentMechanism("LOCALDIRECTPAYT", "LOCAL");
         PaymentTax pt = new PaymentTax(0, "", "not applicable");
         PaymentFees pf = new PaymentFees(0, "", "Amt: " + nt.getCreditAccount() + " " + nt.getRecordId(), nt.getTransactionUId());
@@ -57,20 +57,15 @@ public class PostToAmol {
             pp,
             pt
         );
-        String customerReference = nt.getTransactionUId() + nt.getRecordId();
-        AmolPost amolPost = new AmolPost(customerReference.substring(11, 0), paymentTran, "IT");
+        String customerReference = NotifyTransaction.generateUniqueRefString();
 
-        //     "400 Bad Request: \"{\"code\":\"400\",\"data\":null,\"message\":\"branchId must have minimum 1 and maximum 3 digits,payerProductInstanceReference cannot be null or empty,customerReference cannot be less than 9 characters and more than 12 characters,branchId must be numeric,payeeProductInstanceReference must be numeric\",\"sourceInfo\":null,\"status\":\"Failure\"}\"",
-        //    // String,nt.getTransactionUId(),nt.getAmount(),
-        //  nt.getAmount(),debitAccount,creditAccount,nt.getStudentName(),debitAccount,narration,nt.getTransactionUId(),narration,narration,nt.getStudentName() );
-        //  String json = "{\"customerReference"+":\"87654345678\"+",\"paymentTransaction\":{\"debitAmount\":8654.0,\"creditAmount\":\"6000\",\"debitCurrency\":\"UGX\",\"creditCurrency\":\"UGX\",\"dateType\":{\"date\":\"2023-03-28T12:06:46.000Z\",\"type\":\"P\"},\"fxRate\":\"0\",\"payeeDetails\":{\"branchId\":\"\",\"cardNumber\":\"\",\"counterPartyName\":\"NTINDA\",\"payeeProductInstanceReference\":\"6000029414\",\"productTypeCode\":\"\"},\"payerDetails\":{\"bankCode\":\"\",\"branchId\":\"\",\"cardExpiryDate\":\"\",\"cardNumber\":\"\",\"originatorName\":\"NTINDA\",\"payerProductInstanceReference\":\"6000086213\",\"productTypeCode\":\"\"},\"paymentFees\":{\"feeAmount\":0,\"feeGLAccount\":\"\",\"feeNarration\":\"AIRTELUG NTINDA  6000 34365432\",\"transactionReferenceNumber\":\"34365432\"},\"paymentMechanism\":{\"subCategoryCode\":\"LOCALDIRECTPAYT\",\"transactionCategoryCode\":\"LOCAL\"},\"paymentPurpose\":{\"checkerId\":null,\"narrative\":\"AIRTELUG NTINDA  6000 34365432\",\"remittanceInformation\":\"NTINDA\"},\"paymentTax\":{\"taxAmount\":0,\"taxGLAccount\":\"\",\"taxNarration\":\"\"}},\"paymentTransactionType\":\"IT\"}";
+        AmolPost amolPost = new AmolPost(customerReference, paymentTran, "IT");
 
         ObjectMapper objectMapper = new ObjectMapper();
         String json = null;
         try {
             json = objectMapper.writeValueAsString(amolPost);
         } catch (JsonProcessingException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 

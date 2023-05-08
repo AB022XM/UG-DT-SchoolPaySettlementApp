@@ -1,6 +1,6 @@
 package com.dsarena.corp.schoolpay.notificationapi.service.mapper;
 
-import com.dsarena.corp.schoolpay.notificationapi.domain.School;
+import com.dsarena.corp.schoolpay.notificationapi.domain.SchoolDomain.School;
 import com.dsarena.corp.schoolpay.notificationapi.service.dto.SchoolDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

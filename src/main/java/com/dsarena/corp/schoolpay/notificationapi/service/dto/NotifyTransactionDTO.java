@@ -1,5 +1,6 @@
 package com.dsarena.corp.schoolpay.notificationapi.service.dto;
 
+import com.dsarena.corp.schoolpay.notificationapi.domain.SchoolDomain.NotifyTransaction;
 import com.dsarena.corp.schoolpay.notificationapi.domain.enumeration.ProccesingStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
@@ -10,7 +11,7 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 
 /**
- * A DTO for the {@link com.dsarena.corp.schoolpay.notificationapi.domain.NotifyTransaction} entity.
+ * A DTO for the {@link NotifyTransaction} entity.
  */
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class NotifyTransactionDTO implements Serializable {

@@ -1,6 +1,6 @@
 package com.dsarena.corp.schoolpay.notificationapi.repository;
 
-import com.dsarena.corp.schoolpay.notificationapi.domain.User;
+import com.dsarena.corp.schoolpay.notificationapi.domain.SchoolDomain.User;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;

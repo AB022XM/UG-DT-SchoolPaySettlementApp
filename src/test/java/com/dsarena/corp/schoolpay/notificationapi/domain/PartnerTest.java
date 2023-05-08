@@ -2,6 +2,7 @@ package com.dsarena.corp.schoolpay.notificationapi.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.dsarena.corp.schoolpay.notificationapi.domain.SchoolDomain.Partner;
 import com.dsarena.corp.schoolpay.notificationapi.web.rest.TestUtil;
 import org.junit.jupiter.api.Test;
 

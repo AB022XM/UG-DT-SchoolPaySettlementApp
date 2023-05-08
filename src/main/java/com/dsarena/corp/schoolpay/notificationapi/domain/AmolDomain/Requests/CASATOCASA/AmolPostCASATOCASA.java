@@ -1,20 +1,16 @@
-package com.dsarena.corp.schoolpay.notificationapi.domain.AmolData;
+package com.dsarena.corp.schoolpay.notificationapi.domain.AmolDomain.Requests.CASATOCASA;
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.*;
+
+import javax.annotation.Generated;
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import javax.annotation.Generated;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({ "customerReference", "paymentTransaction", "paymentTransactionType" })
 @Generated("jsonschema2pojo")
-public class AmolPost implements Serializable {
+public class AmolPostCASATOCASA implements Serializable {
 
     @JsonProperty("customerReference")
     private String customerReference;
@@ -36,7 +32,7 @@ public class AmolPost implements Serializable {
      * @param paymentTransaction
      * @param paymentTransactionType
      */
-    public AmolPost(String customerReference, PaymentTransaction paymentTransaction, String paymentTransactionType) {
+    public AmolPostCASATOCASA(String customerReference, PaymentTransaction paymentTransaction, String paymentTransactionType) {
         super();
         this.customerReference = customerReference;
         this.paymentTransaction = paymentTransaction;
@@ -53,7 +49,7 @@ public class AmolPost implements Serializable {
         this.customerReference = customerReference;
     }
 
-    public AmolPost withCustomerReference(String customerReference) {
+    public AmolPostCASATOCASA withCustomerReference(String customerReference) {
         this.customerReference = customerReference;
         return this;
     }
@@ -68,7 +64,7 @@ public class AmolPost implements Serializable {
         this.paymentTransaction = paymentTransaction;
     }
 
-    public AmolPost withPaymentTransaction(PaymentTransaction paymentTransaction) {
+    public AmolPostCASATOCASA withPaymentTransaction(PaymentTransaction paymentTransaction) {
         this.paymentTransaction = paymentTransaction;
         return this;
     }
@@ -83,7 +79,7 @@ public class AmolPost implements Serializable {
         this.paymentTransactionType = paymentTransactionType;
     }
 
-    public AmolPost withPaymentTransactionType(String paymentTransactionType) {
+    public AmolPostCASATOCASA withPaymentTransactionType(String paymentTransactionType) {
         this.paymentTransactionType = paymentTransactionType;
         return this;
     }
@@ -98,7 +94,7 @@ public class AmolPost implements Serializable {
         this.additionalProperties.put(name, value);
     }
 
-    public AmolPost withAdditionalProperty(String name, Object value) {
+    public AmolPostCASATOCASA withAdditionalProperty(String name, Object value) {
         this.additionalProperties.put(name, value);
         return this;
     }
@@ -106,7 +102,7 @@ public class AmolPost implements Serializable {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(AmolPost.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
+        sb.append(AmolPostCASATOCASA.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
         sb.append("customerReference");
         sb.append('=');
         sb.append(((this.customerReference == null) ? "<null>" : this.customerReference));
@@ -146,10 +142,10 @@ public class AmolPost implements Serializable {
         if (other == this) {
             return true;
         }
-        if ((other instanceof AmolPost) == false) {
+        if ((other instanceof AmolPostCASATOCASA) == false) {
             return false;
         }
-        AmolPost rhs = ((AmolPost) other);
+        AmolPostCASATOCASA rhs = ((AmolPostCASATOCASA) other);
         return (
             (
                 (

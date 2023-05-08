@@ -1,6 +1,6 @@
 package com.dsarena.corp.schoolpay.notificationapi.repository;
 
-import com.dsarena.corp.schoolpay.notificationapi.domain.School;
+import com.dsarena.corp.schoolpay.notificationapi.domain.SchoolDomain.School;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

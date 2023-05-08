@@ -1,8 +1,8 @@
 package com.dsarena.corp.schoolpay.notificationapi.service;
 
 import com.dsarena.corp.schoolpay.notificationapi.config.Constants;
-import com.dsarena.corp.schoolpay.notificationapi.domain.Authority;
-import com.dsarena.corp.schoolpay.notificationapi.domain.User;
+import com.dsarena.corp.schoolpay.notificationapi.domain.SchoolDomain.Authority;
+import com.dsarena.corp.schoolpay.notificationapi.domain.SchoolDomain.User;
 import com.dsarena.corp.schoolpay.notificationapi.repository.AuthorityRepository;
 import com.dsarena.corp.schoolpay.notificationapi.repository.UserRepository;
 import com.dsarena.corp.schoolpay.notificationapi.security.AuthoritiesConstants;

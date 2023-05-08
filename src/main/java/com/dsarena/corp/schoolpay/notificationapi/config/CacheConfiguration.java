@@ -1,6 +1,8 @@
 package com.dsarena.corp.schoolpay.notificationapi.config;
 
 import java.time.Duration;
+
+import com.dsarena.corp.schoolpay.notificationapi.domain.SchoolDomain.*;
 import org.ehcache.config.builders.*;
 import org.ehcache.jsr107.Eh107Configuration;
 import org.hibernate.cache.jcache.ConfigSettings;
@@ -45,12 +47,12 @@ public class CacheConfiguration {
         return cm -> {
             createCache(cm, com.dsarena.corp.schoolpay.notificationapi.repository.UserRepository.USERS_BY_LOGIN_CACHE);
             createCache(cm, com.dsarena.corp.schoolpay.notificationapi.repository.UserRepository.USERS_BY_EMAIL_CACHE);
-            createCache(cm, com.dsarena.corp.schoolpay.notificationapi.domain.User.class.getName());
-            createCache(cm, com.dsarena.corp.schoolpay.notificationapi.domain.Authority.class.getName());
-            createCache(cm, com.dsarena.corp.schoolpay.notificationapi.domain.User.class.getName() + ".authorities");
-            createCache(cm, com.dsarena.corp.schoolpay.notificationapi.domain.School.class.getName());
-            createCache(cm, com.dsarena.corp.schoolpay.notificationapi.domain.NotifyTransaction.class.getName());
-            createCache(cm, com.dsarena.corp.schoolpay.notificationapi.domain.Partner.class.getName());
+            createCache(cm, User.class.getName());
+            createCache(cm, Authority.class.getName());
+            createCache(cm, User.class.getName() + ".authorities");
+            createCache(cm, School.class.getName());
+            createCache(cm, NotifyTransaction.class.getName());
+            createCache(cm, Partner.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

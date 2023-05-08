@@ -13,5 +13,11 @@ public final class ErrorConstants {
     public static final URI EMAIL_ALREADY_USED_TYPE = URI.create(PROBLEM_BASE_URL + "/email-already-used");
     public static final URI LOGIN_ALREADY_USED_TYPE = URI.create(PROBLEM_BASE_URL + "/login-already-used");
 
+    public static final String ERROR_GENERIC = "error.unknown_error";
+    public static final String ERROR_DATABASE_NO_ITEM_RETURNED_AFTER_SAVING = "error.genericDberror";
+
+   // public static final String ERROR_INVALID_PASSWORD = "error.invalidPassword";
+
+
     private ErrorConstants() {}
 }

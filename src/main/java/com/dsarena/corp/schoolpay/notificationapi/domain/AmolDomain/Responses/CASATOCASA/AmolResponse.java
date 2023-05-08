@@ -1,4 +1,4 @@
-package com.dsarena.corp.schoolpay.notificationapi.domain;
+package com.dsarena.corp.schoolpay.notificationapi.domain.AmolDomain.Responses.CASATOCASA;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

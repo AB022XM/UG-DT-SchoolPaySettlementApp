@@ -1,4 +1,4 @@
-package com.dsarena.corp.schoolpay.notificationapi.domain;
+package com.dsarena.corp.schoolpay.notificationapi.domain.SchoolDomain;
 
 import java.io.Serializable;
 import java.util.Objects;

@@ -1,40 +1,34 @@
 package com.dsarena.corp.schoolpay.notificationapi.web.rest;
 
 import com.dsarena.corp.schoolpay.notificationapi.Util.PostToAmol;
-import com.dsarena.corp.schoolpay.notificationapi.domain.AmolResponse;
-import com.dsarena.corp.schoolpay.notificationapi.domain.NotifyTransaction;
-import com.dsarena.corp.schoolpay.notificationapi.domain.Responses.NotificationResponse;
-import com.dsarena.corp.schoolpay.notificationapi.domain.School;
+import com.dsarena.corp.schoolpay.notificationapi.domain.SchoolDomain.NotificationResponse;
+import com.dsarena.corp.schoolpay.notificationapi.domain.SchoolDomain.NotifyTransaction;
+import com.dsarena.corp.schoolpay.notificationapi.domain.SchoolDomain.School;
 import com.dsarena.corp.schoolpay.notificationapi.domain.enumeration.ProccesingStatus;
 import com.dsarena.corp.schoolpay.notificationapi.repository.NotifyTransactionRepository;
-import com.dsarena.corp.schoolpay.notificationapi.repository.PartnerRepository;
 import com.dsarena.corp.schoolpay.notificationapi.repository.SchoolRepository;
 import com.dsarena.corp.schoolpay.notificationapi.service.NotifyTransactionService;
-import com.dsarena.corp.schoolpay.notificationapi.service.PartnerService;
 import com.dsarena.corp.schoolpay.notificationapi.service.SchoolService;
 import com.dsarena.corp.schoolpay.notificationapi.service.dto.NotifyTransactionDTO;
 import com.dsarena.corp.schoolpay.notificationapi.web.rest.errors.BadRequestAlertException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import tech.jhipster.web.util.ResponseUtil;
+
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.util.Optional;
-import javax.validation.Valid;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import tech.jhipster.web.util.ResponseUtil;
 
 /**
- * REST controller for managing {@link com.dsarena.corp.schoolpay.notificationapi.domain.NotifyTransaction}.
+ * REST controller for managing {@link NotifyTransaction}.
  */
 @RestController
 @RequestMapping("payment/api/v1/transaction/")
@@ -49,10 +43,6 @@ public class NotifyTransactionResource {
 
     private final NotifyTransactionService notifyTransactionService;
     private final SchoolService dSchoolService;
-
-    private final PartnerRepository partrRepository;
-    private final PartnerService partnerService;
-
     private final NotifyTransactionRepository notifyTransactionRepository;
     private final SchoolRepository schoolRepository;
 
@@ -60,16 +50,12 @@ public class NotifyTransactionResource {
         NotifyTransactionService notifyTransactionService,
         NotifyTransactionRepository notifyTransactionRepository,
         SchoolRepository schoolRepository,
-        SchoolService dSchoolService,
-        PartnerRepository partnerRepository,
-        PartnerService partnerService
+        SchoolService dSchoolService
     ) {
         this.notifyTransactionService = notifyTransactionService;
         this.notifyTransactionRepository = notifyTransactionRepository;
         this.schoolRepository = schoolRepository;
         this.dSchoolService = dSchoolService;
-        this.partnerService = partnerService;
-        this.partrRepository = partnerRepository;
     }
 
     /**
@@ -83,7 +69,7 @@ public class NotifyTransactionResource {
      */
     @PostMapping("/notify")
     public ResponseEntity<NotificationResponse> createNotifyTransaction(@Valid @RequestBody NotifyTransactionDTO notifyTransactionDTO)
-        throws URISyntaxException, NumberFormatException, KeyManagementException, NoSuchAlgorithmException {
+            throws URISyntaxException, NumberFormatException, KeyManagementException, NoSuchAlgorithmException, JsonProcessingException {
         // Integer transactionId = NotifyTransaction.generateUniqueRef();
         log.debug("REST request to save NotifyTransaction : {}", notifyTransactionDTO);
         if (notifyTransactionDTO.getId() != null) {
@@ -97,58 +83,59 @@ public class NotifyTransactionResource {
         log.debug("isPresentValue For notifyTransaction: " + notifyTransaction.isPresent());
         if (notifyTransaction.isPresent()) {
             NotificationResponse duplicateResp = new NotificationResponse(
-                notifyTransaction.get().getAmount() + "",
-                notifyTransaction.get().getRecordId() + "",
-                notifyTransaction.get().getTransactionUId() + "",
-                "Transansaction already proccessed:  " + notifyTransaction.get().getTimestamp(),
+                    String.valueOf(notifyTransaction.get().getAmount()),
+                    String.valueOf(notifyTransaction.get().getRecordId()),
+                    notifyTransaction.get().getTransactionUId(),
+                "Transaction already processed:  " + notifyTransaction.get().getTimestamp(),
                 true
             );
             return ResponseEntity.created(new URI("/notify/" + notifyTransactionDTO.getTransactionUId())).body(duplicateResp);
         }
 
         Optional<School> school = schoolRepository.findBySchoolCode(notifyTransactionDTO.getSchoolCode());
-        if (!school.isPresent()) {
+        if (school.isEmpty()) {
             throw new BadRequestAlertException(
-                "School with schoolCode" + notifyTransaction.get().getSchoolCode() + " does not exist",
+                "School with schoolCode" + notifyTransactionDTO.getSchoolCode() + " does not exist",
                 ENTITY_NAME,
-                "notfound"
+                "not found"
             );
         }
 
-        //Partner partner = partnerService.findByFreeText2(school.get().getFreeField2());
-
-        notifyTransactionDTO.setCreditAccount(school.get().getSchoolAccountNumber().toString());
+        notifyTransactionDTO.setCreditAccount(school.get().getSchoolAccountNumber());
 
         notifyTransactionDTO.setFcrTransactionStatus(ProccesingStatus.PENDING);
         notifyTransactionDTO.setTimestamp(LocalDate.now());
         NotifyTransactionDTO result = notifyTransactionService.save(notifyTransactionDTO);
         log.debug(ENTITY_NAME + " ON Saved: " + result.toString());
         //fetch saved object
-        NotifyTransaction savedNotifyTransaction = notifyTransactionRepository.findById(result.getId()).get();
-        Long tranId = savedNotifyTransaction.getId();
+        NotifyTransaction savedNotifyTransaction = notifyTransactionRepository.findById(result.getId()).orElse(null);
+        if (savedNotifyTransaction == null) {
+
+            throw new BadRequestAlertException(
+                "An error occurred while processing the transaction with recordId" + notifyTransactionDTO.getRecordId(),
+                ENTITY_NAME,
+                "not found"
+            );
+        }
 
         log.info("Saved NotifyTransaction: " + savedNotifyTransaction.toString());
         NotificationResponse responseCreatedResponse = new NotificationResponse(
             result.getAmount().toString(),
             result.getRecordId().toString(),
-            savedNotifyTransaction.getTransactionUId().toString(),
-            "Transansaction has been received",
+                savedNotifyTransaction.getTransactionUId(),
+            "Transaction has been received",
             true
         );
 
-        AmolResponse amolResp = new PostToAmol().postOneTransaction(savedNotifyTransaction, school.get().getFreeField1());
-        if (amolResp != null) {
-            if (amolResp.getStatus().equalsIgnoreCase(ProccesingStatus.SUCCESS.name().toString())) {
-                savedNotifyTransaction.fcrTransactionStatus(ProccesingStatus.SUCCESS);
-                savedNotifyTransaction.fcrTransactionReference(amolResp.getData().getTransferReferenceId().toString());
-                savedNotifyTransaction.fcrTransactionId(amolResp.getData().getTransferId());
-            } else {
-                savedNotifyTransaction.fcrTransactionStatus(ProccesingStatus.FAILED);
-            }
-        }
 
-        return ResponseEntity.created(new URI("/notify/" + result.getTransactionUId())).body(responseCreatedResponse);
+
+        new PostToAmol().postTransactionGLCASA(savedNotifyTransaction, school.get().getSchoolAccountNumber());
+
+  return ResponseEntity.created(new URI("/notify/" + result.getTransactionUId())).body(responseCreatedResponse);
     }
+
+
+
 
     /**
      * {@code PUT  /notify-transactions/:id} : Updates an existing notifyTransaction.

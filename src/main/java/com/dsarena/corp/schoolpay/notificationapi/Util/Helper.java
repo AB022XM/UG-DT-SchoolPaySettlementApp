@@ -16,4 +16,8 @@ public class Helper {
     public static String limitString(String text, int limit) {
         if (text.length() > limit) return text.substring(0, limit - 1); else return text;
     }
+
+    public static String generationUUID(String params) {
+        return null;
+    }
 }

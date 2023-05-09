@@ -9,7 +9,20 @@ public class PaymentTransaction {
     public PaymentMechanism paymentMechanism;
     public PaymentPurpose paymentPurpose;
 
+
     public PaymentTransaction() {}
+
+    public PaymentTransaction(int creditAmount, String creditCurrency
+            , PayeeDetails payeeDetails, PayerDetails payerDetails,
+                              PaymentMechanism paymentMechanism, PaymentPurpose paymentPurpose) {
+        this.creditAmount = creditAmount;
+        this.creditCurrency = creditCurrency;
+        this.payeeDetails = payeeDetails;
+        this.payerDetails = payerDetails;
+        this.paymentMechanism = paymentMechanism;
+        this.paymentPurpose = paymentPurpose;
+    }
+
 
     /**
      * get field

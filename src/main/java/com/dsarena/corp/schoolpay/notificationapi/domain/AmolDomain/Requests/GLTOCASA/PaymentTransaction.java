@@ -1,6 +1,5 @@
 package com.dsarena.corp.schoolpay.notificationapi.domain.AmolDomain.Requests.GLTOCASA;
 
-
 public class PaymentTransaction {
 
     public int creditAmount;
@@ -10,11 +9,7 @@ public class PaymentTransaction {
     public PaymentMechanism paymentMechanism;
     public PaymentPurpose paymentPurpose;
 
-
-    public PaymentTransaction() {
-        super();
-    }
-
+    public PaymentTransaction() {}
 
     /**
      * get field

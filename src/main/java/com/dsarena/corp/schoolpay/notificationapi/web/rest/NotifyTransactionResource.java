@@ -13,20 +13,19 @@ import com.dsarena.corp.schoolpay.notificationapi.service.SchoolService;
 import com.dsarena.corp.schoolpay.notificationapi.service.dto.NotifyTransactionDTO;
 import com.dsarena.corp.schoolpay.notificationapi.web.rest.errors.BadRequestAlertException;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import tech.jhipster.web.util.ResponseUtil;
-
-import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.util.Optional;
+import javax.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import tech.jhipster.web.util.ResponseUtil;
 
 /**
  * REST controller for managing {@link NotifyTransaction}.
@@ -76,8 +75,7 @@ public class NotifyTransactionResource {
         if (notifyTransactionDTO.getId() != null) {
             throw new BadRequestAlertException("A new notifyTransaction cannot already have an ID", ENTITY_NAME, "idexists");
         }
-
-        log.debug("REST request to save NotifyTransaction : {}", notifyTransactionDTO);
+        notifyTransactionDTO.setFcrTransactionStatus(ProccesingStatus.INITIATED);
         //Do a duplicate check here
         Optional<NotifyTransaction> notifyTransaction = notifyTransactionRepository.findByRecordId(notifyTransactionDTO.getRecordId());
 
@@ -103,7 +101,7 @@ public class NotifyTransactionResource {
         }
 
         notifyTransactionDTO.setCreditAccount(school.get().getSchoolAccountNumber());
-
+        notifyTransactionDTO.setDebitAccount(school.get().getFreeField1());
         notifyTransactionDTO.setFcrTransactionStatus(ProccesingStatus.PENDING);
         notifyTransactionDTO.setTimestamp(LocalDate.now());
         NotifyTransactionDTO result = notifyTransactionService.save(notifyTransactionDTO);
@@ -126,9 +124,10 @@ public class NotifyTransactionResource {
             "Transaction has been received",
             true
         );
-
-        ResponseDetails responseDetails= new PostToAmol().postTransactionGLCASA(savedNotifyTransaction, school.get().getSchoolAccountNumber());
-        log.debug("REQUEST_STRING:  "+responseDetails.getRequest().getBody().toString());
+        notifyTransactionDTO.setFcrTransactionStatus(ProccesingStatus.PENDING);
+        ResponseDetails responseDetails = new PostToAmol()
+            .postTransactionGLCASA(savedNotifyTransaction, school.get().getSchoolAccountNumber());
+        log.debug("REQUEST_STRING:  " + responseDetails.getRequest().getBody().toString());
         return ResponseEntity.created(new URI("/notify/" + result.getTransactionUId())).body(responseCreatedResponse);
     }
 

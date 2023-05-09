@@ -3,16 +3,15 @@ package com.dsarena.corp.schoolpay.notificationapi.domain.SchoolDomain;
 import com.dsarena.corp.schoolpay.notificationapi.domain.enumeration.ProccesingStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.Random;
 import javax.annotation.Nullable;
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
-import java.time.LocalDate;
-import java.util.Random;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * A NotifyTransaction.
@@ -21,7 +20,7 @@ import java.util.Random;
 @Table(name = "notify_transaction")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @SuppressWarnings("common-java:DuplicatedBlocks")
-public class NotifyTransaction extends AbstractAuditingEntity<Long> implements Serializable {
+public class NotifyTransaction implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

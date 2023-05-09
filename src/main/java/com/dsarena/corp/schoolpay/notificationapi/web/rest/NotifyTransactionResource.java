@@ -12,20 +12,19 @@ import com.dsarena.corp.schoolpay.notificationapi.service.SchoolService;
 import com.dsarena.corp.schoolpay.notificationapi.service.dto.NotifyTransactionDTO;
 import com.dsarena.corp.schoolpay.notificationapi.web.rest.errors.BadRequestAlertException;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import tech.jhipster.web.util.ResponseUtil;
-
-import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.util.Optional;
+import javax.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import tech.jhipster.web.util.ResponseUtil;
 
 /**
  * REST controller for managing {@link NotifyTransaction}.
@@ -69,7 +68,7 @@ public class NotifyTransactionResource {
      */
     @PostMapping("/notify")
     public ResponseEntity<NotificationResponse> createNotifyTransaction(@Valid @RequestBody NotifyTransactionDTO notifyTransactionDTO)
-            throws URISyntaxException, NumberFormatException, KeyManagementException, NoSuchAlgorithmException, JsonProcessingException {
+        throws URISyntaxException, NumberFormatException, KeyManagementException, NoSuchAlgorithmException, JsonProcessingException {
         // Integer transactionId = NotifyTransaction.generateUniqueRef();
         log.debug("REST request to save NotifyTransaction : {}", notifyTransactionDTO);
         if (notifyTransactionDTO.getId() != null) {
@@ -83,9 +82,9 @@ public class NotifyTransactionResource {
         log.debug("isPresentValue For notifyTransaction: " + notifyTransaction.isPresent());
         if (notifyTransaction.isPresent()) {
             NotificationResponse duplicateResp = new NotificationResponse(
-                    String.valueOf(notifyTransaction.get().getAmount()),
-                    String.valueOf(notifyTransaction.get().getRecordId()),
-                    notifyTransaction.get().getTransactionUId(),
+                String.valueOf(notifyTransaction.get().getAmount()),
+                String.valueOf(notifyTransaction.get().getRecordId()),
+                notifyTransaction.get().getTransactionUId(),
                 "Transaction already processed:  " + notifyTransaction.get().getTimestamp(),
                 true
             );
@@ -95,7 +94,7 @@ public class NotifyTransactionResource {
         Optional<School> school = schoolRepository.findBySchoolCode(notifyTransactionDTO.getSchoolCode());
         if (school.isEmpty()) {
             throw new BadRequestAlertException(
-                "School with schoolCode" + notifyTransactionDTO.getSchoolCode() + " does not exist",
+                "School with schoolCode " + notifyTransactionDTO.getSchoolCode() + " does not exist",
                 ENTITY_NAME,
                 "not found"
             );
@@ -110,7 +109,6 @@ public class NotifyTransactionResource {
         //fetch saved object
         NotifyTransaction savedNotifyTransaction = notifyTransactionRepository.findById(result.getId()).orElse(null);
         if (savedNotifyTransaction == null) {
-
             throw new BadRequestAlertException(
                 "An error occurred while processing the transaction with recordId" + notifyTransactionDTO.getRecordId(),
                 ENTITY_NAME,
@@ -122,20 +120,15 @@ public class NotifyTransactionResource {
         NotificationResponse responseCreatedResponse = new NotificationResponse(
             result.getAmount().toString(),
             result.getRecordId().toString(),
-                savedNotifyTransaction.getTransactionUId(),
+            savedNotifyTransaction.getTransactionUId(),
             "Transaction has been received",
             true
         );
 
-
-
         new PostToAmol().postTransactionGLCASA(savedNotifyTransaction, school.get().getSchoolAccountNumber());
 
-  return ResponseEntity.created(new URI("/notify/" + result.getTransactionUId())).body(responseCreatedResponse);
+        return ResponseEntity.created(new URI("/notify/" + result.getTransactionUId())).body(responseCreatedResponse);
     }
-
-
-
 
     /**
      * {@code PUT  /notify-transactions/:id} : Updates an existing notifyTransaction.

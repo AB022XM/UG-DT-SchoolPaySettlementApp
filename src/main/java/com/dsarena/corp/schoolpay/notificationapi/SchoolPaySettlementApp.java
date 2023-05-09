@@ -6,6 +6,12 @@ import com.dsarena.corp.schoolpay.notificationapi.repository.NotifyTransactionRe
 import com.dsarena.corp.schoolpay.notificationapi.repository.SchoolRepository;
 import com.dsarena.corp.schoolpay.notificationapi.service.NotifyTransactionService;
 import com.dsarena.corp.schoolpay.notificationapi.service.SchoolService;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Optional;
+import javax.annotation.PostConstruct;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,42 +23,35 @@ import org.springframework.core.env.Environment;
 import tech.jhipster.config.DefaultProfileUtil;
 import tech.jhipster.config.JHipsterConstants;
 
-import javax.annotation.PostConstruct;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Optional;
-
 @SpringBootApplication
 @EnableConfigurationProperties({ LiquibaseProperties.class, ApplicationProperties.class })
 public class SchoolPaySettlementApp {
 
     private static final Logger log = LoggerFactory.getLogger(SchoolPaySettlementApp.class);
-    NotifyTransactionRepository notifyTransactionRepository;
-     NotifyTransactionService notifyTransactionService;
-     SchoolRepository schoolRepository;
-     SchoolService dSchoolService;
+    // NotifyTransactionRepository notifyTransactionRepository;
+    //  NotifyTransactionService notifyTransactionService;
+    //  SchoolRepository schoolRepository;
+    //  SchoolService dSchoolService;
     private final Environment env;
 
     public SchoolPaySettlementApp(Environment env) {
         this.env = env;
     }
 
-    public SchoolPaySettlementApp(
-            NotifyTransactionService notifyTransactionService,
-            NotifyTransactionRepository notifyTransactionRepository,
-            SchoolRepository schoolRepository,
-            SchoolService dSchoolService,
-            Environment env
+    // public SchoolPaySettlementApp(
+    //         NotifyTransactionService notifyTransactionService,
+    //         NotifyTransactionRepository notifyTransactionRepository,
+    //         SchoolRepository schoolRepository,
+    //         SchoolService dSchoolService,
+    //         Environment env
 
-    ) {
-        this.notifyTransactionService = notifyTransactionService;
-        this.notifyTransactionRepository = notifyTransactionRepository;
-        this.schoolRepository = schoolRepository;
-        this.dSchoolService = dSchoolService;
-        this.env = env;
-    }
+    // ) {
+    //     this.notifyTransactionService = notifyTransactionService;
+    //     this.notifyTransactionRepository = notifyTransactionRepository;
+    //     this.schoolRepository = schoolRepository;
+    //     this.dSchoolService = dSchoolService;
+    //     this.env = env;
+    // }
 
     /**
      * Initializes SchoolPaySettlementApp.
@@ -125,7 +124,7 @@ public class SchoolPaySettlementApp {
             env.getActiveProfiles().length == 0 ? env.getDefaultProfiles() : env.getActiveProfiles()
         );
     }
- /*   @Scheduled(fixedDelay = 10000)
+    /*   @Scheduled(fixedDelay = 10000)
      public void postTransactions() throws KeyManagementException, NoSuchAlgorithmException {
 
 

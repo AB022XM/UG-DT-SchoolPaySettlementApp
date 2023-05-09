@@ -5,11 +5,14 @@ public class PayeeDetails {
     public String payeeProductInstanceReference;
 
 
+    public PayeeDetails() {
+    }
+
+
     public PayeeDetails(String creditAccount) {
     }
 
-    public PayeeDetails() {
-    }
+
 
     public String getPayeeProductInstanceReference() {
         return payeeProductInstanceReference;

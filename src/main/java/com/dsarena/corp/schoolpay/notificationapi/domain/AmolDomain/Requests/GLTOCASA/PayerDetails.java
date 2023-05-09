@@ -3,6 +3,10 @@ package com.dsarena.corp.schoolpay.notificationapi.domain.AmolDomain.Requests.GL
 public class PayerDetails {
     public String payerProductInstanceReference;
 
+
+    public PayerDetails() {
+    }
+
     public PayerDetails(String debitAccount) {
     }
 

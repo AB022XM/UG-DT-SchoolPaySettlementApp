@@ -5,6 +5,10 @@ public class PaymentPurpose {
     public String narrative;
     public int transactionType;
 
+
+    public PaymentPurpose() {
+    }
+
     public PaymentPurpose(String narrative, int transactionType) {
         this.narrative = narrative;
         this.transactionType = transactionType;

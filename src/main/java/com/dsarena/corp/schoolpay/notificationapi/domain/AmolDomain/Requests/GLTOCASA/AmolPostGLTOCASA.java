@@ -5,7 +5,6 @@ public class AmolPostGLTOCASA {
     public PaymentTransaction paymentTransaction;
 
     public AmolPostGLTOCASA() {
-        super();
     }
 
 

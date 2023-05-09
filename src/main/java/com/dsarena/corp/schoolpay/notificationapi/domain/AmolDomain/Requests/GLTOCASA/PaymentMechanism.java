@@ -4,6 +4,10 @@ public class PaymentMechanism {
     public String subCategoryCode;
     public String transactionCategoryCode;
 
+
+    public PaymentMechanism() {
+    }
+
     public PaymentMechanism(String subCategoryCode, String transactionCategoryCode) {
         this.subCategoryCode = subCategoryCode;
         this.transactionCategoryCode = transactionCategoryCode;

@@ -1,6 +1,7 @@
 package com.dsarena.corp.schoolpay.notificationapi.web.rest;
 
 import com.dsarena.corp.schoolpay.notificationapi.Util.PostToAmol;
+import com.dsarena.corp.schoolpay.notificationapi.domain.AmolDomain.Requests.CASATOCASA.ResponseDetails;
 import com.dsarena.corp.schoolpay.notificationapi.domain.SchoolDomain.NotificationResponse;
 import com.dsarena.corp.schoolpay.notificationapi.domain.SchoolDomain.NotifyTransaction;
 import com.dsarena.corp.schoolpay.notificationapi.domain.SchoolDomain.School;
@@ -12,19 +13,20 @@ import com.dsarena.corp.schoolpay.notificationapi.service.SchoolService;
 import com.dsarena.corp.schoolpay.notificationapi.service.dto.NotifyTransactionDTO;
 import com.dsarena.corp.schoolpay.notificationapi.web.rest.errors.BadRequestAlertException;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
-import java.time.LocalDate;
-import java.util.Optional;
-import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.ResponseUtil;
+
+import javax.validation.Valid;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.time.LocalDate;
+import java.util.Optional;
 
 /**
  * REST controller for managing {@link NotifyTransaction}.
@@ -125,8 +127,8 @@ public class NotifyTransactionResource {
             true
         );
 
-        new PostToAmol().postTransactionGLCASA(savedNotifyTransaction, school.get().getSchoolAccountNumber());
-
+        ResponseDetails responseDetails= new PostToAmol().postTransactionGLCASA(savedNotifyTransaction, school.get().getSchoolAccountNumber());
+        log.debug("REQUEST_STRING:  "+responseDetails.getRequest().getBody().toString());
         return ResponseEntity.created(new URI("/notify/" + result.getTransactionUId())).body(responseCreatedResponse);
     }
 

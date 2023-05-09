@@ -1,5 +1,25 @@
 package com.dsarena.corp.schoolpay.notificationapi.web.rest;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.time.LocalDate;
+import java.util.Optional;
+
+import javax.validation.Valid;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.dsarena.corp.schoolpay.notificationapi.Util.PostToAmol;
 import com.dsarena.corp.schoolpay.notificationapi.domain.AmolDomain.Requests.CASATOCASA.ResponseDetails;
 import com.dsarena.corp.schoolpay.notificationapi.domain.SchoolDomain.NotificationResponse;
@@ -13,18 +33,7 @@ import com.dsarena.corp.schoolpay.notificationapi.service.SchoolService;
 import com.dsarena.corp.schoolpay.notificationapi.service.dto.NotifyTransactionDTO;
 import com.dsarena.corp.schoolpay.notificationapi.web.rest.errors.BadRequestAlertException;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
-import java.time.LocalDate;
-import java.util.Optional;
-import javax.validation.Valid;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
@@ -79,7 +88,6 @@ public class NotifyTransactionResource {
         //Do a duplicate check here
         Optional<NotifyTransaction> notifyTransaction = notifyTransactionRepository.findByRecordId(notifyTransactionDTO.getRecordId());
 
-        log.debug("isPresentValue For notifyTransaction: " + notifyTransaction.isPresent());
         if (notifyTransaction.isPresent()) {
             NotificationResponse duplicateResp = new NotificationResponse(
                 String.valueOf(notifyTransaction.get().getAmount()),
@@ -99,6 +107,10 @@ public class NotifyTransactionResource {
                 "not found"
             );
         }
+
+                log.debug("isPresentValue For notifyTransaction: " + notifyTransaction.isPresent());
+                log.debug("isPresentValue For School: "+school.toString() +" IsSCHOOL-PRESENT: "+ school.isPresent());
+
 
         notifyTransactionDTO.setCreditAccount(school.get().getSchoolAccountNumber());
         notifyTransactionDTO.setDebitAccount(school.get().getFreeField1());
@@ -127,6 +139,8 @@ public class NotifyTransactionResource {
         notifyTransactionDTO.setFcrTransactionStatus(ProccesingStatus.PENDING);
         ResponseDetails responseDetails = new PostToAmol()
             .postTransactionGLCASA(savedNotifyTransaction, school.get().getSchoolAccountNumber());
+
+            //route notify
         log.debug("REQUEST_STRING:  " + responseDetails.getRequest().getBody().toString());
         return ResponseEntity.created(new URI("/notify/" + result.getTransactionUId())).body(responseCreatedResponse);
     }

@@ -11,14 +11,6 @@ public class PayerDetails {
     }
 
 
-    public String payerProductInstanceReference() {
-        return this.payerProductInstanceReference;
-    }
-
-    public void payerProductInstanceReference(String payerProductInstanceReference) {
-        this.payerProductInstanceReference = payerProductInstanceReference;
-    }
-
 
    @Override
     public String toString() {
@@ -26,4 +18,12 @@ public class PayerDetails {
                 "payerProductInstanceReference='" + payerProductInstanceReference + '\'' +
                 '}';
     }
+
+public String getPayerProductInstanceReference() {
+    return payerProductInstanceReference;
+}
+
+public void setPayerProductInstanceReference(String payerProductInstanceReference) {
+    this.payerProductInstanceReference = payerProductInstanceReference;
+}
 }

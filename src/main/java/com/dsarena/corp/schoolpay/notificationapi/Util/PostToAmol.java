@@ -4,6 +4,8 @@ import com.dsarena.corp.schoolpay.notificationapi.domain.AmolDomain.Requests.CAS
 import com.dsarena.corp.schoolpay.notificationapi.domain.AmolDomain.Responses.CASATOCASA.AmolResponse;
 import com.dsarena.corp.schoolpay.notificationapi.domain.SchoolDomain.NotifyTransaction;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -12,8 +14,10 @@ import org.springframework.web.client.RestTemplate;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 
+
 public class PostToAmol {
 
+    private final Logger log = LoggerFactory.getLogger(PostToAmol.class);
 
     public ResponseDetails postTransaction(NotifyTransaction nt, String debitAccount)
             throws KeyManagementException, NoSuchAlgorithmException, JsonProcessingException {
@@ -34,10 +38,8 @@ public class PostToAmol {
     public ResponseDetails postTransactionGLCASA(NotifyTransaction nt, String debitAccount)
             throws KeyManagementException, NoSuchAlgorithmException, JsonProcessingException {
 
-
         RestTemplate  restTemplate = new RestTemplate();
         SSLUtils.turnOffSslChecking();
-
         HttpHeaders headers = CoreBankingGL2CASA.generateAmolHeaderGL2CASA(nt);
         String json= CoreBankingGL2CASA.generateAmolRequestGL2CASA(nt,debitAccount);
 

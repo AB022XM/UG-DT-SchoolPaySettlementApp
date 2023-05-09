@@ -1,10 +1,11 @@
 package com.dsarena.corp.schoolpay.notificationapi.Util;
 
-import static com.dsarena.corp.schoolpay.notificationapi.Util.Constants.SALTCHARS;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.util.Random;
+
+import static com.dsarena.corp.schoolpay.notificationapi.Util.Constants.SALTCHARS;
 
 public class Helper {
 
@@ -49,19 +50,8 @@ public class Helper {
         return salt.toString();
     }
 
+
     public static String generateRandomNumber(int length) {
-        String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-        StringBuilder salt = new StringBuilder();
-        Random rnd = new Random();
-        while (salt.length() < length) {
-            int index = (int) (rnd.nextFloat() * SALTCHARS.length());
-
-            salt.append(SALTCHARS.charAt(index));
-        }
-        return salt.toString();
-    }
-
-    public static String generateRandomNumber(int length, int min, int max) {
         StringBuilder salt = new StringBuilder();
         Random rnd = new Random();
         while (salt.length() < length) {

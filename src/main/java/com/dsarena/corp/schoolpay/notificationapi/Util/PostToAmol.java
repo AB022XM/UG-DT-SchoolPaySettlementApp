@@ -44,6 +44,8 @@ public class PostToAmol {
         String json= CoreBankingGL2CASA.generateAmolRequestGL2CASA(nt,debitAccount);
 
         HttpEntity<String> request = new HttpEntity<String>(json, headers);
+        log.debug("REQUEST OBJECT:  "+request.getBody().toString());
+        log.debug("REQUEST HEADERS:  "+request.getHeaders().toString());
         ResponseEntity<AmolResponse> response = restTemplate.postForEntity(Constants.AMOL_POST_URL, request, AmolResponse.class);
 
         return new ResponseDetails(response.getBody(),request);

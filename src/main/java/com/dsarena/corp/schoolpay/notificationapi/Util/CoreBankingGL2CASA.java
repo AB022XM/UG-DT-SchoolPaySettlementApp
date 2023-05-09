@@ -21,7 +21,9 @@ public class CoreBankingGL2CASA {
         paymentTransaction.setCreditAmount(nt.getAmount());
         PaymentPurpose pp = new PaymentPurpose(narrative, 0);
         paymentTransaction.setPaymentPurpose(pp);
-        AmolPostGLTOCASA amolPost = new AmolPostGLTOCASA(paymentTransaction);
+        AmolPostGLTOCASA amolPost = new AmolPostGLTOCASA();
+        amolPost.setPaymentTransaction(paymentTransaction);
+
 
         return Helper.Object2String(amolPost);
     }

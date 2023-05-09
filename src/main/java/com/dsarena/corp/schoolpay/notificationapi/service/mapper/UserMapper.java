@@ -1,7 +1,7 @@
 package com.dsarena.corp.schoolpay.notificationapi.service.mapper;
 
-import com.dsarena.corp.schoolpay.notificationapi.domain.Authority;
-import com.dsarena.corp.schoolpay.notificationapi.domain.User;
+import com.dsarena.corp.schoolpay.notificationapi.domain.SchoolDomain.Authority;
+import com.dsarena.corp.schoolpay.notificationapi.domain.SchoolDomain.User;
 import com.dsarena.corp.schoolpay.notificationapi.service.dto.AdminUserDTO;
 import com.dsarena.corp.schoolpay.notificationapi.service.dto.UserDTO;
 import java.util.*;

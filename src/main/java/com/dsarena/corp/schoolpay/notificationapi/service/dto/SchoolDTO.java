@@ -1,5 +1,6 @@
 package com.dsarena.corp.schoolpay.notificationapi.service.dto;
 
+import com.dsarena.corp.schoolpay.notificationapi.domain.SchoolDomain.School;
 import com.dsarena.corp.schoolpay.notificationapi.domain.enumeration.DELFLAG;
 import com.dsarena.corp.schoolpay.notificationapi.domain.enumeration.RecordStatus;
 import java.io.Serializable;
@@ -10,7 +11,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
- * A DTO for the {@link com.dsarena.corp.schoolpay.notificationapi.domain.School} entity.
+ * A DTO for the {@link School} entity.
  */
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class SchoolDTO implements Serializable {

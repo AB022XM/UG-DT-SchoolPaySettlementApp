@@ -1,7 +1,7 @@
 package com.dsarena.corp.schoolpay.notificationapi.web.rest;
 
 import com.dsarena.corp.schoolpay.notificationapi.config.Constants;
-import com.dsarena.corp.schoolpay.notificationapi.domain.User;
+import com.dsarena.corp.schoolpay.notificationapi.domain.SchoolDomain.User;
 import com.dsarena.corp.schoolpay.notificationapi.repository.UserRepository;
 import com.dsarena.corp.schoolpay.notificationapi.security.AuthoritiesConstants;
 import com.dsarena.corp.schoolpay.notificationapi.service.MailService;
@@ -10,7 +10,7 @@ import com.dsarena.corp.schoolpay.notificationapi.service.dto.AdminUserDTO;
 import com.dsarena.corp.schoolpay.notificationapi.web.rest.errors.BadRequestAlertException;
 import com.dsarena.corp.schoolpay.notificationapi.web.rest.errors.EmailAlreadyUsedException;
 import com.dsarena.corp.schoolpay.notificationapi.web.rest.errors.LoginAlreadyUsedException;
-import io.swagger.v3.oas.annotations.Hidden;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.*;
@@ -36,7 +36,7 @@ import tech.jhipster.web.util.ResponseUtil;
 /**
  * REST controller for managing users.
  * <p>
- * This class accesses the {@link com.dsarena.corp.schoolpay.notificationapi.domain.User} entity, and needs to fetch its collection of authorities.
+ * This class accesses the {@link User} entity, and needs to fetch its collection of authorities.
  * <p>
  * For a normal use-case, it would be better to have an eager relationship between User and Authority,
  * and send everything to the client side: there would be no View Model and DTO, a lot less code, and an outer-join

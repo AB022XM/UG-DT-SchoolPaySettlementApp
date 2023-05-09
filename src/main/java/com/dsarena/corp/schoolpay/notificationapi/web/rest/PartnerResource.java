@@ -1,10 +1,11 @@
 package com.dsarena.corp.schoolpay.notificationapi.web.rest;
 
+import com.dsarena.corp.schoolpay.notificationapi.domain.SchoolDomain.Partner;
 import com.dsarena.corp.schoolpay.notificationapi.repository.PartnerRepository;
 import com.dsarena.corp.schoolpay.notificationapi.service.PartnerService;
 import com.dsarena.corp.schoolpay.notificationapi.service.dto.PartnerDTO;
 import com.dsarena.corp.schoolpay.notificationapi.web.rest.errors.BadRequestAlertException;
-import io.swagger.v3.oas.annotations.Hidden;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -34,7 +35,7 @@ import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
- * REST controller for managing {@link com.dsarena.corp.schoolpay.notificationapi.domain.Partner}.
+ * REST controller for managing {@link Partner}.
  */
 @RestController
 @RequestMapping("/api")

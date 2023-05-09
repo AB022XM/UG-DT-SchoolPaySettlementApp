@@ -1,6 +1,6 @@
 package com.dsarena.corp.schoolpay.notificationapi.web.rest;
 
-import com.dsarena.corp.schoolpay.notificationapi.domain.User;
+import com.dsarena.corp.schoolpay.notificationapi.domain.SchoolDomain.User;
 import com.dsarena.corp.schoolpay.notificationapi.repository.UserRepository;
 import com.dsarena.corp.schoolpay.notificationapi.security.SecurityUtils;
 import com.dsarena.corp.schoolpay.notificationapi.service.MailService;

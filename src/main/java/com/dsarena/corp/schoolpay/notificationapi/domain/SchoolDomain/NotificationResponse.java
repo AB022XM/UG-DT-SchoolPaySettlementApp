@@ -1,4 +1,4 @@
-package com.dsarena.corp.schoolpay.notificationapi.domain.Responses;
+package com.dsarena.corp.schoolpay.notificationapi.domain.SchoolDomain;
 
 public class NotificationResponse {
 

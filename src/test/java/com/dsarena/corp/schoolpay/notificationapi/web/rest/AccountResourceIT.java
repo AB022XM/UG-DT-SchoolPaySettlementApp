@@ -7,14 +7,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.dsarena.corp.schoolpay.notificationapi.IntegrationTest;
 import com.dsarena.corp.schoolpay.notificationapi.config.Constants;
-import com.dsarena.corp.schoolpay.notificationapi.domain.User;
+import com.dsarena.corp.schoolpay.notificationapi.domain.SchoolDomain.User;
 import com.dsarena.corp.schoolpay.notificationapi.repository.AuthorityRepository;
 import com.dsarena.corp.schoolpay.notificationapi.repository.UserRepository;
 import com.dsarena.corp.schoolpay.notificationapi.security.AuthoritiesConstants;
 import com.dsarena.corp.schoolpay.notificationapi.service.UserService;
 import com.dsarena.corp.schoolpay.notificationapi.service.dto.AdminUserDTO;
 import com.dsarena.corp.schoolpay.notificationapi.service.dto.PasswordChangeDTO;
-import com.dsarena.corp.schoolpay.notificationapi.service.dto.UserDTO;
 import com.dsarena.corp.schoolpay.notificationapi.web.rest.vm.KeyAndPasswordVM;
 import com.dsarena.corp.schoolpay.notificationapi.web.rest.vm.ManagedUserVM;
 import java.time.Instant;

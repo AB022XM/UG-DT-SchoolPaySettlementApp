@@ -1145,7 +1145,7 @@
                                 <changeLogFile>${project.basedir}/src/main/resources/config/liquibase/master.xml</changeLogFile>
                                 <diffChangeLogFile>${project.basedir}/src/main/resources/config/liquibase/changelog/${maven.build.timestamp}_changelog.xml</diffChangeLogFile>
                                 <driver>com.mysql.cj.jdbc.Driver</driver>
-                                <url>jdbc:mysql://22.68.25.205:3306/SchoolPaySettlementApp</url>
+                                <url>jdbc:mysql://127.1:3306/SchoolPaySettlementApp</url>
                                 <defaultSchemaName>SchoolPaySettlementApp</defaultSchemaName>
                                 <username>root</username>
                                 <password></password>

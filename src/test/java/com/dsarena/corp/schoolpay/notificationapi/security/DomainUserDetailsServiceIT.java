@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 import com.dsarena.corp.schoolpay.notificationapi.IntegrationTest;
-import com.dsarena.corp.schoolpay.notificationapi.domain.User;
+import com.dsarena.corp.schoolpay.notificationapi.domain.SchoolDomain.User;
 import com.dsarena.corp.schoolpay.notificationapi.repository.UserRepository;
 import java.util.Locale;
 import org.apache.commons.lang3.RandomStringUtils;

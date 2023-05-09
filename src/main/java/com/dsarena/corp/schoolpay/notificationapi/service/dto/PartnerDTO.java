@@ -1,5 +1,6 @@
 package com.dsarena.corp.schoolpay.notificationapi.service.dto;
 
+import com.dsarena.corp.schoolpay.notificationapi.domain.SchoolDomain.Partner;
 import com.dsarena.corp.schoolpay.notificationapi.domain.enumeration.DELFLAG;
 import com.dsarena.corp.schoolpay.notificationapi.domain.enumeration.RecordStatus;
 import java.io.Serializable;
@@ -9,7 +10,7 @@ import java.util.UUID;
 import javax.validation.constraints.*;
 
 /**
- * A DTO for the {@link com.dsarena.corp.schoolpay.notificationapi.domain.Partner} entity.
+ * A DTO for the {@link Partner} entity.
  */
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class PartnerDTO implements Serializable {

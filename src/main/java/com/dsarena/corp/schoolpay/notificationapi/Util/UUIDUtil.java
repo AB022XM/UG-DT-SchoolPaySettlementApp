@@ -1,3 +1,8 @@
+package com.dsarena.corp.schoolpay.notificationapi.Util;
+
+import java.nio.charset.StandardCharsets;
+import java.util.UUID;
+
 public class UUIDUtil {
 
     /**
@@ -36,10 +41,10 @@ public class UUIDUtil {
         };
     }
 
-    public static void generationUUID(String recordIdplusstudentCodePlusAmountpusTransactionId) {
+    public static String generationUUID(String recordIdplusstudentCodePlusAmountpusTransactionId) {
         UUID namespace = UUID.fromString("11111111-2222-3333-4444-555555555555");
 
         UUID uuid = getNameBased(namespace, recordIdplusstudentCodePlusAmountpusTransactionId);
-        System.out.println(uuid);
+        return uuid + "";
     }
 }

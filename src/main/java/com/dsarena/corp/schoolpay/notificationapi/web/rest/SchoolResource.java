@@ -1,5 +1,6 @@
 package com.dsarena.corp.schoolpay.notificationapi.web.rest;
 
+import com.dsarena.corp.schoolpay.notificationapi.domain.SchoolDomain.School;
 import com.dsarena.corp.schoolpay.notificationapi.repository.SchoolRepository;
 import com.dsarena.corp.schoolpay.notificationapi.service.SchoolService;
 import com.dsarena.corp.schoolpay.notificationapi.service.dto.SchoolDTO;
@@ -17,7 +18,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -26,7 +26,7 @@ import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
- * REST controller for managing {@link com.dsarena.corp.schoolpay.notificationapi.domain.School}.
+ * REST controller for managing {@link School}.
  */
 @RestController
 @RequestMapping("/api")

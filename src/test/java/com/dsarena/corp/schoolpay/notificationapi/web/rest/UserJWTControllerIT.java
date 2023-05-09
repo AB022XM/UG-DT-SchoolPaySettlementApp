@@ -10,7 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.dsarena.corp.schoolpay.notificationapi.IntegrationTest;
-import com.dsarena.corp.schoolpay.notificationapi.domain.User;
+import com.dsarena.corp.schoolpay.notificationapi.domain.SchoolDomain.User;
 import com.dsarena.corp.schoolpay.notificationapi.repository.UserRepository;
 import com.dsarena.corp.schoolpay.notificationapi.web.rest.vm.LoginVM;
 import org.junit.jupiter.api.Test;

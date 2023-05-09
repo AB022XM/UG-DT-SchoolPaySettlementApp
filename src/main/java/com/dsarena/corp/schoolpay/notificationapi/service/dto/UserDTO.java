@@ -1,6 +1,6 @@
 package com.dsarena.corp.schoolpay.notificationapi.service.dto;
 
-import com.dsarena.corp.schoolpay.notificationapi.domain.User;
+import com.dsarena.corp.schoolpay.notificationapi.domain.SchoolDomain.User;
 import java.io.Serializable;
 
 /**

@@ -2,7 +2,7 @@ package com.dsarena.corp.schoolpay.notificationapi.service.mapper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.dsarena.corp.schoolpay.notificationapi.domain.User;
+import com.dsarena.corp.schoolpay.notificationapi.domain.SchoolDomain.User;
 import com.dsarena.corp.schoolpay.notificationapi.service.dto.AdminUserDTO;
 import com.dsarena.corp.schoolpay.notificationapi.service.dto.UserDTO;
 import java.util.ArrayList;

@@ -1,8 +1,8 @@
 package com.dsarena.corp.schoolpay.notificationapi.service.dto;
 
 import com.dsarena.corp.schoolpay.notificationapi.config.Constants;
-import com.dsarena.corp.schoolpay.notificationapi.domain.Authority;
-import com.dsarena.corp.schoolpay.notificationapi.domain.User;
+import com.dsarena.corp.schoolpay.notificationapi.domain.SchoolDomain.Authority;
+import com.dsarena.corp.schoolpay.notificationapi.domain.SchoolDomain.User;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Set;

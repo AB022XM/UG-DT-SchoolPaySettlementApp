@@ -1,24 +1,34 @@
-package com.dsarena.corp.schoolpay.notificationapi.domain;
+package com.dsarena.corp.schoolpay.notificationapi.domain.SchoolDomain;
 
 import com.dsarena.corp.schoolpay.notificationapi.domain.enumeration.DELFLAG;
 import com.dsarena.corp.schoolpay.notificationapi.domain.enumeration.RecordStatus;
+import com.dsarena.corp.schoolpay.notificationapi.service.dto.SchoolDTO;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Optional;
 import java.util.UUID;
-import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Type;
 
 /**
- * A Partner.
+ * A School.
  */
 @Entity
-@Table(name = "partner")
+@Table(name = "school")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @SuppressWarnings("common-java:DuplicatedBlocks")
-public class Partner implements Serializable {
+public class School implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -29,32 +39,32 @@ public class Partner implements Serializable {
 
     @NotNull
     @Type(type = "uuid-char")
-    @Column(name = "partner_id", length = 36, nullable = false, unique = true)
-    private UUID partnerId;
+    @Column(name = "school_id", length = 36, nullable = false, unique = true)
+    private UUID schoolId;
 
     @NotNull
-    @Column(name = "partner_code", nullable = false)
-    private Integer partnerCode;
+    @Column(name = "school_code", nullable = false, unique = true)
+    private String schoolCode;
 
-    @Column(name = "partner_shortcode")
-    private Integer partnerShortcode;
+    @NotNull
+    @Column(name = "school_shortcode", nullable = false)
+    private Integer schoolShortcode;
 
-    @Column(name = "phonenumber")
+    @NotNull
+    @Column(name = "phonenumber", nullable = false)
     private String phonenumber;
 
     @Column(name = "address")
     private String address;
 
     @NotNull
-    @Size(min = 3, max = 100)
-    @Column(name = "partner_name", length = 100, nullable = false)
-    private String partnerName;
+    @Size(min = 3, max = 200)
+    @Column(name = "school_name", length = 200, nullable = false)
+    private String schoolName;
 
-    @Column(name = "registrationdate")
+    @NotNull
+    @Column(name = "registrationdate", nullable = false)
     private LocalDate registrationdate;
-
-    @Column(name = "is_absa_partner")
-    private Boolean isAbsaPartner;
 
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -70,15 +80,14 @@ public class Partner implements Serializable {
     @Column(name = "free_field_3")
     private String freeField3;
 
-    @Column(name = "provide_debit_account")
-    private Boolean provideDebitAccount;
+    @Column(name = "is_school_account_number_absa")
+    private Boolean isSchoolAccountNumberABSA;
 
-    @Column(name = "provide_credit_account")
-    private Boolean provideCreditAccount;
+    @Column(name = "school_account_number")
+    private String schoolAccountNumber;
 
-    @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "is_deleted", nullable = false)
+    @Column(name = "is_deleted")
     private DELFLAG isDeleted;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -87,7 +96,7 @@ public class Partner implements Serializable {
         return this.id;
     }
 
-    public Partner id(Long id) {
+    public School id(Long id) {
         this.setId(id);
         return this;
     }
@@ -96,50 +105,50 @@ public class Partner implements Serializable {
         this.id = id;
     }
 
-    public UUID getPartnerId() {
-        return this.partnerId;
+    public UUID getSchoolId() {
+        return this.schoolId;
     }
 
-    public Partner partnerId(UUID partnerId) {
-        this.setPartnerId(partnerId);
+    public School schoolId(UUID schoolId) {
+        this.setSchoolId(schoolId);
         return this;
     }
 
-    public void setPartnerId(UUID partnerId) {
-        this.partnerId = partnerId;
+    public void setSchoolId(UUID schoolId) {
+        this.schoolId = schoolId;
     }
 
-    public Integer getPartnerCode() {
-        return this.partnerCode;
+    public String getSchoolCode() {
+        return this.schoolCode;
     }
 
-    public Partner partnerCode(Integer partnerCode) {
-        this.setPartnerCode(partnerCode);
+    public School schoolCode(String schoolCode) {
+        this.setSchoolCode(schoolCode);
         return this;
     }
 
-    public void setPartnerCode(Integer partnerCode) {
-        this.partnerCode = partnerCode;
+    public void setSchoolCode(String schoolCode) {
+        this.schoolCode = schoolCode;
     }
 
-    public Integer getPartnerShortcode() {
-        return this.partnerShortcode;
+    public Integer getSchoolShortcode() {
+        return this.schoolShortcode;
     }
 
-    public Partner partnerShortcode(Integer partnerShortcode) {
-        this.setPartnerShortcode(partnerShortcode);
+    public School schoolShortcode(Integer schoolShortcode) {
+        this.setSchoolShortcode(schoolShortcode);
         return this;
     }
 
-    public void setPartnerShortcode(Integer partnerShortcode) {
-        this.partnerShortcode = partnerShortcode;
+    public void setSchoolShortcode(Integer schoolShortcode) {
+        this.schoolShortcode = schoolShortcode;
     }
 
     public String getPhonenumber() {
         return this.phonenumber;
     }
 
-    public Partner phonenumber(String phonenumber) {
+    public School phonenumber(String phonenumber) {
         this.setPhonenumber(phonenumber);
         return this;
     }
@@ -152,7 +161,7 @@ public class Partner implements Serializable {
         return this.address;
     }
 
-    public Partner address(String address) {
+    public School address(String address) {
         this.setAddress(address);
         return this;
     }
@@ -161,24 +170,24 @@ public class Partner implements Serializable {
         this.address = address;
     }
 
-    public String getPartnerName() {
-        return this.partnerName;
+    public String getSchoolName() {
+        return this.schoolName;
     }
 
-    public Partner partnerName(String partnerName) {
-        this.setPartnerName(partnerName);
+    public School schoolName(String schoolName) {
+        this.setSchoolName(schoolName);
         return this;
     }
 
-    public void setPartnerName(String partnerName) {
-        this.partnerName = partnerName;
+    public void setSchoolName(String schoolName) {
+        this.schoolName = schoolName;
     }
 
     public LocalDate getRegistrationdate() {
         return this.registrationdate;
     }
 
-    public Partner registrationdate(LocalDate registrationdate) {
+    public School registrationdate(LocalDate registrationdate) {
         this.setRegistrationdate(registrationdate);
         return this;
     }
@@ -187,24 +196,11 @@ public class Partner implements Serializable {
         this.registrationdate = registrationdate;
     }
 
-    public Boolean getIsAbsaPartner() {
-        return this.isAbsaPartner;
-    }
-
-    public Partner isAbsaPartner(Boolean isAbsaPartner) {
-        this.setIsAbsaPartner(isAbsaPartner);
-        return this;
-    }
-
-    public void setIsAbsaPartner(Boolean isAbsaPartner) {
-        this.isAbsaPartner = isAbsaPartner;
-    }
-
     public RecordStatus getStatus() {
         return this.status;
     }
 
-    public Partner status(RecordStatus status) {
+    public School status(RecordStatus status) {
         this.setStatus(status);
         return this;
     }
@@ -217,7 +213,7 @@ public class Partner implements Serializable {
         return this.freeField1;
     }
 
-    public Partner freeField1(String freeField1) {
+    public School freeField1(String freeField1) {
         this.setFreeField1(freeField1);
         return this;
     }
@@ -230,7 +226,7 @@ public class Partner implements Serializable {
         return this.freeField2;
     }
 
-    public Partner freeField2(String freeField2) {
+    public School freeField2(String freeField2) {
         this.setFreeField2(freeField2);
         return this;
     }
@@ -243,7 +239,7 @@ public class Partner implements Serializable {
         return this.freeField3;
     }
 
-    public Partner freeField3(String freeField3) {
+    public School freeField3(String freeField3) {
         this.setFreeField3(freeField3);
         return this;
     }
@@ -252,37 +248,37 @@ public class Partner implements Serializable {
         this.freeField3 = freeField3;
     }
 
-    public Boolean getProvideDebitAccount() {
-        return this.provideDebitAccount;
+    public Boolean getIsSchoolAccountNumberABSA() {
+        return this.isSchoolAccountNumberABSA;
     }
 
-    public Partner provideDebitAccount(Boolean provideDebitAccount) {
-        this.setProvideDebitAccount(provideDebitAccount);
+    public School isSchoolAccountNumberABSA(Boolean isSchoolAccountNumberABSA) {
+        this.setIsSchoolAccountNumberABSA(isSchoolAccountNumberABSA);
         return this;
     }
 
-    public void setProvideDebitAccount(Boolean provideDebitAccount) {
-        this.provideDebitAccount = provideDebitAccount;
+    public void setIsSchoolAccountNumberABSA(Boolean isSchoolAccountNumberABSA) {
+        this.isSchoolAccountNumberABSA = isSchoolAccountNumberABSA;
     }
 
-    public Boolean getProvideCreditAccount() {
-        return this.provideCreditAccount;
+    public String getSchoolAccountNumber() {
+        return this.schoolAccountNumber;
     }
 
-    public Partner provideCreditAccount(Boolean provideCreditAccount) {
-        this.setProvideCreditAccount(provideCreditAccount);
+    public School schoolAccountNumber(String schoolAccountNumber) {
+        this.setSchoolAccountNumber(schoolAccountNumber);
         return this;
     }
 
-    public void setProvideCreditAccount(Boolean provideCreditAccount) {
-        this.provideCreditAccount = provideCreditAccount;
+    public void setSchoolAccountNumber(String schoolAccountNumber) {
+        this.schoolAccountNumber = schoolAccountNumber;
     }
 
     public DELFLAG getIsDeleted() {
         return this.isDeleted;
     }
 
-    public Partner isDeleted(DELFLAG isDeleted) {
+    public School isDeleted(DELFLAG isDeleted) {
         this.setIsDeleted(isDeleted);
         return this;
     }
@@ -298,10 +294,10 @@ public class Partner implements Serializable {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof Partner)) {
+        if (!(o instanceof School)) {
             return false;
         }
-        return id != null && id.equals(((Partner) o).id);
+        return id != null && id.equals(((School) o).id);
     }
 
     @Override
@@ -313,23 +309,26 @@ public class Partner implements Serializable {
     // prettier-ignore
     @Override
     public String toString() {
-        return "Partner{" +
+        return "School{" +
             "id=" + getId() +
-            ", partnerId='" + getPartnerId() + "'" +
-            ", partnerCode=" + getPartnerCode() +
-            ", partnerShortcode=" + getPartnerShortcode() +
+            ", schoolId='" + getSchoolId() + "'" +
+            ", schoolCode='" + getSchoolCode() + "'" +
+            ", schoolShortcode=" + getSchoolShortcode() +
             ", phonenumber='" + getPhonenumber() + "'" +
             ", address='" + getAddress() + "'" +
-            ", partnerName='" + getPartnerName() + "'" +
+            ", schoolName='" + getSchoolName() + "'" +
             ", registrationdate='" + getRegistrationdate() + "'" +
-            ", isAbsaPartner='" + getIsAbsaPartner() + "'" +
             ", status='" + getStatus() + "'" +
             ", freeField1='" + getFreeField1() + "'" +
             ", freeField2='" + getFreeField2() + "'" +
             ", freeField3='" + getFreeField3() + "'" +
-            ", provideDebitAccount='" + getProvideDebitAccount() + "'" +
-            ", provideCreditAccount='" + getProvideCreditAccount() + "'" +
+            ", isSchoolAccountNumberABSA='" + getIsSchoolAccountNumberABSA() + "'" +
+            ", schoolAccountNumber='" + getSchoolAccountNumber() + "'" +
             ", isDeleted='" + getIsDeleted() + "'" +
             "}";
+    }
+
+    public Optional<SchoolDTO> map(Object object) {
+        return null;
     }
 }

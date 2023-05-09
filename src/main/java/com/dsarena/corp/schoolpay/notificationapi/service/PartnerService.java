@@ -1,6 +1,6 @@
 package com.dsarena.corp.schoolpay.notificationapi.service;
 
-import com.dsarena.corp.schoolpay.notificationapi.domain.Partner;
+import com.dsarena.corp.schoolpay.notificationapi.domain.SchoolDomain.Partner;
 import com.dsarena.corp.schoolpay.notificationapi.repository.PartnerRepository;
 import com.dsarena.corp.schoolpay.notificationapi.service.dto.PartnerDTO;
 import com.dsarena.corp.schoolpay.notificationapi.service.mapper.PartnerMapper;

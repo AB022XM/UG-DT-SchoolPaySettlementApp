@@ -12,7 +12,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.dsarena.corp.schoolpay.notificationapi.IntegrationTest;
-import com.dsarena.corp.schoolpay.notificationapi.domain.NotifyTransaction;
+import com.dsarena.corp.schoolpay.notificationapi.domain.SchoolDomain.NotifyTransaction;
 import com.dsarena.corp.schoolpay.notificationapi.domain.enumeration.ProccesingStatus;
 import com.dsarena.corp.schoolpay.notificationapi.repository.NotifyTransactionRepository;
 import com.dsarena.corp.schoolpay.notificationapi.service.dto.NotifyTransactionDTO;

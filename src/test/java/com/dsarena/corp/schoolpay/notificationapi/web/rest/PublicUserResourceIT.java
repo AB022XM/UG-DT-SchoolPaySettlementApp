@@ -6,7 +6,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.dsarena.corp.schoolpay.notificationapi.IntegrationTest;
-import com.dsarena.corp.schoolpay.notificationapi.domain.User;
+import com.dsarena.corp.schoolpay.notificationapi.domain.SchoolDomain.User;
 import com.dsarena.corp.schoolpay.notificationapi.repository.UserRepository;
 import com.dsarena.corp.schoolpay.notificationapi.security.AuthoritiesConstants;
 import javax.persistence.EntityManager;

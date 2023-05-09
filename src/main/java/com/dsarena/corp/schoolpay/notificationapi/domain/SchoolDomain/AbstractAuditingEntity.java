@@ -1,4 +1,4 @@
-package com.dsarena.corp.schoolpay.notificationapi.domain;
+package com.dsarena.corp.schoolpay.notificationapi.domain.SchoolDomain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;

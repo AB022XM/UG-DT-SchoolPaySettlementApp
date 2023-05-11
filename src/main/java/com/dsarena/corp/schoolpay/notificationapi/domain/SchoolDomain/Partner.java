@@ -2,11 +2,21 @@ package com.dsarena.corp.schoolpay.notificationapi.domain.SchoolDomain;
 
 import com.dsarena.corp.schoolpay.notificationapi.domain.enumeration.DELFLAG;
 import com.dsarena.corp.schoolpay.notificationapi.domain.enumeration.RecordStatus;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
-import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Type;
@@ -51,7 +61,8 @@ public class Partner implements Serializable {
     private String partnerName;
 
     @Column(name = "registrationdate")
-    private LocalDate registrationdate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss[.SSS][.SS][.S]")
+    private LocalDateTime registrationdate;
 
     @Column(name = "is_absa_partner")
     private Boolean isAbsaPartner;
@@ -174,16 +185,16 @@ public class Partner implements Serializable {
         this.partnerName = partnerName;
     }
 
-    public LocalDate getRegistrationdate() {
+    public LocalDateTime getRegistrationdate() {
         return this.registrationdate;
     }
 
-    public Partner registrationdate(LocalDate registrationdate) {
+    public Partner registrationdate(LocalDateTime registrationdate) {
         this.setRegistrationdate(registrationdate);
         return this;
     }
 
-    public void setRegistrationdate(LocalDate registrationdate) {
+    public void setRegistrationdate(LocalDateTime registrationdate) {
         this.registrationdate = registrationdate;
     }
 

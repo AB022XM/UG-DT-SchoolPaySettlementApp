@@ -14,7 +14,7 @@
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="transaction_u_id" type="integer">
+            <column name="transaction_u_id" type="(255)">
                 <constraints nullable="false" unique="true" uniqueConstraintName="ux_notify_transaction__transaction_u_id" />
             </column>
             <column name="record_id" type="integer">
@@ -116,7 +116,7 @@
                   tableName="notify_transaction"
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
-            <column name="transaction_u_id" type="numeric"/>
+            <column name="transaction_u_id" type="string"/>
             <column name="record_id" type="numeric"/>
             <column name="customer_payment_code" type="string"/>
             <column name="school_name" type="string"/>

@@ -14,4 +14,11 @@ public class Constants {
     public static String LOCALDIRECTPAYT = "LOCALDIRECTPAYT";
 
     public static String GLTOCASA = "GLTOCASA";
+
+    public static String SUCCESS = "Success";
+
+    public static String FAILED = "Failed";
+
+    public static String LOCAL_DATE_TIME_FORMART_AMOL = "yyyy-MM-dd'T'HH:mm:ss[.SSS][.SS][.S]Z";
+    public static final String LOCAL_DATE_TIME_FORMART[] = { "yyyy-MM-dd'T'HH:mm:ss" };
 }

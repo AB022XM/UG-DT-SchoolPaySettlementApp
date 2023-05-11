@@ -1,61 +1,82 @@
 package com.dsarena.corp.schoolpay.notificationapi.domain.AmolDomain.Responses.CASATOCASA;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 public class AmolResponse {
 
-    @JsonProperty("code")
+    private String code;
+    private Data data;
+    private String message;
+    private Object sourceInfo;
+    private String status;
+
+    public AmolResponse() {}
+
+    public AmolResponse(String code, Data data, String message, Object sourceInfo, String status) {
+        this.code = code;
+        this.data = data;
+        this.message = message;
+        this.sourceInfo = sourceInfo;
+
+        this.status = status;
+    }
+
     public String getCode() {
-        return this.code;
+        return code;
     }
 
     public void setCode(String code) {
         this.code = code;
     }
 
-    String code;
-
-    @JsonProperty("data")
     public Data getData() {
-        return this.data;
+        return data;
     }
 
     public void setData(Data data) {
         this.data = data;
     }
 
-    Data data;
-
-    @JsonProperty("message")
     public String getMessage() {
-        return this.message;
+        return message;
     }
 
     public void setMessage(String message) {
         this.message = message;
     }
 
-    String message;
-
-    @JsonProperty("sourceInfo")
     public Object getSourceInfo() {
-        return this.sourceInfo;
+        return sourceInfo;
     }
 
     public void setSourceInfo(Object sourceInfo) {
         this.sourceInfo = sourceInfo;
     }
 
-    Object sourceInfo;
-
-    @JsonProperty("status")
     public String getStatus() {
-        return this.status;
+        return status;
     }
 
     public void setStatus(String status) {
         this.status = status;
     }
 
-    String status;
+    @Override
+    public String toString() {
+        return (
+            "Response{" +
+            "code='" +
+            code +
+            '\'' +
+            ", data=" +
+            data.toString() +
+            ", message='" +
+            message +
+            '\'' +
+            ", sourceInfo=" +
+            sourceInfo +
+            ", status='" +
+            status +
+            '\'' +
+            '}'
+        );
+    }
 }

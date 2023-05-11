@@ -4,7 +4,7 @@ import com.dsarena.corp.schoolpay.notificationapi.domain.SchoolDomain.School;
 import com.dsarena.corp.schoolpay.notificationapi.domain.enumeration.DELFLAG;
 import com.dsarena.corp.schoolpay.notificationapi.domain.enumeration.RecordStatus;
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 import javax.validation.constraints.NotNull;
@@ -37,7 +37,7 @@ public class SchoolDTO implements Serializable {
     private String schoolName;
 
     @NotNull
-    private LocalDate registrationdate;
+    private LocalDateTime registrationdate;
 
     @NotNull
     private RecordStatus status;
@@ -110,11 +110,11 @@ public class SchoolDTO implements Serializable {
         this.schoolName = schoolName;
     }
 
-    public LocalDate getRegistrationdate() {
+    public LocalDateTime getRegistrationdate() {
         return registrationdate;
     }
 
-    public void setRegistrationdate(LocalDate registrationdate) {
+    public void setRegistrationdate(LocalDateTime registrationdate) {
         this.registrationdate = registrationdate;
     }
 

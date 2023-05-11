@@ -2,8 +2,14 @@ package com.dsarena.corp.schoolpay.notificationapi.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.dsarena.corp.schoolpay.notificationapi.IntegrationTest;
 import com.dsarena.corp.schoolpay.notificationapi.domain.SchoolDomain.Partner;
@@ -12,7 +18,7 @@ import com.dsarena.corp.schoolpay.notificationapi.domain.enumeration.RecordStatu
 import com.dsarena.corp.schoolpay.notificationapi.repository.PartnerRepository;
 import com.dsarena.corp.schoolpay.notificationapi.service.dto.PartnerDTO;
 import com.dsarena.corp.schoolpay.notificationapi.service.mapper.PartnerMapper;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
 import java.util.Random;
@@ -54,8 +60,8 @@ class PartnerResourceIT {
     private static final String DEFAULT_PARTNER_NAME = "AAAAAAAAAA";
     private static final String UPDATED_PARTNER_NAME = "BBBBBBBBBB";
 
-    private static final LocalDate DEFAULT_REGISTRATIONDATE = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_REGISTRATIONDATE = LocalDate.now(ZoneId.systemDefault());
+    private static final LocalDateTime DEFAULT_REGISTRATIONDATE = LocalDateTime.now();
+    private static final LocalDateTime UPDATED_REGISTRATIONDATE = LocalDateTime.now(ZoneId.systemDefault());
 
     private static final Boolean DEFAULT_IS_ABSA_PARTNER = false;
     private static final Boolean UPDATED_IS_ABSA_PARTNER = true;

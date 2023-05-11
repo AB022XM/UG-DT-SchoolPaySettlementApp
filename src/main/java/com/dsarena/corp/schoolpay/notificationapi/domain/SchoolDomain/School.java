@@ -3,8 +3,9 @@ package com.dsarena.corp.schoolpay.notificationapi.domain.SchoolDomain;
 import com.dsarena.corp.schoolpay.notificationapi.domain.enumeration.DELFLAG;
 import com.dsarena.corp.schoolpay.notificationapi.domain.enumeration.RecordStatus;
 import com.dsarena.corp.schoolpay.notificationapi.service.dto.SchoolDTO;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 import javax.persistence.Column;
@@ -64,7 +65,8 @@ public class School implements Serializable {
 
     @NotNull
     @Column(name = "registrationdate", nullable = false)
-    private LocalDate registrationdate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss[.SSS][.SS][.S]")
+    private LocalDateTime registrationdate;
 
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -183,16 +185,16 @@ public class School implements Serializable {
         this.schoolName = schoolName;
     }
 
-    public LocalDate getRegistrationdate() {
+    public LocalDateTime getRegistrationdate() {
         return this.registrationdate;
     }
 
-    public School registrationdate(LocalDate registrationdate) {
+    public School registrationdate(LocalDateTime registrationdate) {
         this.setRegistrationdate(registrationdate);
         return this;
     }
 
-    public void setRegistrationdate(LocalDate registrationdate) {
+    public void setRegistrationdate(LocalDateTime registrationdate) {
         this.registrationdate = registrationdate;
     }
 

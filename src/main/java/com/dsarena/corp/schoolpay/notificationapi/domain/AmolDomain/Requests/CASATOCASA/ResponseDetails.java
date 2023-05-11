@@ -4,32 +4,28 @@ import com.dsarena.corp.schoolpay.notificationapi.domain.AmolDomain.Responses.CA
 import org.springframework.http.HttpEntity;
 
 public class ResponseDetails {
+
     AmolResponse amolResponse;
-   HttpEntity<String> request;
+    HttpEntity<String> request;
 
-   public ResponseDetails(AmolResponse amolResponse,HttpEntity<String> request){
-       this.amolResponse = amolResponse;
-       this.request = request;
-   }
+    public ResponseDetails(AmolResponse amolResponse, HttpEntity<String> request) {
+        this.amolResponse = amolResponse;
+        this.request = request;
+    }
 
-   public AmolResponse getAmolResponse(){
-       return amolResponse;
-   }
+    public AmolResponse getAmolResponse() {
+        return amolResponse;
+    }
 
-   public HttpEntity<String> getRequest(){
-       return request;
-   }
+    public HttpEntity<String> getRequest() {
+        return request;
+    }
 
-   public void setAmolResponse(AmolResponse amolResponse){
-       this.amolResponse = amolResponse;
-   }
+    public void setAmolResponse(AmolResponse amolResponse) {
+        this.amolResponse = amolResponse;
+    }
 
-   public void setRequest(HttpEntity<String> request){
-       this.request = request;
-
-
-   }
-
-
-
+    public void setRequest(HttpEntity<String> request) {
+        this.request = request;
+    }
 }

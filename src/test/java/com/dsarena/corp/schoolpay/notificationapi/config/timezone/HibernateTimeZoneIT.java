@@ -6,7 +6,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 import com.dsarena.corp.schoolpay.notificationapi.IntegrationTest;
 import com.dsarena.corp.schoolpay.notificationapi.repository.timezone.DateTimeWrapper;
 import com.dsarena.corp.schoolpay.notificationapi.repository.timezone.DateTimeWrapperRepository;
-import java.time.*;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.Month;
+import java.time.OffsetDateTime;
+import java.time.OffsetTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -40,7 +48,7 @@ class HibernateTimeZoneIT {
     public void setup() {
         dateTimeWrapper = new DateTimeWrapper();
         dateTimeWrapper.setInstant(Instant.parse("2014-11-12T05:50:00.0Z"));
-        dateTimeWrapper.setLocalDateTime(LocalDateTime.parse("2014-11-12T07:50:00.0"));
+        dateTimeWrapper.setLocalDateTime(LocalDateTime.parse("2014-11-12T07:50:00"));
         dateTimeWrapper.setOffsetDateTime(OffsetDateTime.parse("2011-12-14T08:30:00.0Z"));
         dateTimeWrapper.setZonedDateTime(ZonedDateTime.parse("2011-12-14T08:30:00.0Z"));
         dateTimeWrapper.setLocalTime(LocalTime.parse("14:30:00"));

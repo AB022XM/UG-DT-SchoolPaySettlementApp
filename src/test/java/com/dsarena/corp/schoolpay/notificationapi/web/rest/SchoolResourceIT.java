@@ -18,7 +18,7 @@ import com.dsarena.corp.schoolpay.notificationapi.domain.enumeration.RecordStatu
 import com.dsarena.corp.schoolpay.notificationapi.repository.SchoolRepository;
 import com.dsarena.corp.schoolpay.notificationapi.service.dto.SchoolDTO;
 import com.dsarena.corp.schoolpay.notificationapi.service.mapper.SchoolMapper;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
 import java.util.Random;
@@ -60,8 +60,8 @@ class SchoolResourceIT {
     private static final String DEFAULT_SCHOOL_NAME = "AAAAAAAAAA";
     private static final String UPDATED_SCHOOL_NAME = "BBBBBBBBBB";
 
-    private static final LocalDate DEFAULT_REGISTRATIONDATE = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_REGISTRATIONDATE = LocalDate.now(ZoneId.systemDefault());
+    private static final LocalDateTime DEFAULT_REGISTRATIONDATE = LocalDateTime.now();
+    private static final LocalDateTime UPDATED_REGISTRATIONDATE = LocalDateTime.now(ZoneId.systemDefault());
 
     private static final RecordStatus DEFAULT_STATUS = RecordStatus.ACTIVE;
     private static final RecordStatus UPDATED_STATUS = RecordStatus.INACTIVE;

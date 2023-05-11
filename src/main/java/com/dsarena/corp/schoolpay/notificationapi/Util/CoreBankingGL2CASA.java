@@ -1,20 +1,19 @@
 package com.dsarena.corp.schoolpay.notificationapi.Util;
 
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-
 import com.dsarena.corp.schoolpay.notificationapi.domain.AmolDomain.Requests.GLTOCASA.AmolPostGLTOCASA;
 import com.dsarena.corp.schoolpay.notificationapi.domain.AmolDomain.Requests.GLTOCASA.PayeeDetails;
 import com.dsarena.corp.schoolpay.notificationapi.domain.AmolDomain.Requests.GLTOCASA.PayerDetails;
 import com.dsarena.corp.schoolpay.notificationapi.domain.AmolDomain.Requests.GLTOCASA.PaymentMechanism;
 import com.dsarena.corp.schoolpay.notificationapi.domain.AmolDomain.Requests.GLTOCASA.PaymentPurpose;
 import com.dsarena.corp.schoolpay.notificationapi.domain.AmolDomain.Requests.GLTOCASA.PaymentTransaction;
-import com.dsarena.corp.schoolpay.notificationapi.domain.SchoolDomain.NotifyTransaction;
+import com.dsarena.corp.schoolpay.notificationapi.service.dto.NotifyTransactionDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 
 public class CoreBankingGL2CASA {
 
-    public static String generateAmolRequestGL2CASA(NotifyTransaction nt, String debitAccount) throws JsonProcessingException {
+    public static String generateAmolRequestGL2CASA(NotifyTransactionDTO nt) throws JsonProcessingException {
         String narrative = nt.getSourcePaymentChannelCode() + " | " + nt.getRecordId() + " | " + nt.getStudentCode();
         AmolPostGLTOCASA amolPost = new AmolPostGLTOCASA();
         PaymentTransaction paymentTransaction = new PaymentTransaction();
@@ -37,7 +36,7 @@ public class CoreBankingGL2CASA {
         return Helper.Object2String(amolPost);
     }
 
-    public static HttpHeaders generateAmolHeaderGL2CASA(NotifyTransaction nt) {
+    public static HttpHeaders generateAmolHeaderGL2CASA(NotifyTransactionDTO nt) {
         String CorrectionId = UUIDUtil.generationUUID(
             String.valueOf(nt.getRecordId()) + nt.getTransactionUId() + String.valueOf(nt.getAmount()) + nt.getTransactionUId()
         );

@@ -5,6 +5,7 @@ import com.dsarena.corp.schoolpay.notificationapi.domain.enumeration.ProccesingS
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 import javax.annotation.Nullable;
 import javax.validation.constraints.Max;
@@ -20,7 +21,7 @@ public class NotifyTransactionDTO implements Serializable {
     private Long id;
 
     @Nullable
-    private Integer transactionUId;
+    private String transactionUId;
 
     private Integer recordId;
 
@@ -47,6 +48,8 @@ public class NotifyTransactionDTO implements Serializable {
     @JsonIgnore
     private String partnerCode;
 
+    //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+
     @NotNull
     private LocalDate dateCreated;
 
@@ -65,7 +68,7 @@ public class NotifyTransactionDTO implements Serializable {
 
     @Nullable
     @JsonIgnore
-    private LocalDate timestamp;
+    private LocalDateTime timestamp;
 
     @Nullable
     @JsonIgnore
@@ -105,11 +108,11 @@ public class NotifyTransactionDTO implements Serializable {
         this.id = id;
     }
 
-    public Integer getTransactionUId() {
+    public String getTransactionUId() {
         return transactionUId;
     }
 
-    public void setTransactionUId(Integer transactionUId) {
+    public void setTransactionUId(String transactionUId) {
         this.transactionUId = transactionUId;
     }
 
@@ -177,8 +180,8 @@ public class NotifyTransactionDTO implements Serializable {
         this.partnerCode = partnerCode;
     }
 
-    public LocalDate getDateCreated() {
-        return dateCreated;
+    public LocalDateTime getDateCreated() {
+        return LocalDateTime.now();
     }
 
     public void setDateCreated(LocalDate dateCreated) {
@@ -217,11 +220,11 @@ public class NotifyTransactionDTO implements Serializable {
         this.charges = charges;
     }
 
-    public LocalDate getTimestamp() {
-        return timestamp;
+    public LocalDateTime getTimestamp() {
+        return LocalDateTime.now();
     }
 
-    public void setTimestamp(LocalDate timestamp) {
+    public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
     }
 
@@ -238,7 +241,7 @@ public class NotifyTransactionDTO implements Serializable {
     }
 
     public void setCurrency(String currency) {
-        this.currency = currency;
+        this.currency = "UGX";
     }
 
     public String getDebitAccount() {

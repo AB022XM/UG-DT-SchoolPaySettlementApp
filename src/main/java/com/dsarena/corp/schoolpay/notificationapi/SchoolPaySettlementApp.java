@@ -2,10 +2,6 @@ package com.dsarena.corp.schoolpay.notificationapi;
 
 import com.dsarena.corp.schoolpay.notificationapi.config.ApplicationProperties;
 import com.dsarena.corp.schoolpay.notificationapi.config.CRLFLogConverter;
-import com.dsarena.corp.schoolpay.notificationapi.repository.NotifyTransactionRepository;
-import com.dsarena.corp.schoolpay.notificationapi.repository.SchoolRepository;
-import com.dsarena.corp.schoolpay.notificationapi.service.NotifyTransactionService;
-import com.dsarena.corp.schoolpay.notificationapi.service.SchoolService;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Arrays;

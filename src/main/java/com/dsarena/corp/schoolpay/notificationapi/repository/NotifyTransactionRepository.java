@@ -1,11 +1,8 @@
 package com.dsarena.corp.schoolpay.notificationapi.repository;
 
 import com.dsarena.corp.schoolpay.notificationapi.domain.SchoolDomain.NotifyTransaction;
-import com.dsarena.corp.schoolpay.notificationapi.domain.enumeration.ProccesingStatus;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -20,4 +17,5 @@ public interface NotifyTransactionRepository extends JpaRepository<NotifyTransac
     //         "order by n.dateCreated")
     // Iterable<NotifyTransaction> findByProccessingStatus();
 
+    Boolean existsByRecordId(Integer recordId);
 }

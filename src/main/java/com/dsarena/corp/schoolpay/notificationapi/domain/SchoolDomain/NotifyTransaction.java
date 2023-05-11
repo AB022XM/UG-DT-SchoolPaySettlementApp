@@ -1,13 +1,23 @@
 package com.dsarena.corp.schoolpay.notificationapi.domain.SchoolDomain;
 
 import com.dsarena.corp.schoolpay.notificationapi.domain.enumeration.ProccesingStatus;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Random;
 import javax.annotation.Nullable;
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Cache;
@@ -67,7 +77,7 @@ public class NotifyTransaction implements Serializable {
     private String partnerCode;
 
     @Nullable
-    @Column(name = "date_created", nullable = false)
+    @Column(name = "date_created", nullable = true)
     private LocalDate dateCreated;
 
     @Nullable
@@ -90,7 +100,8 @@ public class NotifyTransaction implements Serializable {
     @Nullable
     @Column(name = "timestamp", nullable = true)
     @JsonIgnore
-    private LocalDate timestamp;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private LocalDateTime timestamp;
 
     @Nullable
     @JsonIgnore
@@ -342,16 +353,16 @@ public class NotifyTransaction implements Serializable {
         this.charges = charges;
     }
 
-    public LocalDate getTimestamp() {
-        return this.timestamp;
+    public LocalDateTime getTimestamp() {
+        return LocalDateTime.now();
     }
 
-    public NotifyTransaction timestamp(LocalDate timestamp) {
+    public NotifyTransaction timestamp(LocalDateTime timestamp) {
         this.setTimestamp(timestamp);
         return this;
     }
 
-    public void setTimestamp(LocalDate timestamp) {
+    public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
     }
 
@@ -565,43 +576,35 @@ public class NotifyTransaction implements Serializable {
             "}";
     }
 
-    public static Integer generateUniqueRef() {
-        int length = 7;
-        Random random = new Random();
-        char[] digits = new char[length];
-        digits[0] = (char) (random.nextInt(9) + '1');
-        for (int i = 1; i < length; i++) {
-            digits[i] = (char) (random.nextInt(10) + '0');
-        }
-        return Integer.parseInt(new String(digits));
-    }
-
     public static String generateUniqueRefString() {
-        int length = 10;
+        int length = 12;
         Random random = new Random();
         char[] digits = new char[length];
         digits[0] = (char) (random.nextInt(9) + '1');
         for (int i = 1; i < length; i++) {
             digits[i] = (char) (random.nextInt(10) + '0');
         }
-        return new String(digits);
+
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        System.out.println();
+        return new String(digits) + timestamp.getTime();
     }
     // public static String generaneeratSTimeStampString() {
 
     //     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
     //         //generate  date
-    //         return LocalDate.now().format(formatter);
+    //         return LocalDateTime.now().format(formatter);
     // }
 
-    // public static LocalDate generateTimeStampLocal() {
+    // public static LocalDateTime generateTimeStampLocal() {
 
     //     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
     //         //generate  date
-    //         String date = LocalDate.now().format(formatter);
+    //         String date = LocalDateTime.now().format(formatter);
     //         //date format
     //         //format date
-    //         return LocalDate.parse(date, formatter);
+    //         return LocalDateTime.parse(date, formatter);
     // }
 }

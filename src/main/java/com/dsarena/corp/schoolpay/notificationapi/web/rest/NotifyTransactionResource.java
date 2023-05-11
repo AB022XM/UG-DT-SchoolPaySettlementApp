@@ -1,7 +1,10 @@
 package com.dsarena.corp.schoolpay.notificationapi.web.rest;
 
+import com.dsarena.corp.schoolpay.notificationapi.Util.Constants;
+import com.dsarena.corp.schoolpay.notificationapi.Util.Helper;
 import com.dsarena.corp.schoolpay.notificationapi.Util.PostToAmol;
 import com.dsarena.corp.schoolpay.notificationapi.domain.AmolDomain.Requests.CASATOCASA.ResponseDetails;
+import com.dsarena.corp.schoolpay.notificationapi.domain.AmolDomain.Responses.CASATOCASA.AmolResponse;
 import com.dsarena.corp.schoolpay.notificationapi.domain.SchoolDomain.NotificationResponse;
 import com.dsarena.corp.schoolpay.notificationapi.domain.SchoolDomain.NotifyTransaction;
 import com.dsarena.corp.schoolpay.notificationapi.domain.SchoolDomain.School;
@@ -13,18 +16,21 @@ import com.dsarena.corp.schoolpay.notificationapi.service.SchoolService;
 import com.dsarena.corp.schoolpay.notificationapi.service.dto.NotifyTransactionDTO;
 import com.dsarena.corp.schoolpay.notificationapi.web.rest.errors.BadRequestAlertException;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
-import java.time.LocalDate;
 import java.util.Optional;
 import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
@@ -70,28 +76,45 @@ public class NotifyTransactionResource {
     @PostMapping("/notify")
     public ResponseEntity<NotificationResponse> createNotifyTransaction(@Valid @RequestBody NotifyTransactionDTO notifyTransactionDTO)
         throws URISyntaxException, NumberFormatException, KeyManagementException, NoSuchAlgorithmException, JsonProcessingException {
-        // Integer transactionId = NotifyTransaction.generateUniqueRef();
-        log.debug("REST request to save NotifyTransaction : {}", notifyTransactionDTO);
+        log.debug("\n\n\n");
+
+        log.debug("+++++++++++++++++++++++++++++NEW TRANSACTION initiated ++++++++++++++++++");
+
+        log.debug("+++++++++++++++++++++++++++++ TRANSACTION DETAILS START ++++++++++++++++++");
+        log.debug(notifyTransactionDTO.toString());
+        log.debug("+++++++++++++++++++++++++++++ TRANSACTION DETAILS END ++++++++++++++++++");
+        log.debug("ORIGINAL OBJECT : {}", notifyTransactionDTO);
         if (notifyTransactionDTO.getId() != null) {
             throw new BadRequestAlertException("A new notifyTransaction cannot already have an ID", ENTITY_NAME, "idexists");
         }
+
         notifyTransactionDTO.setFcrTransactionStatus(ProccesingStatus.INITIATED);
         //Do a duplicate check here
         Optional<NotifyTransaction> notifyTransaction = notifyTransactionRepository.findByRecordId(notifyTransactionDTO.getRecordId());
 
-        log.debug("isPresentValue For notifyTransaction: " + notifyTransaction.isPresent());
         if (notifyTransaction.isPresent()) {
+            log.debug("+++++++++++++++++++++++++++++  TRANSACTION DETAILS EXISTS ++++++++++++++++++");
+            log.debug(notifyTransaction.toString());
+            log.debug("+++++++++++++++++++++++++++++ TRANSACTION DETAILS EXISTS END ++++++++++++++++++");
+
+            Boolean settlementSuc = false;
+            String statusMesg = notifyTransaction.get().getProccessingStatus().name() + "";
+            String msgDetails = "Transaction already processed :  " + notifyTransaction.get().toString();
+            if (statusMesg.equalsIgnoreCase(ProccesingStatus.SUCCESS.name())) {
+                settlementSuc = true;
+            }
             NotificationResponse duplicateResp = new NotificationResponse(
                 String.valueOf(notifyTransaction.get().getAmount()),
                 String.valueOf(notifyTransaction.get().getRecordId()),
                 notifyTransaction.get().getTransactionUId(),
-                "Transaction already processed:  " + notifyTransaction.get().getTimestamp(),
-                true
+                msgDetails,
+                settlementSuc
             );
-            return ResponseEntity.created(new URI("/notify/" + notifyTransactionDTO.getTransactionUId())).body(duplicateResp);
+            return ResponseEntity.ok(duplicateResp);
         }
 
         Optional<School> school = schoolRepository.findBySchoolCode(notifyTransactionDTO.getSchoolCode());
+        log.debug("isPresentValue For School: " + school.toString() + " IsSCHOOL-PRESENT: " + school.isPresent());
         if (school.isEmpty()) {
             throw new BadRequestAlertException(
                 "School with schoolCode " + notifyTransactionDTO.getSchoolCode() + " does not exist",
@@ -99,36 +122,135 @@ public class NotifyTransactionResource {
                 "not found"
             );
         }
-
+        String transactionId = Helper.TranIdGen();
         notifyTransactionDTO.setCreditAccount(school.get().getSchoolAccountNumber());
         notifyTransactionDTO.setDebitAccount(school.get().getFreeField1());
         notifyTransactionDTO.setFcrTransactionStatus(ProccesingStatus.PENDING);
-        notifyTransactionDTO.setTimestamp(LocalDate.now());
+        //notifyTransactionDTO.setTimestamp(LocalDateTime.now());
+
+        String narrative =
+            notifyTransactionDTO.getSourcePaymentChannelCode() +
+            " | " +
+            notifyTransactionDTO.getSourceTransactionId() +
+            " | " +
+            notifyTransactionDTO.getStudentCode();
+
+        notifyTransactionDTO.setNarration(narrative);
+        notifyTransactionDTO.setFcrTransactionStatus(ProccesingStatus.PENDING);
+        notifyTransactionDTO.setProccessingStatus(ProccesingStatus.PENDING);
+
+        notifyTransactionDTO.setTransactionUId(transactionId);
         NotifyTransactionDTO result = notifyTransactionService.save(notifyTransactionDTO);
-        log.debug(ENTITY_NAME + " ON Saved: " + result.toString());
-        //fetch saved object
-        NotifyTransaction savedNotifyTransaction = notifyTransactionRepository.findById(result.getId()).orElse(null);
-        if (savedNotifyTransaction == null) {
+
+        if (result == null) {
+            log.debug("FAILURE: no able to get saved transaction");
             throw new BadRequestAlertException(
                 "An error occurred while processing the transaction with recordId" + notifyTransactionDTO.getRecordId(),
                 ENTITY_NAME,
                 "not found"
             );
         }
+        try {
+            postToAmolUpdate(result);
+        } catch (Exception e) {
+            log.debug("No DETAILS FOUND ON RESULT: " + result.toString());
+        }
 
-        log.info("Saved NotifyTransaction: " + savedNotifyTransaction.toString());
         NotificationResponse responseCreatedResponse = new NotificationResponse(
             result.getAmount().toString(),
             result.getRecordId().toString(),
-            savedNotifyTransaction.getTransactionUId(),
-            "Transaction has been received",
+            result.getTransactionUId() + "",
+            "Transaction has been received ",
             true
         );
-        notifyTransactionDTO.setFcrTransactionStatus(ProccesingStatus.PENDING);
-        ResponseDetails responseDetails = new PostToAmol()
-            .postTransactionGLCASA(savedNotifyTransaction, school.get().getSchoolAccountNumber());
-        log.debug("REQUEST_STRING:  " + responseDetails.getRequest().getBody().toString());
-        return ResponseEntity.created(new URI("/notify/" + result.getTransactionUId())).body(responseCreatedResponse);
+
+        return ResponseEntity.ok(responseCreatedResponse);
+    }
+
+    // private void postToAmolUpdate(NotifyTransactionDTO savedNtDTO)
+    //     throws KeyManagementException, JsonProcessingException, NoSuchAlgorithmException {
+    //     try {
+    //         if (savedNtDTO != null) {
+    //             ResponseDetails responseDetails = new PostToAmol().postTransactionGLCASA(savedNtDTO);
+    //             NotifyTransactionDTO notDTO = null;
+    //             if (responseDetails != null) {
+    //                 if (responseDetails.getAmolResponse() != null) {
+    //                     String tranStatus = responseDetails.getAmolResponse().getStatus();
+    //                     log.debug("REQUEST AMOL PREVIOUS :  " + responseDetails.getRequest().getBody().toString());
+
+    //                     savedNtDTO.setFreeField2(responseDetails.getRequest().toString());
+    //                     savedNtDTO.setFreeField3(responseDetails.getAmolResponse().toString());
+
+    //                     if (tranStatus.equalsIgnoreCase(Constants.SUCCESS)) {
+    //                         savedNtDTO.setFcrTransactionId(responseDetails.getAmolResponse().getData().getTransferId());
+    //                         savedNtDTO.setFcrTransactionReference(responseDetails.getAmolResponse().getData().getTransferReferenceId());
+    //                         savedNtDTO.setFcrTransactionStatus(ProccesingStatus.SUCCESS);
+    //                     } else if (tranStatus.equalsIgnoreCase(ProccesingStatus.FAILED.name())) {
+    //                         savedNtDTO.setFcrTransactionStatus(ProccesingStatus.FAILED);
+    //                     } else {
+    //                         savedNtDTO.setProccessingStatus(ProccesingStatus.UNKNOWN);
+    //                     }
+    //                 }
+    //             }
+
+    //             //Optional<NotifyTransactionDTO> updateAfterDeposit =  commented out since its not being used.
+
+    //             notifyTransactionService.partialUpdate(notDTO);
+    //         }
+    //     } catch (Exception e) {
+    //         log.debug(e.getStackTrace().toString());
+    //         log.debug(e.getMessage().toString());
+    //     }
+    // }
+
+    private void postToAmolUpdate(NotifyTransactionDTO savedNtDTO)
+        throws KeyManagementException, JsonProcessingException, NoSuchAlgorithmException {
+        log.debug("postToAmolUpdate BEFORE ANYUPDATE :  " + savedNtDTO.toString());
+
+        try {
+            log.debug("OBJECT-NotifyTransactionDTO Before amol posting :  " + savedNtDTO.toString());
+            log.debug(
+                "\n RECORDID: " +
+                savedNtDTO.getRecordId() +
+                " TRANSACTIONID " +
+                savedNtDTO.getTransactionUId() +
+                "\n ###AUTO ID### : " +
+                savedNtDTO.getId()
+            );
+            if (savedNtDTO != null) {
+                ResponseDetails responseDetails = new PostToAmol().postTransactionGLCASA(savedNtDTO);
+                if (responseDetails != null) {
+                    AmolResponse amolResponse = responseDetails.getAmolResponse();
+                    if (amolResponse != null) {
+                        String tranStatus = amolResponse.getStatus() + "";
+                        log.debug("REQUEST AMOL PREVIOUS :  " + responseDetails.getRequest().getBody().toString());
+
+                        savedNtDTO.setFreeField2(responseDetails.getRequest() + "");
+                        savedNtDTO.setFreeField3(responseDetails.getAmolResponse().toString() + "");
+
+                        if (tranStatus.equalsIgnoreCase(Constants.SUCCESS)) {
+                            savedNtDTO.setFcrTransactionId(amolResponse.getData().getTransferId());
+                            savedNtDTO.setFcrTransactionReference(amolResponse.getData().getTransferReferenceId());
+                            savedNtDTO.setProccessingStatus(ProccesingStatus.SUCCESS);
+
+                            savedNtDTO.setFcrTransactionStatus(ProccesingStatus.SUCCESS);
+                        } else if (tranStatus.equalsIgnoreCase(ProccesingStatus.FAILED.name())) {
+                            savedNtDTO.setFcrTransactionStatus(ProccesingStatus.FAILED);
+                            savedNtDTO.setProccessingStatus(ProccesingStatus.FAILED);
+                        } else {
+                            savedNtDTO.setProccessingStatus(ProccesingStatus.UNKNOWN);
+                            savedNtDTO.setFcrTransactionStatus(ProccesingStatus.UNKNOWN);
+                            savedNtDTO.setFreeField1(amolResponse.toString());
+                        }
+                    }
+                }
+                //Optional<NotifyTransactionDTO> updateAfterDeposit =  commented out since its not being used.
+                notifyTransactionService.partialUpdate(savedNtDTO);
+            }
+        } catch (Exception e) {
+            log.debug(e.getStackTrace().toString());
+            log.debug(e.getMessage().toString());
+        }
     }
 
     /**

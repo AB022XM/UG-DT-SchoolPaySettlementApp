@@ -1,13 +1,19 @@
 package com.dsarena.corp.schoolpay.notificationapi.Util;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.util.Random;
-
 import static com.dsarena.corp.schoolpay.notificationapi.Util.Constants.SALTCHARS;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.Random;
+
 public class Helper {
+
+    public static String TranIdGen() {
+        Long randpmNum = generateRandomLong(5);
+        long time = System.currentTimeMillis() / 1000;
+
+        return (randpmNum + time) + "";
+    }
 
     public static Boolean isNullOREmptyORBlank(String stringText) {
         try {
@@ -15,12 +21,11 @@ public class Helper {
                 stringText.isBlank() || stringText.isEmpty() || stringText.equals(null) || stringText == "" || stringText.equals("")
             ) return true; else return false;
         } catch (Exception e) {
-            // TODO: handle exception
             return true;
         }
     }
 
-    public static long generateRandom(int length) {
+    public static long generateRandomLong(int length) {
         Random random = new Random();
         char[] digits = new char[length];
         digits[0] = (char) (random.nextInt(9) + '1');
@@ -49,7 +54,6 @@ public class Helper {
         }
         return salt.toString();
     }
-
 
     public static String generateRandomNumber(int length) {
         StringBuilder salt = new StringBuilder();

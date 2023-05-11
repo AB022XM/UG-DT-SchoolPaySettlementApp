@@ -23,8 +23,8 @@ spring:
 
 springdoc:
   api-docs:
-    enabled: false
-    //path-to-match: /payment/api/v1/,/api/authenticate
+    enabled: true
+    path-to-match: /payment/api/v1/,/api/authenticate
 
 ---
 management:
@@ -171,6 +171,9 @@ server:
     session:
       cookie:
         http-only: true
+        timeout: 360000
+
+
 
 springdoc:
   show-actuator: true

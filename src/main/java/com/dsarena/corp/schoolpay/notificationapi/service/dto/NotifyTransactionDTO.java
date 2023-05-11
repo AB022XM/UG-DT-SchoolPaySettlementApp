@@ -5,58 +5,78 @@ import com.dsarena.corp.schoolpay.notificationapi.domain.enumeration.ProccesingS
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 import javax.annotation.Nullable;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.NotNull;
+import javax.validation.Valid;
+import javax.validation.constraints.*;
 
 /**
  * A DTO for the {@link NotifyTransaction} entity.
  */
 @SuppressWarnings("common-java:DuplicatedBlocks")
+
 public class NotifyTransactionDTO implements Serializable {
 
     @JsonIgnore
     private Long id;
 
     @Nullable
-    private Integer transactionUId;
+    private String transactionUId;
 
+
+    @NotNull
     private Integer recordId;
 
-    @Nullable
+
     @JsonIgnore
     private String customerPaymentCode;
 
     @Nullable
+    @Size(max = 100)
+    @Pattern(regexp = "^[a-zA-Z0-9\\s]+$")
     private String schoolName;
 
     @Nullable
     private String sourcePaymentChannelCode;
 
     @NotNull
+    @Size(max = 30)
+    @Pattern(regexp ="[a-zA-Z0-9]+$*")
     private String schoolpayReceiptNumber;
 
     @NotNull
+    @Min(500)
+    @Max(199999999)
     private Integer amount;
 
     @Nullable
+    @Size(max = 20)
+    @Pattern(regexp = "[a-zA-Z0-9]*")
     private String schoolCode;
 
     @Nullable
     @JsonIgnore
+    @Size(max = 20)
+    @Pattern(regexp = "^[a-zA-Z0-9\\s]+$")
     private String partnerCode;
 
     @NotNull
     private LocalDate dateCreated;
 
     @NotNull
+    @Size(max = 20)
+    @Pattern(regexp = "[a-zA-Z0-9]*")
     private String sourceTransactionId;
 
     @NotNull
+    @Size(max = 20)
+    @Pattern(regexp ="[a-zA-Z0-9]+$*")
     private String studentCode;
 
     @NotNull
+    @Size(min=3,max=70)
+    @Pattern(regexp = "^[a-zA-Z0-9\\s]+$")
     private String studentName;
 
     @Nullable
@@ -65,19 +85,27 @@ public class NotifyTransactionDTO implements Serializable {
 
     @Nullable
     @JsonIgnore
-    private LocalDate timestamp;
+    private LocalDateTime timestamp;
 
     @Nullable
     @JsonIgnore
+    @Pattern(regexp ="[a-zA-Z0-9]+$*")
+    @Size(min = 10,max = 40, message = "Maximum length is 40 characters")
     private String narration;
 
     @Nullable
+    @Size(max=4, message = "Maximum length is 4 characters")
+    @Pattern(regexp = "[a-zA-Z]*")
     private String currency;
 
     @Nullable
+    @Size(max = 20)
+    @Pattern(regexp = "[a-zA-Z0-9]*")
     private String debitAccount;
 
     @Nullable
+    @Size(max = 20)
+    @Pattern(regexp = "[a-zA-Z0-9]*")
     private String creditAccount;
 
     private ProccesingStatus proccessingStatus;
@@ -105,11 +133,11 @@ public class NotifyTransactionDTO implements Serializable {
         this.id = id;
     }
 
-    public Integer getTransactionUId() {
+    public String getTransactionUId() {
         return transactionUId;
     }
 
-    public void setTransactionUId(Integer transactionUId) {
+    public void setTransactionUId(String transactionUId) {
         this.transactionUId = transactionUId;
     }
 
@@ -177,8 +205,8 @@ public class NotifyTransactionDTO implements Serializable {
         this.partnerCode = partnerCode;
     }
 
-    public LocalDate getDateCreated() {
-        return dateCreated;
+    public LocalDateTime getDateCreated() {
+        return LocalDateTime.now();
     }
 
     public void setDateCreated(LocalDate dateCreated) {
@@ -217,11 +245,11 @@ public class NotifyTransactionDTO implements Serializable {
         this.charges = charges;
     }
 
-    public LocalDate getTimestamp() {
-        return timestamp;
+    public LocalDateTime getTimestamp() {
+        return LocalDateTime.now();
     }
 
-    public void setTimestamp(LocalDate timestamp) {
+    public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
     }
 
@@ -238,7 +266,7 @@ public class NotifyTransactionDTO implements Serializable {
     }
 
     public void setCurrency(String currency) {
-        this.currency = currency;
+        this.currency = "UGX";
     }
 
     public String getDebitAccount() {
@@ -346,34 +374,34 @@ public class NotifyTransactionDTO implements Serializable {
     @Override
     public String toString() {
         return "NotifyTransactionDTO{" +
-            "id=" + getId() +
-            ", transactionUId=" + getTransactionUId() +
-            ", recordId=" + getRecordId() +
-            ", customerPaymentCode='" + getCustomerPaymentCode() + "'" +
-            ", schoolName='" + getSchoolName() + "'" +
-            ", sourcePaymentChannelCode='" + getSourcePaymentChannelCode() + "'" +
-            ", schoolpayReceiptNumber='" + getSchoolpayReceiptNumber() + "'" +
-            ", amount=" + getAmount() +
-            ", schoolCode='" + getSchoolCode() + "'" +
-            ", partnerCode='" + getPartnerCode() + "'" +
-            ", dateCreated='" + getDateCreated() + "'" +
-            ", sourceTransactionId=" + getSourceTransactionId() +
-            ", studentCode=" + getStudentCode() +
-            ", studentName='" + getStudentName() + "'" +
-            ", charges=" + getCharges() +
-            ", timestamp='" + getTimestamp() + "'" +
-            ", narration='" + getNarration() + "'" +
-            ", currency=" + getCurrency() +
-            ", debitAccount=" + getDebitAccount() +
-            ", creditAccount=" + getCreditAccount() +
-            ", proccessingStatus='" + getProccessingStatus() + "'" +
-            ", fcrTransactionStatus='" + getFcrTransactionStatus() + "'" +
-            ", fcrTransactionId='" + getFcrTransactionId() + "'" +
-            ", fcrTransactionReference='" + getFcrTransactionReference() + "'" +
-            ", freeField1='" + getFreeField1() + "'" +
-            ", freeField2='" + getFreeField2() + "'" +
-            ", freeField3='" + getFreeField3() + "'" +
-            ", retries=" + getRetries() +
-            "}";
+                "id=" + getId() +
+                ", transactionUId=" + getTransactionUId() +
+                ", recordId=" + getRecordId() +
+                ", customerPaymentCode='" + getCustomerPaymentCode() + "'" +
+                ", schoolName='" + getSchoolName() + "'" +
+                ", sourcePaymentChannelCode='" + getSourcePaymentChannelCode() + "'" +
+                ", schoolpayReceiptNumber='" + getSchoolpayReceiptNumber() + "'" +
+                ", amount=" + getAmount() +
+                ", schoolCode='" + getSchoolCode() + "'" +
+                ", partnerCode='" + getPartnerCode() + "'" +
+                ", dateCreated='" + getDateCreated() + "'" +
+                ", sourceTransactionId=" + getSourceTransactionId() +
+                ", studentCode=" + getStudentCode() +
+                ", studentName='" + getStudentName() + "'" +
+                ", charges=" + getCharges() +
+                ", timestamp='" + getTimestamp() + "'" +
+                ", narration='" + getNarration() + "'" +
+                ", currency=" + getCurrency() +
+                ", debitAccount=" + getDebitAccount() +
+                ", creditAccount=" + getCreditAccount() +
+                ", proccessingStatus='" + getProccessingStatus() + "'" +
+                ", fcrTransactionStatus='" + getFcrTransactionStatus() + "'" +
+                ", fcrTransactionId='" + getFcrTransactionId() + "'" +
+                ", fcrTransactionReference='" + getFcrTransactionReference() + "'" +
+                ", freeField1='" + getFreeField1() + "'" +
+                ", freeField2='" + getFreeField2() + "'" +
+                ", freeField3='" + getFreeField3() + "'" +
+                ", retries=" + getRetries() +
+                "}";
     }
 }

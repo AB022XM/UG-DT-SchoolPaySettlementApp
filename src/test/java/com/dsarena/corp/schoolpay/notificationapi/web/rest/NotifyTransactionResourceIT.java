@@ -18,6 +18,7 @@ import com.dsarena.corp.schoolpay.notificationapi.repository.NotifyTransactionRe
 import com.dsarena.corp.schoolpay.notificationapi.service.dto.NotifyTransactionDTO;
 import com.dsarena.corp.schoolpay.notificationapi.service.mapper.NotifyTransactionMapper;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
 import java.util.Random;
@@ -67,7 +68,7 @@ class NotifyTransactionResourceIT {
     private static final String DEFAULT_PARTNER_CODE = "AAAAAAAAAA";
     private static final String UPDATED_PARTNER_CODE = "BBBBBBBBBB";
 
-    private static final LocalDate DEFAULT_DATE_CREATED = LocalDate.ofEpochDay(0L);
+    private static final LocalDate DEFAULT_DATE_CREATED = LocalDate.now();
     private static final LocalDate UPDATED_DATE_CREATED = LocalDate.now(ZoneId.systemDefault());
 
     private static final String DEFAULT_SOURCE_TRANSACTION_ID = "AAAAAAAAAA";
@@ -82,8 +83,8 @@ class NotifyTransactionResourceIT {
     private static final Integer DEFAULT_CHARGES = 1;
     private static final Integer UPDATED_CHARGES = 2;
 
-    private static final LocalDate DEFAULT_TIMESTAMP = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_TIMESTAMP = LocalDate.now(ZoneId.systemDefault());
+    private static final LocalDateTime DEFAULT_TIMESTAMP = LocalDateTime.now();
+    private static final LocalDateTime UPDATED_TIMESTAMP = LocalDateTime.now(ZoneId.systemDefault());
 
     private static final String DEFAULT_NARRATION = "AAAAAAAAAA";
     private static final String UPDATED_NARRATION = "BBBBBBBBBB";

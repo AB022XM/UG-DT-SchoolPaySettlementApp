@@ -129,11 +129,11 @@ public class NotifyTransactionResource {
         //notifyTransactionDTO.setTimestamp(LocalDateTime.now());
 
         String narrative =
-            notifyTransactionDTO.getSourcePaymentChannelCode() +
-            " | " +
             notifyTransactionDTO.getSourceTransactionId() +
             " | " +
-            notifyTransactionDTO.getStudentCode();
+            notifyTransactionDTO.getStudentCode() +
+            " | " +
+            notifyTransactionDTO.getStudentName();
 
         notifyTransactionDTO.setNarration(narrative);
         notifyTransactionDTO.setFcrTransactionStatus(ProccesingStatus.PENDING);

@@ -8,17 +8,22 @@ import com.dsarena.corp.schoolpay.notificationapi.domain.AmolDomain.Requests.GLT
 import com.dsarena.corp.schoolpay.notificationapi.domain.AmolDomain.Requests.GLTOCASA.PaymentTransaction;
 import com.dsarena.corp.schoolpay.notificationapi.service.dto.NotifyTransactionDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
 public class CoreBankingGL2CASA {
 
+    private static final Logger log = LoggerFactory.getLogger(CoreBankingGL2CASA.class);
+
     public static String generateAmolRequestGL2CASA(NotifyTransactionDTO nt) throws JsonProcessingException {
-        String narrative = nt.getSourcePaymentChannelCode() + " | " + nt.getRecordId() + " | " + nt.getStudentCode();
+        String narrative = nt.getRecordId() + "| " + nt.getStudentCode() + "| " + nt.getStudentName();
+
         AmolPostGLTOCASA amolPost = new AmolPostGLTOCASA();
         PaymentTransaction paymentTransaction = new PaymentTransaction();
 
-        PaymentPurpose pp = new PaymentPurpose(narrative, 0);
+        PaymentPurpose pp = new PaymentPurpose(Helper.truncate(narrative, 40), 0);
         PayeeDetails pd = new PayeeDetails();
         pd.setPayeeProductInstanceReference(nt.getCreditAccount());
         PayerDetails payer = new PayerDetails();

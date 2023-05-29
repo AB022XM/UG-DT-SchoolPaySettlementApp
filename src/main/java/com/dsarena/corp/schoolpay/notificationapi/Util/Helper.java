@@ -25,6 +25,29 @@ public class Helper {
         }
     }
 
+    public static String truncate(String str, int len) {
+        if (str == null) return "";
+
+        String crop = str;
+        int slen = 0;
+        int blen = 0;
+        char c;
+
+        try {
+            while (blen + 1 <= len) {
+                c = crop.charAt(slen);
+                blen++;
+                slen++;
+                if (c > 127) blen++; //2-byte character..
+            }
+            crop = crop.substring(0, slen);
+        } catch (Exception e) {
+            //           logger.error("StringTool.cropByte() :::"+ e.toString());
+        }
+
+        return crop;
+    }
+
     public static long generateRandomLong(int length) {
         Random random = new Random();
         char[] digits = new char[length];
